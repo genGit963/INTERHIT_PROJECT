@@ -4,3 +4,7 @@ export const Colors = {
   tabIconDefault: '#0051BA',
   tabIconSelected: '#13378D',
 };
+
+export const CommunityColor = {
+  slogan: '#13378D',
+};
