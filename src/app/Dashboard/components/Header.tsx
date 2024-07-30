@@ -1,11 +1,11 @@
-import {View, StyleSheet, Image, Text} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 import React from 'react';
 import {ThemedText} from '../../../components/ThemedText';
 import {CommunityColor} from '../../../constants/Color';
 import NotificationSvg from '../../../assets/svg/bell.svg';
 import NepaliFlagSvg from '../../../assets/svg/nepali_flag.svg';
 
-export function Header() {
+export default function Header() {
   return (
     <View style={styles.Container}>
       <View style={styles.Profile}>
@@ -18,8 +18,8 @@ export function Header() {
           style={styles.Image}
         />
         <View>
-          <ThemedText style={styles.CommunitySlog} type="defaultSemiBold">
-            Jay Godar !
+          <ThemedText style={styles.CommunitySlog} type="semiBold">
+            Jay Thapa !
           </ThemedText>
           <ThemedText>Bhakta Bahadur Thapa</ThemedText>
         </View>
@@ -64,5 +64,3 @@ const styles = StyleSheet.create({
     flex: 0.34,
   },
 });
-
-export default Header;
