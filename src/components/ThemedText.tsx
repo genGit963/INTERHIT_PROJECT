@@ -4,11 +4,12 @@ import {Colors} from '../constants/Color';
 
 export type ThemedTextProps = TextProps & {
   type?:
-    | 'defaultLight'
+    | 'light'
     | 'default'
     | 'defaultItalic'
+    | 'mediumBold'
     | 'title'
-    | 'defaultSemiBold'
+    | 'semiBold'
     | 'subtitle'
     | 'link';
 };
@@ -24,11 +25,12 @@ export function ThemedText({
     <Text
       style={[
         {color},
-        type === 'defaultLight' ? styles.defaultLight : undefined,
+        type === 'light' ? styles.light : undefined,
         type === 'default' ? styles.default : undefined,
         type === 'defaultItalic' ? styles.defaultItalic : undefined,
+        type === 'mediumBold' ? styles.mediumBold : undefined,
+        type === 'semiBold' ? styles.semiBold : undefined,
         type === 'title' ? styles.title : undefined,
-        type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
         type === 'subtitle' ? styles.subtitle : undefined,
         type === 'link' ? styles.link : undefined,
         style,
@@ -39,7 +41,7 @@ export function ThemedText({
 }
 
 const styles = StyleSheet.create({
-  defaultLight: {
+  light: {
     fontSize: 14,
     lineHeight: 24,
     fontFamily: Platform.OS === 'ios' ? 'Poppins Light' : 'PoppinsLight',
@@ -54,8 +56,13 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     fontFamily: Platform.OS === 'ios' ? 'Poppins Italic' : 'PoppinsItalic',
   },
-  defaultSemiBold: {
+  mediumBold: {
     fontSize: 14,
+    lineHeight: 24,
+    fontFamily: Platform.OS === 'ios' ? 'Poppins Medium' : 'PoppinsMedium',
+  },
+  semiBold: {
+    fontSize: 16,
     lineHeight: 24,
     fontFamily: Platform.OS === 'ios' ? 'Poppins SemiBold' : 'PoppinsSemiBold',
   },
