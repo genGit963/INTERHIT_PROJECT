@@ -75,10 +75,13 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 20,
     fontWeight: 'bold',
+    fontFamily: Platform.OS === 'ios' ? 'Poppins semiBold' : 'PoppinssemiBold',
   },
   link: {
     lineHeight: 30,
     fontSize: 14,
     color: '#0a7ea4',
+    fontFamily:
+      Platform.OS === 'ios' ? 'Poppins MediumItalic' : 'PoppinsMediumItalic',
   },
 });
