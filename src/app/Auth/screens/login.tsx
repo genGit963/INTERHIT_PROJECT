@@ -17,7 +17,7 @@ export default Login;
 
 const styles = StyleSheet.create({
   Page: {
-    backgroundColor: Colors.background,
+    backgroundColor: Colors.screenBackground,
     flex: 1,
   },
 });

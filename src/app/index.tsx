@@ -1,5 +1,5 @@
 // Dashboard
-import {DashboardScreen} from './Dashboard';
+import DashboardScreen from './Dashboard';
 
 // Family
 
