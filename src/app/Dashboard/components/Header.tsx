@@ -5,7 +5,7 @@ import {CommunityColor} from '../../../constants/Color';
 import NotificationSvg from '../../../assets/svg/bell.svg';
 import NepaliFlagSvg from '../../../assets/svg/nepali_flag.svg';
 
-export default function Header() {
+const Header = () => {
   return (
     <View style={styles.Container}>
       <View style={styles.Profile}>
@@ -30,7 +30,9 @@ export default function Header() {
       </View>
     </View>
   );
-}
+};
+
+export default Header;
 
 const styles = StyleSheet.create({
   Container: {

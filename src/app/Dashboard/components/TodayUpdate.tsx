@@ -6,7 +6,7 @@ import BirthdaySvg from '../../../assets/svg/gift_parcel.svg';
 import AnniversarySvg from '../../../assets/svg/circled_heart.svg';
 import DeathSvg from '../../../assets/svg/sad_emoji.svg';
 
-export default function TodayUpdate() {
+const TodayUpdate = () => {
   return (
     <View style={styles.Container}>
       <View>
@@ -52,7 +52,9 @@ export default function TodayUpdate() {
       </View>
     </View>
   );
-}
+};
+
+export default TodayUpdate;
 
 const styles = StyleSheet.create({
   Container: {
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.shadow,
     padding: 8,
     // elevation: 5,
-    // ...supplyIOSShadowEffect({
+    // ...supplyShadowEffect({
     //   X_off: 0,
     //   Y_off: 0,
     //   Radius: 10,

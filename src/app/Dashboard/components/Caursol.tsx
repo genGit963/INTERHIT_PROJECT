@@ -2,7 +2,7 @@ import {StyleSheet, ImageBackground, View} from 'react-native';
 import React from 'react';
 import {ThemedText} from '../../../components/ThemedText';
 
-export default function Caursol() {
+const Caursol = () => {
   const image = {
     uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCUJr0DxQCv1qjcqhOLDl0C6MR3Rk762KQ-w&s',
   };
@@ -23,7 +23,9 @@ export default function Caursol() {
       </ImageBackground>
     </View>
   );
-}
+};
+
+export default Caursol;
 
 const styles = StyleSheet.create({
   Container: {
