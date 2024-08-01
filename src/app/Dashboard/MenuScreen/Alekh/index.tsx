@@ -6,8 +6,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ParamListBase} from '@react-navigation/native';
 
 import {ThemedText} from '../../../../components/ThemedText';
 import ScreenTopTitle from '../../../../components/ScreenTopTitle';
@@ -20,11 +18,10 @@ import {Colors} from '../../../../constants/Color';
 import AddAlekhSvg from '../../../../assets/svg/solid-plus-circle.svg';
 import supplyShadowEffect from '../../../../utils/Shadow';
 import AlekhAddModal from './components/AlekhAddModel';
+import {AppScreenNavigationType} from '../../../../core/navigation-type';
 
 // types and interface
-type AlekhScreenProps = {
-  navigation: NativeStackNavigationProp<ParamListBase>;
-};
+type AlekhScreenProps = {} & AppScreenNavigationType;
 export interface AlekhInterface {
   id: string;
   title: string;

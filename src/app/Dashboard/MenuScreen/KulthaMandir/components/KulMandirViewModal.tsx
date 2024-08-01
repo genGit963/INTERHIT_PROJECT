@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
   DoneText: {
     color: Colors.primary,
     textAlign: 'right',
-    fontSize: 16,
+    fontSize: 18,
   },
   Title: {
     fontSize: 20,

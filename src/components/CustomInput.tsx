@@ -1,8 +1,16 @@
 // CustomTextInput.tsx
 import React from 'react';
-import {TextInput, StyleSheet, View, TextInputProps, Text} from 'react-native';
+import {
+  TextInput,
+  StyleSheet,
+  View,
+  TextInputProps,
+  Text,
+  Platform,
+} from 'react-native';
 import {Controller} from 'react-hook-form';
 import {ThemedText} from './ThemedText';
+import {Colors} from '../constants/Color';
 
 interface CustomTextInputProps extends TextInputProps {
   name: string;
@@ -64,15 +72,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 5,
     padding: 10,
-    fontSize: 16,
+    fontSize: 15,
+    fontFamily: Platform.OS === 'ios' ? 'Poppins Regular' : 'PoppinsRegular',
   },
   requiredSymbol: {
-    color: 'red',
+    color: Colors.redColor,
     fontSize: 18,
     marginBottom: 5,
   },
   errorText: {
-    color: 'red',
+    color: Colors.redColor,
     marginTop: 4,
   },
 });

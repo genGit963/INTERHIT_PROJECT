@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ParamListBase} from '@react-navigation/native';
 
 import {ThemedText} from '../../../../components/ThemedText';
 import ScreenTopTitle from '../../../../components/ScreenTopTitle';
@@ -12,11 +10,10 @@ import BottomSpace from '../../../../components/BottomSpace';
 import EmptyFlatList from '../../../../components/EmptyFlatList';
 import {Colors} from '../../../../constants/Color';
 import supplyShadowEffect from '../../../../utils/Shadow';
+import {AppScreenNavigationType} from '../../../../core/navigation-type';
 
 // types and interface
-type MandirScreenProps = {
-  navigation: NativeStackNavigationProp<ParamListBase>;
-};
+type MandirScreenProps = {} & AppScreenNavigationType;
 export interface MandirInterface {
   id: string;
   title: string;

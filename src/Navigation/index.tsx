@@ -44,17 +44,17 @@ function AppNavigator() {
         <Stack.Screen
           name={SCREEN_NAME.MENUSCREEN.BANSHACONTRIBUTION}
           component={BanshaContribution}
-          options={{headerShown: true}}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name={SCREEN_NAME.MENUSCREEN.DOWNLOAD}
           component={DownloadScreen}
-          options={{headerShown: true}}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name={SCREEN_NAME.MENUSCREEN.GALLERY}
           component={Gallery}
-          options={{headerShown: true}}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name={SCREEN_NAME.MENUSCREEN.KULMANDIR}
@@ -69,7 +69,7 @@ function AppNavigator() {
         <Stack.Screen
           name={SCREEN_NAME.MENUSCREEN.TOPCONTRIBUTION}
           component={TopContribution}
-          options={{headerShown: true}}
+          options={{headerShown: false}}
         />
 
         {/* other */}

@@ -74,8 +74,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 20,
-    fontWeight: 'bold',
-    fontFamily: Platform.OS === 'ios' ? 'Poppins semiBold' : 'PoppinssemiBold',
+    fontFamily: Platform.OS === 'ios' ? 'Poppins Medium' : 'PoppinsMedium',
   },
   link: {
     lineHeight: 30,

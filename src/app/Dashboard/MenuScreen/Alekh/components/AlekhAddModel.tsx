@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
-  Button,
   Platform,
 } from 'react-native';
 import supplyShadowEffect from '../../../../../utils/Shadow';
@@ -56,7 +55,7 @@ const AlekhAddModal = ({
             onPress={() => onClose(false)}
             style={styles.DoneButton}>
             <ThemedText style={styles.DoneText} type="mediumBold">
-              Done
+              Cancel
             </ThemedText>
           </TouchableOpacity>
 
@@ -65,7 +64,7 @@ const AlekhAddModal = ({
             style={styles.ScrollContainer}
             contentContainerStyle={{}}
             showsVerticalScrollIndicator={false}>
-            <ThemedText type="semiBold">Add Alekh</ThemedText>
+            <ThemedText type="subtitle">Add Alekh</ThemedText>
 
             <CustomTextInput
               name="alekhDetails"
@@ -105,7 +104,14 @@ const AlekhAddModal = ({
               error={errors.writeAlekh}
             />
 
-            <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+            {/* Submit Button */}
+            <TouchableOpacity
+              onPress={handleSubmit(onSubmit)}
+              style={styles.SubmitBtn}>
+              <ThemedText type="mediumBold" style={styles.SubmitText}>
+                Submit
+              </ThemedText>
+            </TouchableOpacity>
           </ScrollView>
           <BottomSpace spaceHeight={'4%'} />
         </View>
@@ -152,9 +158,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   DoneText: {
-    color: Colors.primary,
+    color: Colors.redColor,
     textAlign: 'right',
-    fontSize: 16,
+    fontSize: 18,
+  },
+  SubmitBtn: {
+    borderWidth: 1,
+    backgroundColor: Colors.primary,
+    height: 40,
+    borderRadius: 10,
+    marginVertical: 30,
+  },
+  SubmitText: {
+    fontSize: 20,
+    color: Colors.misText,
+    textAlign: 'center',
+    margin: 'auto',
   },
   writeAlekh: {height: Platform.OS === 'ios' ? 100 : 'auto'},
 });

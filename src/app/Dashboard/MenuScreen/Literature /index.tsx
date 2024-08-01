@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
-import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {ParamListBase} from '@react-navigation/native';
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import {ThemedText} from '../../../../components/ThemedText';
 import ScreenTopTitle from '../../../../components/ScreenTopTitle';
@@ -12,11 +16,12 @@ import {Colors} from '../../../../constants/Color';
 import supplyShadowEffect from '../../../../utils/Shadow';
 import LiteratureViewModal from './components/LiteratureViewModal';
 import LiteratureCard from './components/LiteratureCard';
+import AddLiteratureSvg from '../../../../assets/svg/solid-plus-circle.svg';
+import LiteratureAddModal from './components/LiteratureAddModal';
+import {AppScreenNavigationType} from '../../../../core/navigation-type';
 
 // types and interface
-type LiteratureScreenProps = {
-  navigation: NativeStackNavigationProp<ParamListBase>;
-};
+type LiteratureScreenProps = {} & AppScreenNavigationType;
 export interface LiteratureInterface {
   id: string;
   writer: string;
@@ -118,6 +123,10 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({navigation}) => {
     setLiteratureViewVisible(false);
   };
 
+  // Add Modal States
+  const [isLiteratureAddVisible, setLiteratureAddVisible] =
+    useState<boolean>(false);
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
@@ -154,6 +163,22 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({navigation}) => {
             isVisible={isLiteratureViewVisible}
             onClose={handleCloseLiteratureView}
             data={selectedLiterature}
+          />
+        )}
+
+        {/* Alekh Add Button Opener */}
+        <TouchableOpacity
+          style={styles.AddLiteratureButton}
+          onPress={() => setLiteratureAddVisible(true)}>
+          <AddLiteratureSvg style={styles.AddLiteratureIcon} />
+        </TouchableOpacity>
+
+        {/* Add Alekh modal */}
+        {/* Alekh Detail View Modal */}
+        {isLiteratureAddVisible && (
+          <LiteratureAddModal
+            isVisible={isLiteratureAddVisible}
+            onClose={setLiteratureAddVisible}
           />
         )}
 

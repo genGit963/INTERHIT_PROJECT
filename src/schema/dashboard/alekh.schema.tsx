@@ -1,4 +1,3 @@
-// schemas.ts
 import {z} from 'zod';
 
 export const alekhSchema = z.object({
