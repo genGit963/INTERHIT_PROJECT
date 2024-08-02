@@ -1,32 +1,23 @@
-// CustomTextInput.tsx
+// CustomDatePicker.tsx
 import React from 'react';
-import {
-  TextInput,
-  StyleSheet,
-  View,
-  TextInputProps,
-  Text,
-  Platform,
-} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import {Controller} from 'react-hook-form';
 import {ThemedText} from './ThemedText';
 import {Colors} from '../constants/Color';
 
-interface CustomTextInputProps extends TextInputProps {
+interface CustomDatePickerProps {
   name: string;
   control: any;
   label: string;
-  error?: any;
   isRequired?: boolean;
 }
 
-const CustomTextInput: React.FC<CustomTextInputProps> = ({
-  style,
+const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
   name,
   control,
   label,
-  isRequired = true,
-  ...rest
+  isRequired,
 }) => {
   return (
     <View style={styles.inputContainer}>
@@ -37,14 +28,13 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
       <Controller
         control={control}
         name={name}
-        render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+        render={({field: {onChange, value}, fieldState: {error}}) => (
           <>
-            <TextInput
-              style={[styles.input, style]}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              {...rest}
+            <DateTimePicker
+              value={value ? new Date(value) : new Date()}
+              mode="date"
+              display="default"
+              onChange={(event, selectedDate) => onChange(selectedDate)}
             />
             {error && (
               <ThemedText style={styles.errorText}>{error.message}</ThemedText>
@@ -66,15 +56,6 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     color: '#000',
   },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor: Colors.whiteTunedBG,
-    borderRadius: 5,
-    padding: 10,
-    fontSize: 15,
-    fontFamily: Platform.OS === 'ios' ? 'Poppins Regular' : 'PoppinsRegular',
-  },
   requiredSymbol: {
     color: Colors.redColor,
     fontSize: 18,
@@ -86,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomTextInput;
+export default CustomDatePicker;

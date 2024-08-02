@@ -1,32 +1,25 @@
-// CustomTextInput.tsx
+// CustomDropdownSelector.tsx
 import React from 'react';
-import {
-  TextInput,
-  StyleSheet,
-  View,
-  TextInputProps,
-  Text,
-  Platform,
-} from 'react-native';
+
+import {View, StyleSheet, Picker, Text} from 'react-native';
 import {Controller} from 'react-hook-form';
 import {ThemedText} from './ThemedText';
 import {Colors} from '../constants/Color';
 
-interface CustomTextInputProps extends TextInputProps {
+interface CustomDropdownSelectorProps {
   name: string;
   control: any;
   label: string;
-  error?: any;
+  options: {label: string; value: string}[];
   isRequired?: boolean;
 }
 
-const CustomTextInput: React.FC<CustomTextInputProps> = ({
-  style,
+const CustomDropdownSelector: React.FC<CustomDropdownSelectorProps> = ({
   name,
   control,
   label,
-  isRequired = true,
-  ...rest
+  options,
+  isRequired,
 }) => {
   return (
     <View style={styles.inputContainer}>
@@ -37,15 +30,20 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
       <Controller
         control={control}
         name={name}
-        render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+        render={({field: {onChange, value}, fieldState: {error}}) => (
           <>
-            <TextInput
-              style={[styles.input, style]}
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              {...rest}
-            />
+            <Picker
+              selectedValue={value}
+              onValueChange={onChange}
+              style={styles.picker}>
+              {options.map((option) => (
+                <Picker.Item
+                  key={option.value}
+                  label={option.label}
+                  value={option.value}
+                />
+              ))}
+            </Picker>
             {error && (
               <ThemedText style={styles.errorText}>{error.message}</ThemedText>
             )}
@@ -66,14 +64,9 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     color: '#000',
   },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor: Colors.whiteTunedBG,
-    borderRadius: 5,
-    padding: 10,
-    fontSize: 15,
-    fontFamily: Platform.OS === 'ios' ? 'Poppins Regular' : 'PoppinsRegular',
+  picker: {
+    height: 50,
+    width: '100%',
   },
   requiredSymbol: {
     color: Colors.redColor,
@@ -86,4 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomTextInput;
+export default CustomDropdownSelector;
