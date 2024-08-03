@@ -2,6 +2,7 @@
 import React from 'react';
 
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+
 import {Controller} from 'react-hook-form';
 import {ThemedText} from './ThemedText';
 import {Colors} from '../constants/Color';
@@ -81,7 +82,8 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: Colors.primary,
+    // padding: 4,
     marginRight: 5,
   },
   radioButtonSelected: {

@@ -25,6 +25,11 @@ const NoIDCard: React.FC<NoIDCardProps> = ({callBackIDCardReqModalVisible}) => {
 export default NoIDCard;
 
 const styles = StyleSheet.create({
-  NoIDText: {},
-  ReqBtn: {},
+  NoIDText: {
+    marginTop: '75%',
+    textAlign: 'center',
+  },
+  ReqBtn: {
+    marginTop: '60%',
+  },
 });

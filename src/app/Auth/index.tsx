@@ -1,3 +1,5 @@
-import Login from './screens/login';
+import LoginScreen from './screens/login-screen';
 
-export {Login};
+export const AuthScreens = {
+  login: LoginScreen,
+};

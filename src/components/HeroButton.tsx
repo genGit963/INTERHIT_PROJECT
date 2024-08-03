@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
   CancelButtonView: {
     height: 40,
     borderRadius: 10,
-    marginVertical: 4,
     paddingRight: 4,
     justifyContent: 'center',
     width: '100%',
@@ -123,7 +122,6 @@ const styles = StyleSheet.create({
     // backgroundColor: Colors.primary,
     height: 40,
     borderRadius: 10,
-    marginVertical: 4,
     paddingRight: 4,
     justifyContent: 'center',
     width: '100%',

@@ -1,4 +1,9 @@
 export const SCREEN_NAME = {
+  AUTH: {
+    LOGIN: 'login-screen',
+    SIGN_UP: 'signup-screen',
+    FORGOT_PSWD: 'forgot-pswd-screen',
+  },
   DASHBOARD: 'dashboard-screen',
   MENUSCREEN: {
     ALEKH: 'alkeh-screen',

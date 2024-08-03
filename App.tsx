@@ -1,5 +1,5 @@
 import React from 'react';
-import AppNavigator from './src/Navigation';
+import AppNavigator from './src/navigation';
 // import {StyleSheet} from 'react-native';
 
 export function App() {

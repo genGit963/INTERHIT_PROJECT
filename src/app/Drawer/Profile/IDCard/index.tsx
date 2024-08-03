@@ -5,6 +5,7 @@ import ScreenTopTitle from '../../../../components/ScreenTopTitle';
 import BottomSpace from '../../../../components/BottomSpace';
 import {Colors} from '../../../../constants/Color';
 import NoIDCard from './components/NoIDCard';
+import IDCardRequestModal from './components/IdCardRequestModal';
 
 // types and interface
 type IDCardScreenProps = {} & AppScreenNavigationType;
@@ -29,7 +30,12 @@ const IDCardScreen: React.FC<IDCardScreenProps> = ({navigation}) => {
         </ScrollView>
 
         {/* Request Id Modal */}
-        {/* {isIDCardRequestModalVisible && } */}
+        {isIDCardRequestModalVisible && (
+          <IDCardRequestModal
+            isVisible={isIDCardRequestModalVisible}
+            onClose={setIDCardRequestModalVisible}
+          />
+        )}
 
         <BottomSpace spaceHeight={'5%'} />
       </SafeAreaView>
