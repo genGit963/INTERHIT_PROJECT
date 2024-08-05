@@ -194,8 +194,8 @@ export const styles = StyleSheet.create({
   FlatlistFooter: {marginBottom: '6%'},
   AddAlekhButton: {
     position: 'absolute',
-    bottom: '20%',
-    right: '2%',
+    bottom: '16%',
+    right: '1.5%',
     zIndex: 10,
     backgroundColor: 'rgba(0,0,0)',
   },

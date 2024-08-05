@@ -19,36 +19,36 @@ export const menuScreenData: MenuScreenDataInterface[] = [
   {
     Icon: AlekhSvg,
     label: 'Alekh',
-    route: SCREEN_NAME.MENUSCREEN.ALEKH,
+    route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.ALEKH,
   },
   {
     Icon: LiteratureSvg,
     label: 'Literature',
-    route: SCREEN_NAME.MENUSCREEN.LITERATURE,
+    route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.LITERATURE,
   },
   {
     Icon: GallerySvg,
     label: 'Gallery',
-    route: SCREEN_NAME.MENUSCREEN.GALLERY,
+    route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.GALLERY,
   },
   {
     Icon: KulmandirSvg,
     label: 'Kul Mandir',
-    route: SCREEN_NAME.MENUSCREEN.KULMANDIR,
+    route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.KULMANDIR,
   },
   {
     Icon: BanshaContributionSvg,
     label: 'Bansha Contribution',
-    route: SCREEN_NAME.MENUSCREEN.BANSHACONTRIBUTION,
+    route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.BANSHACONTRIBUTION,
   },
   {
     Icon: TopContributerSvg,
     label: 'Top Contributer',
-    route: SCREEN_NAME.MENUSCREEN.TOPCONTRIBUTION,
+    route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.TOPCONTRIBUTION,
   },
   {
     Icon: DownloadSvg,
     label: 'Download',
-    route: SCREEN_NAME.MENUSCREEN.DOWNLOAD,
+    route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.DOWNLOAD,
   },
 ];

@@ -1,11 +1,48 @@
 // Dashboard
 import DashboardScreen from './Dashboard';
+import {
+  AlekhScreen,
+  BanshaContribution,
+  DownloadScreen,
+  Gallery,
+  KulMandir,
+  Literature,
+  TopContribution,
+} from './Dashboard/MenuScreen';
 
-// Family
+// Contribution
+import ContributionTabScreen from './Contribution';
 
-// UserPanel
+// Genealogy
+import GenealogyTabScreen from './Genealogy';
 
-// Profile
+// Notice
+import NoticeTabScreen from './Notice';
 
-// export all app screens
-export {DashboardScreen};
+// Overview
+import OverviewTabScreen from './Overview';
+
+export const TabsScreen = {
+  dashboard: {
+    main: DashboardScreen,
+    alekh: AlekhScreen,
+    banshaContribution: BanshaContribution,
+    download: DownloadScreen,
+    gallery: Gallery,
+    kulMandir: KulMandir,
+    literatute: Literature,
+    topContribution: TopContribution,
+  },
+  genealogy: {
+    main: GenealogyTabScreen,
+  },
+  notice: {
+    main: NoticeTabScreen,
+  },
+  overview: {
+    main: OverviewTabScreen,
+  },
+  contribution: {
+    main: ContributionTabScreen,
+  },
+};
