@@ -8,6 +8,7 @@ import {
   Platform,
   Modal,
 } from 'react-native';
+
 import DatePicker from 'react-native-date-picker';
 import {Controller} from 'react-hook-form';
 import {ThemedText} from './ThemedText';
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'Poppins Regular' : 'PoppinsRegular',
   },
   requiredSymbol: {
-    color: Colors.redColor,
+    color: Colors.redMain,
     fontSize: 18,
     marginBottom: 5,
   },
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     marginVertical: -2,
   },
   errorText: {
-    color: Colors.redColor,
+    color: Colors.redMain,
     marginTop: 4,
   },
 });

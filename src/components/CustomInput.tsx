@@ -76,12 +76,12 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'Poppins Regular' : 'PoppinsRegular',
   },
   requiredSymbol: {
-    color: Colors.redColor,
+    color: Colors.redMain,
     fontSize: 18,
     marginBottom: 5,
   },
   errorText: {
-    color: Colors.redColor,
+    color: Colors.redMain,
     marginTop: 4,
   },
 });

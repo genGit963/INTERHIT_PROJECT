@@ -11,7 +11,8 @@ export type ThemedTextProps = TextProps & {
     | 'title'
     | 'semiBold'
     | 'subtitle'
-    | 'link';
+    | 'link'
+    | 'muted';
 };
 
 export function ThemedText({
@@ -33,6 +34,7 @@ export function ThemedText({
         type === 'title' ? styles.title : undefined,
         type === 'subtitle' ? styles.subtitle : undefined,
         type === 'link' ? styles.link : undefined,
+        type === 'muted' ? styles.muted : undefined,
         style,
       ]}
       {...rest}
@@ -82,5 +84,11 @@ const styles = StyleSheet.create({
     color: '#0a7ea4',
     fontFamily:
       Platform.OS === 'ios' ? 'Poppins MediumItalic' : 'PoppinsMediumItalic',
+  },
+  muted: {
+    lineHeight: 30,
+    fontSize: 14,
+    color: Colors.muteText,
+    fontFamily: Platform.OS === 'ios' ? 'Poppins Regular' : 'PoppinsRegular',
   },
 });

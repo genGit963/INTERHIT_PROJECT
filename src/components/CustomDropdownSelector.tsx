@@ -119,12 +119,12 @@ const styles = StyleSheet.create({
     color: '#151E26',
   },
   requiredSymbol: {
-    color: Colors.redColor,
+    color: Colors.redMain,
     fontSize: 18,
     marginBottom: 5,
   },
   errorText: {
-    color: Colors.redColor,
+    color: Colors.redMain,
     marginTop: 4,
   },
 });

@@ -48,7 +48,6 @@ const HeroButton: React.FC<HeroButtonProps> = ({
 
 const styles = StyleSheet.create({
   SolidButtonView: {
-    borderWidth: 1,
     backgroundColor: Colors.primary,
     height: 40,
     borderRadius: 10,
@@ -92,7 +91,7 @@ const styles = StyleSheet.create({
   WarningButtonView: {
     height: 40,
     borderRadius: 10,
-    backgroundColor: Colors.redColor,
+    backgroundColor: Colors.redMain,
     marginVertical: 16,
     alignItems: 'center',
     justifyContent: 'center',
@@ -113,12 +112,11 @@ const styles = StyleSheet.create({
   },
   CancelButtonText: {
     fontSize: 18,
-    color: Colors.redColor,
+    color: Colors.redMain,
     textAlign: 'center',
     paddingRight: 4,
   },
   DoneButtonView: {
-    // borderWidth: 1,
     // backgroundColor: Colors.primary,
     height: 40,
     borderRadius: 10,

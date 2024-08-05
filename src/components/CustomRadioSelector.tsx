@@ -90,12 +90,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   requiredSymbol: {
-    color: Colors.redColor,
+    color: Colors.redMain,
     fontSize: 18,
     marginBottom: 5,
   },
   errorText: {
-    color: Colors.redColor,
+    color: Colors.redMain,
     marginTop: 4,
   },
 });
