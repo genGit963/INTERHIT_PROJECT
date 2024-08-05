@@ -18,7 +18,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
         <ThemedText>Login Screen</ThemedText>
         <Button
           title={'Home'}
-          onPress={() => navigation.navigate(SCREEN_NAME.DASHBOARD)}
+          onPress={() => navigation.navigate(SCREEN_NAME.TABS.DASHBOARD.MAIN)}
         />
 
         <BottomSpace spaceHeight={'5%'} />

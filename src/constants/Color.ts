@@ -12,8 +12,13 @@ export const Colors = {
   tabIconDefault: '#0051BA',
   tabIconSelected: '#13378D',
   shadow: '#D7D7D7',
-  redColor: '#F6060A',
+  redMain: '#FD2424',
+  redLightest: '#FFC7C7',
+  redDark: '#9A0505',
   whiteTunedBG: '#FBFBFB', // white tuned color for card/other bg color
+  greenLightest: '#CFFFE2',
+  greenMain: '#12B76A',
+  greenDark: '#027A48',
 };
 
 export const CommunityColor = {

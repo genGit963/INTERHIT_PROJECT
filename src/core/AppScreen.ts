@@ -4,26 +4,42 @@ export const SCREEN_NAME = {
     SIGN_UP: 'signup-screen',
     FORGOT_PSWD: 'forgot-pswd-screen',
   },
-  DASHBOARD: 'dashboard-screen',
-  MENUSCREEN: {
-    ALEKH: 'alkeh-screen',
-    LITERATURE: 'Literature-screen',
-    BANSHACONTRIBUTION: 'bansha-contribution-screen',
-    DOWNLOAD: 'download-screen',
-    GALLERY: 'gallery-screen',
-    KULMANDIR: 'kulmandir-screen',
-    TOPCONTRIBUTION: 'Top-contribution-screen',
+  TABS: {
+    DASHBOARD: {
+      MAIN: 'dashboard-screen',
+      MENUSCREEN: {
+        ALEKH: 'alkeh-screen',
+        LITERATURE: 'Literature-screen',
+        BANSHACONTRIBUTION: 'bansha-contribution-screen',
+        DOWNLOAD: 'download-screen',
+        GALLERY: 'gallery-screen',
+        KULMANDIR: 'kulmandir-screen',
+        TOPCONTRIBUTION: 'Top-contribution-screen',
+      },
+    },
+    GENEALOGY: {
+      MAIN: 'genealogy-tab-screen',
+    },
+    NOTICE: {
+      MAIN: 'notice-tab-screen',
+    },
+    OVERVIEW: {
+      MAIN: 'overview-tab-screen',
+    },
+    CONTRIBUTION: {
+      MAIN: 'contribution-tab-screen',
+    },
   },
   DRAWER: {
     PROFILE: {
-      MAIN: 'profile-screen',
+      MAIN: 'profile-drawer-screen',
       PROFILE_MENU: {
-        TRANSACTION_HISTORY: 'transaction-history-screen',
-        IDCARD: 'Id-card-screen',
-        SUBSCRIPTION: 'subscription-screen',
-        MERGE_REQUEST: 'merge-request-screen',
-        CONTRIBUTION: 'profile-contribution-screen',
-        OTHER: 'profile-others-screen',
+        TRANSACTION_HISTORY: 'transaction-history-drawer-screen',
+        IDCARD: 'Id-card-drawer-screen',
+        SUBSCRIPTION: 'subscription-drawer-screen',
+        MERGE_REQUEST: 'merge-request-drawer-screen',
+        CONTRIBUTION: 'profile-contribution-drawer-screen',
+        OTHER: 'profile-others-drawer-screen',
       },
     },
   },
