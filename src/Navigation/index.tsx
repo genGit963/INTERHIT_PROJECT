@@ -3,15 +3,15 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 
 // navigation stack
-import UserNavigationStackContainer from './private/private';
 import AuthNavigationStack from './public';
+import TabNavigationStackScreen from './private/tabs';
 
 const user: boolean = true;
 
 function AppNavigator() {
   return (
     <NavigationContainer>
-      {user ? <UserNavigationStackContainer /> : <AuthNavigationStack />}
+      {user ? <TabNavigationStackScreen /> : <AuthNavigationStack />}
     </NavigationContainer>
   );
 }

@@ -6,7 +6,7 @@ import {AuthScreens} from '../../app/Auth';
 
 const Stack = createNativeStackNavigator();
 
-const AuthNavigationStack = () => {
+const AuthNavigationStackScreen = () => {
   return (
     <Stack.Navigator>
       {/* Dashboard */}
@@ -19,4 +19,4 @@ const AuthNavigationStack = () => {
   );
 };
 
-export default AuthNavigationStack;
+export default AuthNavigationStackScreen;
