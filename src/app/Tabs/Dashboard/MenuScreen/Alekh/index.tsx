@@ -15,10 +15,10 @@ import AlekhCard from './components/AlekhCard';
 import BottomSpace from '../../../../../components/BottomSpace';
 import EmptyFlatList from '../../../../../components/EmptyFlatList';
 import {Colors} from '../../../../../constants/Color';
-import AddAlekhSvg from '../../../../../assets/svg/solid-plus-circle.svg';
 import supplyShadowEffect from '../../../../../utils/Shadow';
 import AlekhAddModal from './components/AlekhAddModel';
 import {AppScreenNavigationType} from '../../../../../core/navigation-type';
+import AddAlekhSvg from '../../../../../assets/svg/solid-plus-circle.svg';
 
 // types and interface
 type AlekhScreenProps = {} & AppScreenNavigationType;
@@ -203,7 +203,7 @@ export const styles = StyleSheet.create({
     ...supplyShadowEffect({
       X_off: 0,
       Y_off: 0,
-      Radius: 10,
+      Radius: 7,
       Color: 'black',
       Opacity: 0.6,
       Elevation: 5,

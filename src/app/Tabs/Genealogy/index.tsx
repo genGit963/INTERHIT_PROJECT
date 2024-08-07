@@ -8,7 +8,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 // types and interface
 type GenealogyTabScreenProps = {} & AppScreenNavigationType;
 
-// ----------------- Subscription Screen ---------------------
+// ----------------- Genealogy Tab Screen ---------------------
 const GenealogyTabScreen: React.FC<GenealogyTabScreenProps> = ({
   navigation,
 }) => {
