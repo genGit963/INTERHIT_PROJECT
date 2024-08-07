@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 0.7,
-    fontSize: 16,
+    fontSize: Platform.OS === 'ios' ? 16 : 16,
     alignItems: 'center',
     justifyContent: 'center',
     padding: Platform.OS === 'ios' ? 0 : 0,

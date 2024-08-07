@@ -1,5 +1,7 @@
 PODS:
   - boost (1.83.0)
+  - BVLinearGradient (2.8.3):
+    - React-Core
   - DoubleConversion (1.1.6)
   - dr-pogodin-react-native-fs (2.27.1):
     - DoubleConversion
@@ -1217,13 +1219,14 @@ PODS:
     - Yoga
   - RNShare (10.2.1):
     - React-Core
-  - RNSVG (15.4.0):
+  - RNSVG (15.5.0):
     - React-Core
   - SocketRocket (0.7.0)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
+  - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - "dr-pogodin-react-native-fs (from `../node_modules/@dr.pogodin/react-native-fs`)"
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
@@ -1295,6 +1298,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
+  BVLinearGradient:
+    :path: "../node_modules/react-native-linear-gradient"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   dr-pogodin-react-native-fs:
@@ -1421,6 +1426,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
+  BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
   DoubleConversion: 76ab83afb40bddeeee456813d9c04f67f78771b5
   dr-pogodin-react-native-fs: 4915f1387ac816de2c51e346729cb9fd8d87aebc
   FBLazyVector: 7e977dd099937dc5458851233141583abba49ff2
@@ -1480,7 +1486,7 @@ SPEC CHECKSUMS:
   RNPermissions: 294531ede5a64d1528463e88fffef05675842042
   RNScreens: 5aeecbb09aa7285379b6e9f3c8a3c859bb16401c
   RNShare: 0fad69ae2d71de9d1f7b9a43acf876886a6cb99c
-  RNSVG: cb24fb322de8c1ebf59904e7aca0447bb8dbed5a
+  RNSVG: b986585e367f4a49d8aa43065066cc9c290b3d9b
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: 04f1db30bb810187397fa4c37dd1868a27af229c
 

@@ -81,9 +81,9 @@ const styles = StyleSheet.create({
   link: {
     lineHeight: 30,
     fontSize: 14,
-    color: '#0a7ea4',
-    fontFamily:
-      Platform.OS === 'ios' ? 'Poppins MediumItalic' : 'PoppinsMediumItalic',
+    color: Colors.primary,
+    textDecorationLine: 'underline',
+    fontFamily: Platform.OS === 'ios' ? 'Poppins Regular' : 'PoppinsRegular',
   },
   muted: {
     lineHeight: 30,

@@ -13,7 +13,7 @@ import MergeReqCard from './components/MergeReqCard';
 // types and interface
 type MergeRequestScreenProps = {} & AppScreenNavigationType;
 
-// ----------------- Subscription Screen ---------------------
+// ----------------- Merge Req Screen ---------------------
 const MergeRequestScreen: React.FC<MergeRequestScreenProps> = ({
   navigation,
 }) => {

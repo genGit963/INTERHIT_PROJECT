@@ -20,7 +20,7 @@ import supplyShadowEffect from '../../../../utils/Shadow';
 // types and interface
 type ProfileContributionScreenProps = {} & AppScreenNavigationType;
 
-// ----------------- Subscription Screen ---------------------
+// ----------------- Profile contribution Screen ---------------------
 const ProfileContributionScreen: React.FC<ProfileContributionScreenProps> = ({
   navigation,
 }) => {

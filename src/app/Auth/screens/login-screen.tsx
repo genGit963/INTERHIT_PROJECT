@@ -9,7 +9,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 // types and interface
 type LoginScreenProps = {} & AppScreenNavigationType;
 
-// ----------------- Subscription Screen ---------------------
+// ----------------- Login Screen ---------------------
 const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
   return (
     <View style={styles.Page}>

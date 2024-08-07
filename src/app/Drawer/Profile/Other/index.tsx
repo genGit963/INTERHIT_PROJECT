@@ -8,7 +8,7 @@ import {Colors} from '../../../../constants/Color';
 // types and interface
 type ProfileOtherScreenProps = {} & AppScreenNavigationType;
 
-// ----------------- Subscription Screen ---------------------
+// ----------------- Profile other Screen ---------------------
 const ProfileOtherScreen: React.FC<ProfileOtherScreenProps> = ({
   navigation,
 }) => {

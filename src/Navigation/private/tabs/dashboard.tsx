@@ -14,7 +14,7 @@ function DashboardTabNavigationStackScreen() {
       <DashboardStack.Screen
         name={SCREEN_NAME.TABS.DASHBOARD.MAIN}
         component={TabsScreen.dashboard.main}
-        options={{title: 'Home', headerShown: false}}
+        options={{headerShown: false}}
       />
 
       {/* Dashboard/DashboardMenu*/}

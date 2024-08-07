@@ -10,7 +10,7 @@ import IDCardRequestModal from './components/IdCardRequestModal';
 // types and interface
 type IDCardScreenProps = {} & AppScreenNavigationType;
 
-// ----------------- Subscription Screen ---------------------
+// ----------------- Id Card Screen ---------------------
 const IDCardScreen: React.FC<IDCardScreenProps> = ({navigation}) => {
   // open Id card field
   const [isIDCardRequestModalVisible, setIDCardRequestModalVisible] =
