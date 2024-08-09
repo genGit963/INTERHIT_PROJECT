@@ -1,35 +1,39 @@
-// AlekhAddModal.tsx
+// AddYogdanModal.tsx
 import React from 'react';
-import {Modal, StyleSheet, View, ScrollView, Platform} from 'react-native';
-import supplyShadowEffect from '../../../../../../utils/Shadow';
-import {ThemedText} from '../../../../../../components/ThemedText';
-import {Colors} from '../../../../../../constants/Color';
-import BottomSpace from '../../../../../../components/BottomSpace';
 import {useForm} from 'react-hook-form';
-import {zodResolver} from '@hookform/resolvers/zod';
+import {Modal, StyleSheet, View, ScrollView, Platform} from 'react-native';
 import {
-  AlekhFormDataType,
-  alekhSchema,
-} from '../../../../../../schema/tabs/dashboard/alekh.schema';
-import CustomTextInput from '../../../../../../components/CustomInput';
+  BanshaYogdanZSchema,
+  BanshaYogdanZType,
+} from '../../../../../../schema/tabs/dashboard/bansha-yogdan.schema';
+import {zodResolver} from '@hookform/resolvers/zod';
 import HeroButton from '../../../../../../components/HeroButton';
+import {ThemedText} from '../../../../../../components/ThemedText';
+import CustomTextInput from '../../../../../../components/CustomInput';
+import BottomSpace from '../../../../../../components/BottomSpace';
+import {Colors} from '../../../../../../constants/Color';
+import supplyShadowEffect from '../../../../../../utils/Shadow';
+import CustomDropdownSelector from '../../../../../../components/CustomDropdownSelector';
 
-const AlekhAddModal = ({
-  isVisible,
-  modalVisibile,
-}: {
+// types
+type AddYogdanModalProps = {
   isVisible: boolean;
   modalVisibile: (val: boolean) => void;
+};
+
+const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
+  isVisible,
+  modalVisibile,
 }) => {
   const {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm<AlekhFormDataType>({
-    resolver: zodResolver(alekhSchema),
+  } = useForm<BanshaYogdanZType>({
+    resolver: zodResolver(BanshaYogdanZSchema),
   });
 
-  const onSubmit = (data: AlekhFormDataType) => {
+  const onSubmit = (data: BanshaYogdanZType) => {
     console.log('formdata: ', data);
     modalVisibile(false);
   };
@@ -56,44 +60,48 @@ const AlekhAddModal = ({
             style={styles.ScrollContainer}
             contentContainerStyle={{}}
             showsVerticalScrollIndicator={false}>
-            <ThemedText type="subtitle">Add Alekh</ThemedText>
+            <ThemedText type="subtitle">Add Bansaj Yogdan</ThemedText>
 
             <CustomTextInput
-              name="alekhDetails"
+              name="fullName"
               control={control}
-              placeholder="Alekh Details"
-              label="Alekh Details"
+              placeholder="Eg: Ram Bahadur Gaurgain"
+              label="Name of the person"
               isRequired={true}
-              error={errors.alekhDetails}
+              error={errors.fullName}
             />
 
             <CustomTextInput
-              name="authorName"
+              name="birthPlace"
               control={control}
-              placeholder="Author Name"
-              label="Author Name"
+              placeholder="Eg: Namche, Solukhumbu"
+              label="Birth Place"
               isRequired={true}
-              error={errors.authorName}
+              error={errors.birthPlace}
             />
 
-            {/* <CustomTextInput
-              name="contributionType"
+            {/* Yogdan Type Selector */}
+            <CustomDropdownSelector
+              name="yogdanType"
               control={control}
-              placeholder="Contribution Type"
-              label="Contribution Type"
-              isRequired={true}
-              error={errors.contributionType}
-            /> */}
+              label="Yogan Type"
+              options={[
+                {label: 'Political', value: 'Political'},
+                {label: 'Social', value: 'Social'},
+                {label: 'Other', value: 'Other'},
+              ]}
+              isRequired
+            />
 
             <CustomTextInput
-              name="writeAlekh"
+              name="description"
               control={control}
-              placeholder="Write Alekh"
-              label="Write Alekh"
+              placeholder="Eg: अनुराधा कोइराला नेपालमा मानव बेचबिखन विरुद्ध र महिला संरक्षणको वकालत गर्ने गैर-लाभकारी संस्था माइती नेपालकी संस्थापक र निर्देशक हुन्...।"
+              label="Description"
               isRequired={true}
               multiline
-              style={styles.writeAlekh}
-              error={errors.writeAlekh}
+              style={styles.Description}
+              error={errors.description}
             />
 
             {/* Submit Button */}
@@ -148,7 +156,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginVertical: 30,
   },
-  writeAlekh: {height: Platform.OS === 'ios' ? 100 : 'auto'},
+  Description: {height: Platform.OS === 'ios' ? 100 : 'auto'},
 });
 
-export default AlekhAddModal;
+export default AddYogdanModal;

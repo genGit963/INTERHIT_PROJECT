@@ -161,7 +161,7 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({navigation}) => {
         {isLiteratureViewVisible && (
           <LiteratureViewModal
             isVisible={isLiteratureViewVisible}
-            onClose={handleCloseLiteratureView}
+            modalVisibile={handleCloseLiteratureView}
             data={selectedLiterature}
           />
         )}
@@ -178,7 +178,7 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({navigation}) => {
         {isLiteratureAddVisible && (
           <LiteratureAddModal
             isVisible={isLiteratureAddVisible}
-            onClose={setLiteratureAddVisible}
+            modalVisibile={setLiteratureAddVisible}
           />
         )}
 

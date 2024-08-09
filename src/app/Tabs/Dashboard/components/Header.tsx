@@ -1,21 +1,21 @@
-import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
+import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {ThemedText} from '../../../../components/ThemedText';
 import {CommunityColor} from '../../../../constants/Color';
 import NotificationSvg from '../../../../assets/svg/bell.svg';
 import NepaliFlagSvg from '../../../../assets/svg/nepali_flag.svg';
-import {AppScreenNavigationType} from '../../../../core/navigation-type';
-import {SCREEN_NAME} from '../../../../core/AppScreen';
 
-type HeaderProps = {} & AppScreenNavigationType;
+type HeaderProps = {
+  callBackDrawerVisible: (value: boolean) => void;
+};
 
-const Header: React.FC<HeaderProps> = ({navigation}) => {
+const Header: React.FC<HeaderProps> = ({callBackDrawerVisible}) => {
   return (
     <View style={styles.Container}>
       {/* to the profile */}
       <TouchableOpacity
         style={styles.Profile}
-        onPress={() => navigation.navigate(SCREEN_NAME.DRAWER.PROFILE.MAIN)}>
+        onPress={() => callBackDrawerVisible(true)}>
         <Image
           height={60}
           width={60}

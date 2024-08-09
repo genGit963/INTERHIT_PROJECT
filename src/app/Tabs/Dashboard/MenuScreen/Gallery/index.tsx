@@ -63,7 +63,7 @@ const Gallery: React.FC<GalleryScreenProps> = ({navigation}) => {
           <GallaryViewModal
             isVisible={isGallaryModalVisible}
             data={selectedGallary}
-            onClose={handleCloseGallaryModal}
+            modalVisibile={handleCloseGallaryModal}
           />
         )}
       </SafeAreaView>

@@ -122,7 +122,7 @@ const MandirScreen: React.FC<MandirScreenProps> = ({navigation}) => {
         {isMandirViewVisible && (
           <MandirViewModal
             isVisible={isMandirViewVisible}
-            onClose={handleCloseMandirView}
+            modalVisibile={handleCloseMandirView}
             data={selectedMandir}
           />
         )}

@@ -1,6 +1,6 @@
 // LiteratureAddModal.tsx
 import React from 'react';
-import {Modal, StyleSheet, View, Alert, ScrollView} from 'react-native';
+import {Modal, StyleSheet, View, ScrollView} from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
 import {ThemedText} from '../../../../../../components/ThemedText';
 import {Colors} from '../../../../../../constants/Color';
@@ -17,10 +17,10 @@ import HeroButton from '../../../../../../components/HeroButton';
 
 const LiteratureAddModal = ({
   isVisible,
-  onClose,
+  modalVisibile,
 }: {
   isVisible: boolean;
-  onClose: (val: boolean) => void;
+  modalVisibile: (val: boolean) => void;
 }) => {
   const {
     control,
@@ -32,7 +32,7 @@ const LiteratureAddModal = ({
 
   const onSubmit = (data: LiteratureSchemaType) => {
     console.log('formdata: ', data);
-    onClose(false);
+    modalVisibile(false);
   };
 
   return (
@@ -41,7 +41,7 @@ const LiteratureAddModal = ({
       transparent={true}
       visible={isVisible}
       onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
+        modalVisibile(false);
       }}>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
@@ -49,7 +49,7 @@ const LiteratureAddModal = ({
           <HeroButton
             btnText="Cancel"
             varient="cancel"
-            onPress={() => onClose(false)}
+            onPress={() => modalVisibile(false)}
           />
 
           {/* Content View */}

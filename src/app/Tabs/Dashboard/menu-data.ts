@@ -38,7 +38,7 @@ export const menuScreenData: MenuScreenDataInterface[] = [
   },
   {
     Icon: BanshaContributionSvg,
-    label: 'Bansha Contribution',
+    label: 'Bansha Yogdan',
     route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.BANSHACONTRIBUTION,
   },
   {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, StyleSheet, View, Alert, ScrollView, Image} from 'react-native';
+import {Modal, StyleSheet, View, ScrollView, Image} from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
 
 import {LiteratureInterface} from '..';
@@ -10,11 +10,11 @@ import HeroButton from '../../../../../../components/HeroButton';
 
 const LiteratureViewModal = ({
   isVisible,
-  onClose,
+  modalVisibile,
   data,
 }: {
   isVisible: boolean;
-  onClose: () => void;
+  modalVisibile: () => void;
   data: LiteratureInterface | undefined;
 }) => {
   //   console.log(data);
@@ -23,13 +23,11 @@ const LiteratureViewModal = ({
       animationType="slide"
       transparent={true}
       visible={isVisible}
-      onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
-      }}>
+      onRequestClose={modalVisibile}>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
           {/* done btn */}
-          <HeroButton btnText="Done" varient="done" onPress={onClose} />
+          <HeroButton btnText="Done" varient="done" onPress={modalVisibile} />
 
           {/* Content View */}
           <ScrollView

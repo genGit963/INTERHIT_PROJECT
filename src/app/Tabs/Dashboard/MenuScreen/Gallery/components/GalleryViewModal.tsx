@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, StyleSheet, View, Alert, ScrollView, Image} from 'react-native';
+import {Modal, StyleSheet, View, ScrollView, Image} from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
 
 import {ThemedText} from '../../../../../../components/ThemedText';
@@ -10,11 +10,11 @@ import HeroButton from '../../../../../../components/HeroButton';
 
 const GallaryViewModal = ({
   isVisible,
-  onClose,
+  modalVisibile,
   data,
 }: {
   isVisible: boolean;
-  onClose: () => void;
+  modalVisibile: () => void;
   data: GalleryAPIInterface | undefined;
 }) => {
   return (
@@ -22,13 +22,11 @@ const GallaryViewModal = ({
       animationType="slide"
       transparent={true}
       visible={isVisible}
-      onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
-      }}>
+      onRequestClose={modalVisibile}>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
           {/* done model */}
-          <HeroButton btnText="Done" varient="done" onPress={onClose} />
+          <HeroButton btnText="Done" varient="done" onPress={modalVisibile} />
 
           {/* title */}
           <ThemedText type="mediumBold" style={styles.Title}>

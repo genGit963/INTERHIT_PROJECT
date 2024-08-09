@@ -139,7 +139,7 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
         {isAlekhViewVisible && (
           <AlekhViewModal
             isVisible={isAlekhViewVisible}
-            onClose={handleCloseAlekhView}
+            modalVisibile={handleCloseAlekhView}
             data={selectedAlekh}
           />
         )}
@@ -156,7 +156,7 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
         {isAlekhAddVisible && (
           <AlekhAddModal
             isVisible={isAlekhAddVisible}
-            onClose={setAlekhAddVisible}
+            modalVisibile={setAlekhAddVisible}
           />
         )}
 

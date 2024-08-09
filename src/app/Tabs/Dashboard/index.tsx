@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Image, Platform, SafeAreaView, StyleSheet, View} from 'react-native';
 import Header from './components/Header';
 import Caursol from './components/Caursol';
@@ -7,12 +7,16 @@ import DashboardMenuCompoent from './components/DashboardMenu';
 
 import {ParamListBase} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import DrawerModal from '../../../components/Drawer';
 
 type DashboardScreenProps = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
 const DashboardScreen: React.FC<DashboardScreenProps> = ({navigation}) => {
+  // handle DrawerModal
+  const [isDrawerModalVisible, setDrawerModalVisible] =
+    useState<boolean>(false);
   return (
     <View style={styles.Page}>
       <Image
@@ -21,7 +25,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({navigation}) => {
       />
       <SafeAreaView>
         {/* header */}
-        <Header navigation={navigation} />
+        <Header callBackDrawerVisible={setDrawerModalVisible} />
 
         {/* caursol */}
         <Caursol />
@@ -36,6 +40,14 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({navigation}) => {
         {/*Banshawali*/}
         <DashboardMenuCompoent navigation={navigation} />
       </SafeAreaView>
+
+      {isDrawerModalVisible && (
+        <DrawerModal
+          navigation={navigation}
+          isVisible={isDrawerModalVisible}
+          modalVisibile={setDrawerModalVisible}
+        />
+      )}
       <Image
         source={require('../../../assets/images/Ellipse.png')}
         style={styles.BottomBG}
