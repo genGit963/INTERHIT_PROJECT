@@ -55,7 +55,9 @@ function DashboardTabNavigationStackScreen() {
         options={{headerShown: false}}
       />
 
-      {/* For now Putting Drawer screens here  */}
+      {/* Drawer screens here  */}
+
+      {/* ------------------ Profile Navigation ------------------ */}
       <DashboardStack.Screen
         name={SCREEN_NAME.DRAWER.PROFILE.MAIN}
         component={DrawerScreens.profile.main}
@@ -89,6 +91,71 @@ function DashboardTabNavigationStackScreen() {
       <DashboardStack.Screen
         name={SCREEN_NAME.DRAWER.PROFILE.PROFILE_MENU.OTHER}
         component={DrawerScreens.profile.ProfileOther}
+        options={{headerShown: false}}
+      />
+
+      {/* ------------------ Settings Navigation ------------------ */}
+      <DashboardStack.Screen
+        name={SCREEN_NAME.DRAWER.SETTING.MAIN}
+        component={DrawerScreens.Setting.main}
+        options={{headerShown: false}}
+      />
+
+      {/* ------------------ Commitee Navigation ------------------ */}
+      <DashboardStack.Screen
+        name={SCREEN_NAME.DRAWER.COMMITTEE.BANSHAWALI_COMMITTEE}
+        component={DrawerScreens.Committee.banshawaliCommittee}
+        options={{headerShown: false}}
+      />
+      <DashboardStack.Screen
+        name={SCREEN_NAME.DRAWER.COMMITTEE.CENTRAL_COMMITTEE}
+        component={DrawerScreens.Committee.centralCommittee}
+        options={{headerShown: false}}
+      />
+      <DashboardStack.Screen
+        name={SCREEN_NAME.DRAWER.COMMITTEE.DISTRICT_COMMITTEE}
+        component={DrawerScreens.Committee.districtCommittee}
+        options={{headerShown: false}}
+      />
+      <DashboardStack.Screen
+        name={SCREEN_NAME.DRAWER.COMMITTEE.COMMITTEE_HISTORY}
+        component={DrawerScreens.Committee.committeeHistory}
+        options={{headerShown: false}}
+      />
+      <DashboardStack.Screen
+        name={SCREEN_NAME.DRAWER.COMMITTEE.FINANCE_COMMITTEE}
+        component={DrawerScreens.Committee.financeCommittee}
+        options={{headerShown: false}}
+      />
+      <DashboardStack.Screen
+        name={SCREEN_NAME.DRAWER.COMMITTEE.PROVINCE_COMMITTEE}
+        component={DrawerScreens.Committee.provinceCommittee}
+        options={{headerShown: false}}
+      />
+      <DashboardStack.Screen
+        name={SCREEN_NAME.DRAWER.COMMITTEE.SADHASHYA_MEMBER}
+        component={DrawerScreens.Committee.sadhashyaMember}
+        options={{headerShown: false}}
+      />
+      {/* ------------------ About US Navigation ------------------ */}
+      <DashboardStack.Screen
+        name={SCREEN_NAME.DRAWER.ABOUT_US.ABOUT_ORGANIZATION}
+        component={DrawerScreens.AboutUs.aboutOrganization}
+        options={{headerShown: false}}
+      />
+      <DashboardStack.Screen
+        name={SCREEN_NAME.DRAWER.ABOUT_US.CHAIRMAN_MESSAGE}
+        component={DrawerScreens.AboutUs.chairmanMessage}
+        options={{headerShown: false}}
+      />
+      <DashboardStack.Screen
+        name={SCREEN_NAME.DRAWER.ABOUT_US.EDITOR_MESSAGE}
+        component={DrawerScreens.AboutUs.editorMessage}
+        options={{headerShown: false}}
+      />
+      <DashboardStack.Screen
+        name={SCREEN_NAME.DRAWER.ABOUT_US.WELL_WISHES}
+        component={DrawerScreens.AboutUs.wellWishes}
         options={{headerShown: false}}
       />
     </DashboardStack.Navigator>

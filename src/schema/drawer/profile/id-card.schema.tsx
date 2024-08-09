@@ -1,7 +1,7 @@
 // IdCardSchema.ts
 import * as z from 'zod';
 
-export const IdCardSchema = z.object({
+export const IdCardZSchema = z.object({
   fullName: z.string().min(1, {message: 'Full Name is required'}),
   dateOfBirth: z.string().min(1, {message: 'Date of Birth is required'}),
   birthPlace: z.string().min(1, {message: 'Birth Place is required'}),
@@ -17,4 +17,4 @@ export const IdCardSchema = z.object({
   organizationalPost: z.string().optional(),
 });
 
-export type IdCardSchemaType = z.infer<typeof IdCardSchema>;
+export type IdCardZType = z.infer<typeof IdCardZSchema>;

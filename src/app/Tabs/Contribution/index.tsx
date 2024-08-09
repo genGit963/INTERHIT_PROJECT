@@ -9,7 +9,7 @@ import {
 import {AppScreenNavigationType} from '../../../core/navigation-type';
 import ScreenTopTitle from '../../../components/ScreenTopTitle';
 import BottomSpace from '../../../components/BottomSpace';
-import {SoceityContributionDummyData} from '../../../schema/tabs/dashboard/contribution/contributions.schema';
+import {SoceityContributionDummyData} from '../../../schema/tabs/contribution/contributions.schema';
 import EmptyFlatList from '../../../components/EmptyFlatList';
 import ContributionCard from './components/SContributionCard';
 import {Colors} from '../../../constants/Color';
@@ -25,7 +25,7 @@ const ContributionTabScreen: React.FC<ContributionTabScreenProps> = ({
   navigation,
 }) => {
   // search
-  const [searchText, setSearchText] = useState<SearchType>({searchText: ''});
+  const [searchText, setSearchText] = useState<SearchType['searchText']>('');
   console.log('searchText contribution: ', searchText);
 
   // contribution QR modal
@@ -73,7 +73,7 @@ const ContributionTabScreen: React.FC<ContributionTabScreenProps> = ({
       {isContributionAddQRVisible && (
         <SoceityContributionQRModal
           isVisible={isContributionAddQRVisible}
-          onClose={setContributionAddQRVisible}
+          modalVisibile={setContributionAddQRVisible}
           data={JSON.stringify({
             bankName: 'Nabil Bank',
             accountName: 'Godar Thapa Donation',

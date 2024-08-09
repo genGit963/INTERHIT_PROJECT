@@ -41,7 +41,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
           {isQRModalVisible && (
             <ShowMyQRModal
               isVisible={isQRModalVisible}
-              onClose={setQRModalVisible}
+              modalVisibile={setQRModalVisible}
               data={JSON.stringify({
                 Name: 'Mahesh Bogati',
                 BankAccount: '92309202394024902342',

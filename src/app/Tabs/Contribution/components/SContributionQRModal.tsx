@@ -3,7 +3,6 @@ import {
   Modal,
   StyleSheet,
   View,
-  Alert,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
@@ -16,11 +15,11 @@ import {ThemedText} from '../../../../components/ThemedText';
 
 const SoceityContributionQRModal = ({
   isVisible,
-  onClose,
+  modalVisibile,
   data,
 }: {
   isVisible: boolean;
-  onClose: (val: boolean) => void;
+  modalVisibile: (val: boolean) => void;
   data: string;
 }) => {
   const jsonData = JSON.parse(data);
@@ -30,7 +29,7 @@ const SoceityContributionQRModal = ({
       transparent={true}
       visible={isVisible}
       onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
+        modalVisibile(false);
       }}>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
@@ -38,7 +37,7 @@ const SoceityContributionQRModal = ({
           <HeroButton
             btnText="Done"
             varient="done"
-            onPress={() => onClose(false)}
+            onPress={() => modalVisibile(false)}
           />
 
           {/* QR View */}

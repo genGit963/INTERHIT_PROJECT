@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
-import {SoceityContributionInterface} from '../../../../schema/tabs/dashboard/contribution/contributions.schema';
+import {SoceityContributionInterface} from '../../../../schema/tabs/contribution/contributions.schema';
 import {ThemedText} from '../../../../components/ThemedText';
 import {Colors} from '../../../../constants/Color';
 

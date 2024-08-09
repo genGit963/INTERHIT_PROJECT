@@ -1,9 +1,14 @@
+// This dropdown is especially for input or form selector
+
 import React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {Controller} from 'react-hook-form';
 import SelectDropdown from 'react-native-select-dropdown';
 import {ThemedText} from './ThemedText';
 import {Colors} from '../constants/Color';
+
+// svg
+import DropDownSvg from '../assets/svg/chevron-right.svg';
 
 interface CustomDropdownSelectorProps {
   name: string;
@@ -41,7 +46,12 @@ const CustomDropdownSelector: React.FC<CustomDropdownSelectorProps> = ({
                     {(selectedItem && selectedItem.label) || 'Select an option'}
                   </ThemedText>
                   <ThemedText style={styles.dropdownButtonArrowStyle}>
-                    {isOpened ? '▲' : '▼'} {/* Placeholder arrow */}
+                    {isOpened ? (
+                      <DropDownSvg style={styles.DDSvgOpen} />
+                    ) : (
+                      <DropDownSvg />
+                    )}
+                    {/* Placeholder arrow */}
                   </ThemedText>
                 </View>
               )}
@@ -78,13 +88,13 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginBottom: 4,
-    color: '#000',
+    color: Colors.text,
   },
   dropdownButtonStyle: {
     width: '100%',
     height: 50,
     backgroundColor: Colors.whiteTunedBG,
-    borderRadius: 12,
+    borderRadius: 10,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -101,11 +111,13 @@ const styles = StyleSheet.create({
     color: '#151E26',
   },
   dropdownMenuStyle: {
-    backgroundColor: '#E9ECEF',
+    backgroundColor: Colors.whiteTunedBG,
     borderRadius: 8,
   },
   dropdownItemStyle: {
     width: '100%',
+    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.muteGray,
     flexDirection: 'row',
     paddingHorizontal: 12,
     justifyContent: 'center',
@@ -117,6 +129,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     color: '#151E26',
+  },
+  DDSvgOpen: {
+    transform: [{rotate: '180deg'}],
   },
   requiredSymbol: {
     color: Colors.redMain,

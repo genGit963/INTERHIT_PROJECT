@@ -17,12 +17,12 @@ import {
 
 type ContributionFormModalProps = {
   isVisible: boolean;
-  onClose: (val: boolean) => void;
+  modalVisibile: (val: boolean) => void;
 };
 
 const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
   isVisible,
-  onClose,
+  modalVisibile,
 }) => {
   const {
     control,
@@ -34,7 +34,7 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
 
   const onSubmit = (data: ContributionClaimType) => {
     console.log('contribution data: ', data);
-    onClose(false);
+    modalVisibile(false);
   };
 
   return (
@@ -43,7 +43,16 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
       transparent={true}
       visible={isVisible}
       onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
+        Alert.alert('Contribution Claim Form', 'Are you sure want to cancel?', [
+          {
+            text: 'Yes',
+            onPress: () => modalVisibile(false),
+          },
+          {
+            text: 'No',
+            onPress: () => {},
+          },
+        ]);
       }}>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
@@ -51,7 +60,7 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
           <HeroButton
             btnText="Cancel"
             varient="cancel"
-            onPress={() => onClose(false)}
+            onPress={() => modalVisibile(false)}
           />
           {/* form title */}
           <ThemedText type="subtitle" style={styles.FormTitle}>

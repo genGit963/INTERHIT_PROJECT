@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     backgroundColor: Colors.whiteTunedBG,
-    borderRadius: 5,
+    borderRadius: 10,
     padding: 10,
     fontSize: 15,
     fontFamily: Platform.OS === 'ios' ? 'Poppins Regular' : 'PoppinsRegular',

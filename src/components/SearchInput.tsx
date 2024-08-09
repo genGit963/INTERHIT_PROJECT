@@ -23,7 +23,7 @@ export type SearchType = z.infer<typeof SearchSchema>;
 
 interface SearchProps extends TextInputProps {
   placeHolder: string;
-  callBackSetSearchValue: (val: SearchType) => void;
+  callBackSetSearchValue: (val: SearchType['searchText']) => void;
 }
 
 const SearchInput: React.FC<SearchProps> = ({
@@ -41,8 +41,8 @@ const SearchInput: React.FC<SearchProps> = ({
   });
 
   const onSubmit = (data: SearchType) => {
-    // console.log('id card: ', data);
-    callBackSetSearchValue(data);
+    // console.log('search text: ', data);
+    callBackSetSearchValue(data.searchText);
   };
   return (
     <View style={styles.SearchContainer}>

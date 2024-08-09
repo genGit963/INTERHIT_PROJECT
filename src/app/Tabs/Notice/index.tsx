@@ -11,7 +11,7 @@ type NoticeTabScreenProps = {} & AppScreenNavigationType;
 
 // ----------------- Notice Tab Screen ---------------------
 const NoticeTabScreen: React.FC<NoticeTabScreenProps> = ({navigation}) => {
-  const [searchText, setSearchText] = useState<SearchType>({searchText: ''});
+  const [searchText, setSearchText] = useState<SearchType['searchText']>('');
   console.log('searchText notice: ', searchText);
   return (
     <View style={styles.Page}>

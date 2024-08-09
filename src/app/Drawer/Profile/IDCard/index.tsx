@@ -33,7 +33,7 @@ const IDCardScreen: React.FC<IDCardScreenProps> = ({navigation}) => {
         {isIDCardRequestModalVisible && (
           <IDCardRequestModal
             isVisible={isIDCardRequestModalVisible}
-            onClose={setIDCardRequestModalVisible}
+            modalVisibile={setIDCardRequestModalVisible}
           />
         )}
 

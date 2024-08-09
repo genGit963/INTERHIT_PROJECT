@@ -4,7 +4,7 @@ export const Colors = {
   lightBlack: '#2A2424',
   text: '#000000',
   misText: '#fff', //use for solid color bg
-  muteText: '#9E9EA1',
+  muteText: 'gray',
   background: '#EEEEFA',
   screenBackground: '#EEEEFA',
   tabIconDefault: '#0051BA',

@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {Modal, StyleSheet, View, Alert, ScrollView} from 'react-native';
+import {Modal, StyleSheet, View, ScrollView} from 'react-native';
 import HeroButton from '../../../../components/HeroButton';
 import BottomSpace from '../../../../components/BottomSpace';
 import GenerateQR from '../../../../utils/generateQR';
@@ -9,11 +9,11 @@ import {shareQRCode} from '../../../../utils/shareQR';
 
 const ShowMyQRModal = ({
   isVisible,
-  onClose,
+  modalVisibile,
   data,
 }: {
   isVisible: boolean;
-  onClose: (val: boolean) => void;
+  modalVisibile: (val: boolean) => void;
   data: string;
 }) => {
   const qrRef = useRef<View>(null);
@@ -28,7 +28,7 @@ const ShowMyQRModal = ({
       transparent={true}
       visible={isVisible}
       onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
+        modalVisibile(false);
       }}>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
@@ -36,7 +36,7 @@ const ShowMyQRModal = ({
           <HeroButton
             btnText="Done"
             varient="done"
-            onPress={() => onClose(false)}
+            onPress={() => modalVisibile(false)}
           />
 
           {/* QR View */}

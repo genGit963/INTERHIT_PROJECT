@@ -56,7 +56,7 @@ const ProfileContributionScreen: React.FC<ProfileContributionScreenProps> = ({
         {isContributionFormModalVisible && (
           <ContributionFormModal
             isVisible={isContributionFormModalVisible}
-            onClose={setContributionFormModalVisible}
+            modalVisibile={setContributionFormModalVisible}
           />
         )}
 

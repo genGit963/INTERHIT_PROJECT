@@ -11,7 +11,6 @@ const BottomSpace: React.FC<BottomSpaceProps> = ({spaceHeight}) => {
       marginVertical: 5,
       height: spaceHeight,
       width: '100%',
-      // borderWidth: 1,
     },
   });
   return <View style={styles.Divider} />;

@@ -1,14 +1,10 @@
 // IDCardRequestModal.tsx
 import React from 'react';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {Modal, ScrollView, StyleSheet, View, Alert} from 'react-native';
+import {Modal, ScrollView, StyleSheet, View} from 'react-native';
 import {useForm} from 'react-hook-form';
-import {
-  IdCardSchema,
-  IdCardSchemaType,
-} from '../../../../../schema/drawer/profile/id-card.schema';
 import CustomTextInput from '../../../../../components/CustomInput';
-import CustomDatePicker from '../../../../../components/CustomDatePicker';
+// import CustomDatePicker from '../../../../../components/CustomDatePicker';
 import HeroButton from '../../../../../components/HeroButton';
 import supplyShadowEffect from '../../../../../utils/Shadow';
 import {Colors} from '../../../../../constants/Color';
@@ -16,27 +12,31 @@ import CustomDropdownSelector from '../../../../../components/CustomDropdownSele
 import CustomRadioSelector from '../../../../../components/CustomRadioSelector';
 import BottomSpace from '../../../../../components/BottomSpace';
 import {ThemedText} from '../../../../../components/ThemedText';
+import {
+  IdCardZSchema,
+  IdCardZType,
+} from '../../../../../schema/drawer/profile/id-card.schema';
 
 type IDCardRequestModalProps = {
   isVisible: boolean;
-  onClose: (val: boolean) => void;
+  modalVisibile: (val: boolean) => void;
 };
 
 const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
   isVisible,
-  onClose,
+  modalVisibile,
 }) => {
   const {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm<IdCardSchemaType>({
-    resolver: zodResolver(IdCardSchema),
+  } = useForm<IdCardZType>({
+    resolver: zodResolver(IdCardZSchema),
   });
 
-  const onSubmit = (data: IdCardSchemaType) => {
+  const onSubmit = (data: IdCardZType) => {
     console.log('id card: ', data);
-    onClose(false);
+    modalVisibile(false);
   };
 
   return (
@@ -45,7 +45,7 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
       transparent={true}
       visible={isVisible}
       onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
+        modalVisibile(false);
       }}>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
@@ -53,7 +53,7 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
           <HeroButton
             btnText="Cancel"
             varient="cancel"
-            onPress={() => onClose(false)}
+            onPress={() => modalVisibile(false)}
           />
           {/* form title */}
           <ThemedText type="subtitle" style={styles.FormTitle}>
@@ -70,11 +70,21 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
               error={errors.fullName}
             />
 
-            <CustomDatePicker
+            {/* <CustomDatePicker
               name="dateOfBirth"
               control={control}
               label="Date of Birth"
               isRequired
+            /> */}
+
+            {/* date of birth */}
+            <CustomTextInput
+              name="dateOfBirth"
+              control={control}
+              label="Date of Birth"
+              placeholder="Eg: 2078/01/20"
+              isRequired
+              error={errors.dateOfBirth}
             />
 
             <CustomTextInput
@@ -159,6 +169,7 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
               control={control}
               label="Ward No."
               isRequired
+              error={errors.wardNo}
             />
 
             <CustomTextInput
@@ -167,12 +178,14 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
               label="Contact"
               isRequired
               keyboardType="phone-pad"
+              error={errors.contact}
             />
 
             <CustomTextInput
               name="organizationalPost"
               control={control}
               label="Organizational Post"
+              error={errors.organizationalPost}
             />
 
             {/* Submit Button */}
