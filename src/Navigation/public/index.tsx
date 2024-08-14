@@ -13,7 +13,18 @@ const AuthNavigationStackScreen = () => {
       <Stack.Screen
         name={SCREEN_NAME.AUTH.LOGIN}
         component={AuthScreens.login}
-        options={{title: 'Login', headerShown: false}}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={SCREEN_NAME.AUTH.SIGN_UP}
+        component={AuthScreens.signup}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name={SCREEN_NAME.AUTH.FORGOT_PSWD}
+        component={AuthScreens.forgotPswd}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

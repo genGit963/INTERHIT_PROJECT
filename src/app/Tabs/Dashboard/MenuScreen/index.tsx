@@ -14,7 +14,7 @@ import Gallery from './Gallery';
 import KulMandir from './KulthaMandir';
 
 // Literature
-import Literature from './Literature ';
+import Literature from './Literature';
 
 // TopContribution
 import TopContribution from './TopContribution';

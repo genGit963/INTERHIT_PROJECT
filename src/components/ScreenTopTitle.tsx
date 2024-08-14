@@ -1,15 +1,13 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {ParamListBase} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 import {ThemedText} from './ThemedText';
 import GoBackSvg from '../assets/svg/left-arrow.svg';
+import {AppScreenNavigationType} from '../core/navigation-type';
 
 type ScreenTopTitleProps = {
-  navigation: NativeStackNavigationProp<ParamListBase>;
   screenTitle: string;
-};
+} & AppScreenNavigationType;
 
 const ScreenTopTitle: React.FC<ScreenTopTitleProps> = ({
   navigation,

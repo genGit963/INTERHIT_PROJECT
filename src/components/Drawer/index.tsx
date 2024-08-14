@@ -13,6 +13,7 @@ import {SCREEN_NAME} from '../../core/AppScreen';
 import DrawerBarBtn from './DrawerBarButton';
 import {stylesDC} from './Drawer.stylesheet';
 import {aboutUsOptionsData, committeeOptionsData} from './drawer-data';
+import RNRestart from 'react-native-restart';
 
 // svg
 import ProfileSvg from '../../assets/svg/user.svg';
@@ -30,6 +31,7 @@ import PrivacypolicySvg from '../../assets/svg/shield.svg';
 import HelpFAQsSvg from '../../assets/svg/help-circle.svg';
 import TermsConditionsSvg from '../../assets/svg/file-text.svg';
 import UserDrawerView from './UserDrawerView';
+import {asyncRemoveData} from '../../core/AsyncStorage';
 
 // type
 type DrawerModalProps = {
@@ -49,6 +51,12 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
 
   // isAboutUsGrpVisible
   const [isAboutUsGrpVisible, setAboutUsGrpVisible] = useState<boolean>(false);
+
+  // handle Logout
+  const handleLogout = async () => {
+    console.log('Do log out !');
+    await asyncRemoveData('USER').then(() => RNRestart.restart());
+  };
   return (
     <Modal
       animationType="slide"
@@ -208,9 +216,7 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
           </View>
           <View style={stylesDC.LogoutAndSocialView}>
             {/* Log out button */}
-            <TouchableOpacity
-              style={stylesDC.LogOutBtn}
-              onPress={() => console.log('Do log out !')}>
+            <TouchableOpacity style={stylesDC.LogOutBtn} onPress={handleLogout}>
               <LogOutSvg height={24} width={24} />
               <ThemedText type="mediumBold" style={stylesDC.LogOutText}>
                 Log Out
