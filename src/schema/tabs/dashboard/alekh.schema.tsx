@@ -1,6 +1,6 @@
 import {z} from 'zod';
 
-export const alekhSchema = z.object({
+export const AlekhZSchema = z.object({
   alekhDetails: z.string().min(1, {message: 'Alekh Details are required'}),
   authorName: z.string().min(1, {message: 'Author Name is required'}),
   //   contributionType: z
@@ -9,4 +9,4 @@ export const alekhSchema = z.object({
   writeAlekh: z.string().min(1, {message: 'Write Alekh is required'}),
 });
 
-export type AlekhFormDataType = z.infer<typeof alekhSchema>;
+export type AlekhZType = z.infer<typeof AlekhZSchema>;

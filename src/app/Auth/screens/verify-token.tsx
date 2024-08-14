@@ -7,17 +7,6 @@ import {
   View,
 } from 'react-native';
 import {AppScreenNavigationType} from '../../../core/navigation-type';
-import {ThemedText} from '../../../components/ThemedText';
-import AuthScreenTop from '../components/AuthScreenTop';
-import {Colors} from '../../../constants/Color';
-import HeroButton from '../../../components/HeroButton';
-import {SCREEN_NAME} from '../../../core/AppScreen';
-import FlexImgSvg from '../../../assets/svg/auth-rprst.svg';
-import CustomTextInput from '../../../components/CustomInput';
-import {useForm} from 'react-hook-form';
-import {SignupZschema, SignupZType} from '../../../schema/auth';
-import {zodResolver} from '@hookform/resolvers/zod';
-import CustomDropdownSelector from '../../../components/CustomDropdownSelector';
 
 // types and interface
 type SignUpScreenProps = {} & AppScreenNavigationType;

@@ -18,7 +18,6 @@ import CustomTextInput from '../../../components/CustomInput';
 import {zodResolver} from '@hookform/resolvers/zod';
 import FlexImgSvg from '../../../assets/svg/auth-rprst.svg';
 import {useLogin} from '../../../hooks/auth/login-hook';
-import {Toast} from 'toastify-react-native';
 import RNRestart from 'react-native-restart';
 
 type LoginScreenProps = {} & AppScreenNavigationType;
@@ -37,7 +36,6 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
   const onSubmit = async (data: LoginZType) => {
     await handleLogin(data).then(() => {
       RNRestart.restart();
-      Toast.success('Login successfull !!');
     });
   };
 
@@ -98,7 +96,6 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
             <ThemedText>Don't have an Account ? </ThemedText>
             <TouchableOpacity
               onPress={() => {
-                Toast.info('Processing Log in !!', 'top');
                 navigation.navigate(SCREEN_NAME.AUTH.SIGN_UP);
               }}>
               <ThemedText type="link">Sign up</ThemedText>

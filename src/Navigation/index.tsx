@@ -1,7 +1,6 @@
 // In App.js in a new project
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import ToastManager from 'toastify-react-native';
 
 // navigation stack
 import AuthNavigationStack from './public';
@@ -23,7 +22,6 @@ function AppNavigator() {
   }, []);
   return (
     <NavigationContainer>
-      <ToastManager />
       {user ? <TabNavigationStackScreen /> : <AuthNavigationStack />}
     </NavigationContainer>
   );

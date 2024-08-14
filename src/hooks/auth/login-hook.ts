@@ -17,6 +17,7 @@ export const useLogin = () => {
       await AUTH_SERVICE.login(loginData).then(async (Response) => {
         // storing to AsyncStorage
         await asyncStoreData('USER', JSON.stringify(Response.data));
+        await asyncStoreData('TOKEN', Response.data.accessToken);
       });
     } catch (err) {
       setError('Login Failed!');

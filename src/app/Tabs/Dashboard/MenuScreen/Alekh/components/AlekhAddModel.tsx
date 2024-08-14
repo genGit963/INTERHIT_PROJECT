@@ -8,8 +8,8 @@ import BottomSpace from '../../../../../../components/BottomSpace';
 import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {
-  AlekhFormDataType,
-  alekhSchema,
+  AlekhZType,
+  AlekhZSchema,
 } from '../../../../../../schema/tabs/dashboard/alekh.schema';
 import CustomTextInput from '../../../../../../components/CustomInput';
 import HeroButton from '../../../../../../components/HeroButton';
@@ -25,11 +25,11 @@ const AlekhAddModal = ({
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm<AlekhFormDataType>({
-    resolver: zodResolver(alekhSchema),
+  } = useForm<AlekhZType>({
+    resolver: zodResolver(AlekhZSchema),
   });
 
-  const onSubmit = (data: AlekhFormDataType) => {
+  const onSubmit = (data: AlekhZType) => {
     console.log('formdata: ', data);
     modalVisibile(false);
   };

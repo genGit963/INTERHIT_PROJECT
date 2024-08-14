@@ -131,3 +131,11 @@ export interface LoginResponeInterface {
     verified: boolean;
   };
 }
+
+// "name": "John Doe",
+// "phone": "1234567890",
+// "email": "john.doe@example.com",
+// "province": "गण्डकी प्रदेश",
+// "district": "District",
+// "password": "Password1!",
+// "referral": "referral_code"

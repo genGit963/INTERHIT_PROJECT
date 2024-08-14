@@ -8,9 +8,6 @@ const AUTH_SERVICE = {
       url: '/auth/signin',
       method: 'POST',
       data: loginData,
-      headers: {
-        Accept: 'application/json',
-      },
     });
   },
 
@@ -19,9 +16,6 @@ const AUTH_SERVICE = {
       url: '/auth/signup',
       method: 'POST',
       data: signupData,
-      headers: {
-        Accept: 'application/json',
-      },
     });
   },
 };
