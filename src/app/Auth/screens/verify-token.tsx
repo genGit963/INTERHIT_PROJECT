@@ -1,34 +1,36 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {AppScreenNavigationType} from '../../../core/navigation-type';
+import ScreenTopTitle from '../../../components/ScreenTopTitle';
+import {VerifyTokenZSchema, VerifyTokenZType} from '../../../schema/auth';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {ThemedText} from '../../../components/ThemedText';
+import CustomTextInput from '../../../components/CustomInput';
+import HeroButton from '../../../components/HeroButton';
+import {Colors} from '../../../constants/Color';
 
 // types and interface
-type SignUpScreenProps = {} & AppScreenNavigationType;
+type VerifyOTPScreenProps = {} & AppScreenNavigationType;
 
 // ----------------- Sign up Screen ---------------------
-const SignUpScreen: React.FC<SignUpScreenProps> = ({navigation}) => {
+const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({navigation}) => {
   const {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm<SignupZType>({
-    resolver: zodResolver(SignupZschema),
+  } = useForm<VerifyTokenZType>({
+    resolver: zodResolver(VerifyTokenZSchema),
   });
 
-  const onSubmit = async (data: SignupZType) => {
+  const onSubmit = async (data: VerifyTokenZType) => {
     console.log('sign up data: ', data);
   };
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Screen Top */}
-        <AuthScreenTop screenTitle={'Signup'} />
+        <ScreenTopTitle screenTitle={'Verify Token'} navigation={navigation} />
 
         <ScrollView
           style={styles.ScrollView}
@@ -39,101 +41,27 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({navigation}) => {
             डिजिटल बंशावलीमा हजुरलाई स्वागत छ
           </ThemedText>
 
-          {/* Flex Image */}
-          <FlexImgSvg height={250} width={'100%'} style={styles.FlexImg} />
-
-          {/* Sign up Form */}
-          <CustomTextInput
-            name="name"
-            control={control}
-            placeholder="Eg: Shree Krishna"
-            label="Name"
-            isRequired={true}
-            error={errors.name}
-          />
-
-          <CustomTextInput
-            name="email"
-            control={control}
-            placeholder="Eg: sk88@gmail.com"
-            label="Email"
-            isRequired={true}
-            error={errors.email}
-          />
-
+          {/* Verify OTP Form */}
           <CustomTextInput
             name="phone"
             control={control}
-            placeholder="Eg: 9865914599"
+            placeholder="Eg: 9865714682"
             label="Phone"
             isRequired={true}
             error={errors.phone}
           />
 
-          <CustomDropdownSelector
-            name="province"
-            control={control}
-            label="Province"
-            options={[
-              {label: 'Province 1', value: 'Province 1'},
-              {label: 'Province 2', value: 'Province 2'},
-              {label: 'Province 3', value: 'Province 3'},
-              {label: 'Province 4', value: 'Province 4'},
-              {label: 'Province 5', value: 'Province 5'},
-              {label: 'Province 6', value: 'Province 6'},
-              {label: 'Province 7', value: 'Province 7'},
-            ]}
-            isRequired
-          />
-
-          <CustomDropdownSelector
-            name="district"
-            control={control}
-            label="District"
-            options={[
-              {label: 'District 1', value: 'District 1'},
-              {label: 'District 2', value: 'District 2'},
-            ]}
-            isRequired
-          />
-
           <CustomTextInput
-            name="password"
+            name="otp"
             control={control}
-            placeholder="Eg: Metalogic9!"
-            label="Password"
+            placeholder="Eg: 090901"
+            label="OTP"
             isRequired={true}
-            error={errors.password}
-          />
-
-          <CustomTextInput
-            name="confirmPassword"
-            control={control}
-            placeholder="Eg: Metalogic9!"
-            label="confirmPassword"
-            isRequired={true}
-            error={errors.confirmPassword}
-          />
-
-          <CustomTextInput
-            name="referral"
-            control={control}
-            label="Referral Code"
-            isRequired={true}
-            error={errors.referral}
+            error={errors.otp}
           />
 
           {/* btn */}
-          <HeroButton btnText={'Signup'} onPress={handleSubmit(onSubmit)} />
-
-          {/* Registration info */}
-          <View style={styles.RegInfoView}>
-            <ThemedText>Don't have an Account ? </ThemedText>
-            <TouchableOpacity
-              onPress={() => navigation.navigate(SCREEN_NAME.AUTH.LOGIN)}>
-              <ThemedText type="link">Login</ThemedText>
-            </TouchableOpacity>
-          </View>
+          <HeroButton btnText={'Verify'} onPress={handleSubmit(onSubmit)} />
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -166,4 +94,4 @@ export const styles = StyleSheet.create({
   },
 });
 
-export default SignUpScreen;
+export default VerifyOTPScreen;

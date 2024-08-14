@@ -8,7 +8,8 @@ export const API_PUBLIC_SERVICE = axios.create({
   baseURL: 'http://192.168.16.151:4444',
   timeout: 20000, // in 20sec
   headers: {
-    Accept: 'application/json',
+    Accept: '*/*',
+    'Content-Type': 'application/json',
   },
 });
 

@@ -17,8 +17,9 @@ import {LoginZSchema, LoginZType} from '../../../schema/auth';
 import CustomTextInput from '../../../components/CustomInput';
 import {zodResolver} from '@hookform/resolvers/zod';
 import FlexImgSvg from '../../../assets/svg/auth-rprst.svg';
-import {useLogin} from '../../../hooks/auth/login-hook';
+import {useLogin} from '../../../hooks/auth';
 import RNRestart from 'react-native-restart';
+import ApiError from '../../../components/api/ApiError';
 
 type LoginScreenProps = {} & AppScreenNavigationType;
 
@@ -87,9 +88,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
             onPress={handleSubmit(onSubmit)}
           />
           {/* errors */}
-          {error ? (
-            <ThemedText style={styles.ErrorText}>{error}</ThemedText>
-          ) : null}
+          {error ? <ApiError message={error} /> : null}
 
           {/* registration */}
           <View style={styles.RegInfoView}>
@@ -140,10 +139,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  ErrorText: {
-    color: Colors.redMain,
-    textAlign: 'center',
   },
 });
 

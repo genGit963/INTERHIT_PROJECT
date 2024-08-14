@@ -13,6 +13,19 @@ export const LoginZSchema = z.object({
 
 export type LoginZType = z.infer<typeof LoginZSchema>;
 
+// ----------------------- Verify Token Schema -----------------------
+export const VerifyTokenZSchema = z.object({
+  phone: z
+    .string()
+    .min(1, {message: 'Phone number is required.'})
+    .min(10, {message: 'Invalid phone number.'})
+    .max(10, {message: 'Invalid phone number.'})
+    .trim(),
+  otp: z.string().min(1, {message: 'OTP is required.'}).trim(),
+});
+
+export type VerifyTokenZType = z.infer<typeof VerifyTokenZSchema>;
+
 // ----------------------- Signup Schema -----------------------
 
 // Lookahead assertion to check for at least one digit
@@ -30,59 +43,59 @@ const uppercaseRegex = /(?=.*[A-Z])/;
 // Lookahead assertion to check for at least one lowercase letter
 const lowercaseRegex = /(?=.*[a-z])/;
 
-export const SignupZschema = z
-  .object({
-    name: z.string().min(1, {message: 'Full Name is required.'}).trim(),
-    email: z
-      .string()
-      .min(1, {message: 'Email is required.'})
-      .email({message: 'Must be a valid email.'})
-      .trim(),
-    phone: z
-      .string()
-      .min(10, {message: 'Invalid phone nuber.'})
-      .max(10, {message: 'Invalid phone number.'})
-      .trim(),
-    province: z.string().min(1, {message: 'Province is requred.'}).trim(),
-    district: z.string().min(1, {message: 'District is requred.'}).trim(),
-    referral: z
-      .string()
-      .min(1, {message: 'Refferal code is requred.'})
-      .refine((val) => val === 'METALOGIC9', {
-        message: 'Invalid Referral Code.',
-      }),
-    password: z
-      .string()
-      .trim()
-      .min(8, {message: 'Password must be atleast 8 characters.'})
-      .max(20, {message: 'Password must be at most 20 characters.'})
-      .refine((val) => digitRegex.test(val), {
-        message: 'Password must contains atleast a number.',
-      })
-      .refine((val) => nonWordRegex.test(val), {
-        message:
-          "Password must contains at least a special characters. Eg: '!', '@', '#'",
-      })
-      .refine((val) => uppercaseRegex.test(val), {
-        message: 'Password must contains at least a capital letter.',
-      })
-      .refine((val) => lowercaseRegex.test(val), {
-        message: 'Password must contains at least a small letter.',
-      })
-      .refine((val) => excludeDotOrNewlineRegex.test(val), {
-        message: "Password must not contain '.'",
-      }),
-    confirmPassword: z.string().trim(),
-  })
-  .superRefine(({password, confirmPassword}, ctx) => {
-    if (password !== confirmPassword) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Confirm password must be same as password.',
-        path: ['confirmPassword'],
-      });
-    }
-  });
+export const SignupZschema = z.object({
+  name: z.string().min(1, {message: 'Full Name is required.'}).trim(),
+  email: z
+    .string()
+    .toLowerCase()
+    .min(1, {message: 'Email is required.'})
+    .email({message: 'Must be a valid email.'})
+    .trim(),
+  phone: z
+    .string()
+    .min(10, {message: 'Invalid phone nuber.'})
+    .max(10, {message: 'Invalid phone number.'})
+    .trim(),
+  province: z.string().min(1, {message: 'Province is requred.'}).trim(),
+  district: z.string().min(1, {message: 'District is requred.'}).trim(),
+  referral: z
+    .string()
+    .min(1, {message: 'Refferal code is requred.'})
+    .refine((val) => val === 'METALOGIC9', {
+      message: 'Invalid Referral Code.',
+    }),
+  password: z
+    .string()
+    .trim()
+    .min(8, {message: 'Password must be atleast 8 characters.'})
+    .max(20, {message: 'Password must be at most 20 characters.'})
+    .refine((val) => digitRegex.test(val), {
+      message: 'Password must contains atleast a number.',
+    })
+    .refine((val) => nonWordRegex.test(val), {
+      message:
+        "Password must contains at least a special characters. Eg: '!', '@', '#'",
+    })
+    .refine((val) => uppercaseRegex.test(val), {
+      message: 'Password must contains at least a capital letter.',
+    })
+    .refine((val) => lowercaseRegex.test(val), {
+      message: 'Password must contains at least a small letter.',
+    })
+    .refine((val) => excludeDotOrNewlineRegex.test(val), {
+      message: "Password must not contain '.'",
+    }),
+  // confirmPassword: z.string().trim(),
+});
+// .superRefine(({password, confirmPassword}, ctx) => {
+//   if (password !== confirmPassword) {
+//     ctx.addIssue({
+//       code: z.ZodIssueCode.custom,
+//       message: 'Confirm password must be same as password.',
+//       path: ['confirmPassword'],
+//     });
+//   }
+// });
 
 export type SignupZType = z.infer<typeof SignupZschema>;
 
