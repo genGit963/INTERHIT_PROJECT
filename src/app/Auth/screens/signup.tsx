@@ -18,6 +18,8 @@ import {useForm} from 'react-hook-form';
 import {SignupZschema, SignupZType} from '../../../schema/auth';
 import {zodResolver} from '@hookform/resolvers/zod';
 import CustomDropdownSelector from '../../../components/CustomDropdownSelector';
+import {useSignUp} from '../../../hooks/auth';
+import ApiError from '../../../components/api/ApiError';
 
 // types and interface
 type SignUpScreenProps = {} & AppScreenNavigationType;
@@ -32,8 +34,16 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({navigation}) => {
     resolver: zodResolver(SignupZschema),
   });
 
+  // sign up hook
+  const {loading, error, handleSignUp} = useSignUp();
   const onSubmit = async (data: SignupZType) => {
     console.log('sign up data: ', data);
+    await handleSignUp(data).then((Response) => {
+      if (Response) {
+        console.log('Sign up successful !', Response);
+        navigation.navigate(SCREEN_NAME.AUTH.VERIFY_OTP);
+      }
+    });
   };
   return (
     <View style={styles.Page}>
@@ -117,14 +127,14 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({navigation}) => {
             error={errors.password}
           />
 
-          <CustomTextInput
+          {/* <CustomTextInput
             name="confirmPassword"
             control={control}
             placeholder="Eg: Metalogic9!"
-            label="confirmPassword"
+            label="Confirm Password"
             isRequired={true}
             error={errors.confirmPassword}
-          />
+          /> */}
 
           <CustomTextInput
             name="referral"
@@ -135,7 +145,14 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({navigation}) => {
           />
 
           {/* btn */}
-          <HeroButton btnText={'Signup'} onPress={handleSubmit(onSubmit)} />
+          <HeroButton
+            disabled={loading}
+            btnText={loading ? 'Loading...' : 'Signup'}
+            onPress={handleSubmit(onSubmit)}
+          />
+
+          {/* errors */}
+          {error ? <ApiError message={error} /> : null}
 
           {/* Registration info */}
           <View style={styles.RegInfoView}>
@@ -143,6 +160,14 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({navigation}) => {
             <TouchableOpacity
               onPress={() => navigation.navigate(SCREEN_NAME.AUTH.LOGIN)}>
               <ThemedText type="link">Login</ThemedText>
+            </TouchableOpacity>
+          </View>
+          {/* develop otp sc */}
+          <View style={styles.RegInfoView}>
+            <ThemedText>Go to OTP screen ? </ThemedText>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(SCREEN_NAME.AUTH.VERIFY_OTP)}>
+              <ThemedText type="link">OTP</ThemedText>
             </TouchableOpacity>
           </View>
         </ScrollView>

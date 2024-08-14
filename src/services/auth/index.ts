@@ -12,6 +12,7 @@ const AUTH_SERVICE = {
   },
 
   signup: async (signupData: SignupZType) => {
+    console.log('singu portal : ', signupData);
     return await API_PUBLIC_SERVICE.request({
       url: '/auth/signup',
       method: 'POST',

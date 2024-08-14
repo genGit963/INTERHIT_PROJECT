@@ -26,6 +26,12 @@ const AuthNavigationStackScreen = () => {
         component={AuthScreens.forgotPswd}
         options={{headerShown: false}}
       />
+
+      <Stack.Screen
+        name={SCREEN_NAME.AUTH.VERIFY_OTP}
+        component={AuthScreens.verifyOTP}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };

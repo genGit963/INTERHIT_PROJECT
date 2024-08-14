@@ -3,6 +3,7 @@ export const SCREEN_NAME = {
     LOGIN: 'login-screen',
     SIGN_UP: 'signup-screen',
     FORGOT_PSWD: 'forgot-pswd-screen',
+    VERIFY_OTP: 'verify-otp-screen',
   },
   TABS: {
     DASHBOARD: {
