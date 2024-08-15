@@ -5,7 +5,7 @@ import {asyncGetData} from '../core/AsyncStorage';
 
 export const API_PUBLIC_SERVICE = axios.create({
   // baseURL: 'https://api.thadaraiadhikari.com',
-  baseURL: 'http://192.168.16.151:4444',
+  baseURL: 'http://192.168.16.153:4444',
   timeout: 20000, // in 20sec
   headers: {
     Accept: '*/*',
@@ -21,7 +21,7 @@ export async function getUserToken(): Promise<string> {
 // Create an Axios instance for private services
 export const API_PRIVATE_SERVICE = axios.create({
   // baseURL: 'https://api.thadaraiadhikari.com',
-  baseURL: 'http://192.168.16.151:4444',
+  baseURL: 'http://192.168.16.153:4444',
   timeout: 20000, // in 20 sec
   headers: {Accept: 'application/json'},
 });

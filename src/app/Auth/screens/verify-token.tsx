@@ -1,31 +1,42 @@
 import React from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
-import {AppScreenNavigationType} from '../../../core/navigation-type';
+import {AppScreenNavigationType, AppScreenRouteType} from '../../../core/navigation-type';
 import ScreenTopTitle from '../../../components/ScreenTopTitle';
-import {VerifyTokenZSchema, VerifyTokenZType} from '../../../schema/auth';
+import {VerifyOTPZSchema, VerifyOTPZType} from '../../../schema/auth';
 import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {ThemedText} from '../../../components/ThemedText';
 import CustomTextInput from '../../../components/CustomInput';
 import HeroButton from '../../../components/HeroButton';
 import {Colors} from '../../../constants/Color';
+import { useVerifyOTP } from '../../../hooks/auth';
+import { SCREEN_NAME } from '../../../core/AppScreen';
 
 // types and interface
-type VerifyOTPScreenProps = {} & AppScreenNavigationType;
+type VerifyOTPScreenProps = {} & AppScreenNavigationType & AppScreenRouteType;
 
 // ----------------- Sign up Screen ---------------------
-const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({navigation}) => {
+const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({navigation, route}) => {
   const {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm<VerifyTokenZType>({
-    resolver: zodResolver(VerifyTokenZSchema),
+  } = useForm<VerifyOTPZType>({
+    resolver: zodResolver(VerifyOTPZSchema),
   });
-
-  const onSubmit = async (data: VerifyTokenZType) => {
-    console.log('sign up data: ', data);
+console.log(route.params)
+  const {loading, error, handleVerifyOTP} = useVerifyOTP()
+  const onSubmit = async (data: VerifyOTPZType) => {
+    console.log('optData data: ', data);
+    
+    await handleVerifyOTP(data).then(Response =>{
+      if(Response){
+        console.log("OTP verification successful", Response)
+        navigation.navigate(SCREEN_NAME.AUTH.LOGIN)
+      }
+    })
   };
+  
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
@@ -42,14 +53,7 @@ const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({navigation}) => {
           </ThemedText>
 
           {/* Verify OTP Form */}
-          <CustomTextInput
-            name="phone"
-            control={control}
-            placeholder="Eg: 9865714682"
-            label="Phone"
-            isRequired={true}
-            error={errors.phone}
-          />
+          
 
           <CustomTextInput
             name="otp"
