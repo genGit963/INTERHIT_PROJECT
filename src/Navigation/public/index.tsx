@@ -3,7 +3,6 @@ import React from 'react';
 import {SCREEN_NAME} from '../../core/AppScreen';
 import {AuthScreens} from '../../app/Auth';
 
-
 const Stack = createNativeStackNavigator();
 
 const AuthNavigationStackScreen = () => {
