@@ -1,17 +1,17 @@
 // IDCardRequestModal.tsx
 import React from 'react';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {Modal, ScrollView, StyleSheet, View} from 'react-native';
-import {useForm} from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Modal, ScrollView, StyleSheet, View } from 'react-native';
+import { useForm } from 'react-hook-form';
 import CustomTextInput from '../../../../../components/CustomInput';
 // import CustomDatePicker from '../../../../../components/CustomDatePicker';
 import HeroButton from '../../../../../components/HeroButton';
 import supplyShadowEffect from '../../../../../utils/Shadow';
-import {Colors} from '../../../../../constants/Color';
+import { Colors } from '../../../../../constants/Color';
 import CustomDropdownSelector from '../../../../../components/CustomDropdownSelector';
 import CustomRadioSelector from '../../../../../components/CustomRadioSelector';
 import BottomSpace from '../../../../../components/BottomSpace';
-import {ThemedText} from '../../../../../components/ThemedText';
+import { ThemedText } from '../../../../../components/ThemedText';
 import {
   IdCardZSchema,
   IdCardZType,
@@ -29,7 +29,7 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm<IdCardZType>({
     resolver: zodResolver(IdCardZSchema),
   });
@@ -63,11 +63,11 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
             style={styles.ScrollContainer}
             showsVerticalScrollIndicator={false}>
             <CustomTextInput
-              name="fullName"
+              name="full_name"
               control={control}
               label="Full Name"
               isRequired
-              error={errors.fullName}
+              error={errors.full_name}
             />
 
             {/* <CustomDatePicker
@@ -79,20 +79,20 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
 
             {/* date of birth */}
             <CustomTextInput
-              name="dateOfBirth"
+              name="birth_date"
               control={control}
               label="Date of Birth"
               placeholder="Eg: 2078/01/20"
               isRequired
-              error={errors.dateOfBirth}
+              error={errors.birth_date}
             />
 
             <CustomTextInput
-              name="birthPlace"
+              name="birth_place"
               control={control}
               label="Birth Place"
               isRequired
-              error={errors.birthPlace}
+              error={errors.birth_place}
             />
 
             <CustomRadioSelector
@@ -100,26 +100,26 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
               control={control}
               label="Gender"
               options={[
-                {label: 'Male', value: 'Male'},
-                {label: 'Female', value: 'Female'},
-                {label: 'Others', value: 'Others'},
+                { label: 'Male', value: 'Male' },
+                { label: 'Female', value: 'Female' },
+                { label: 'Others', value: 'Others' },
               ]}
               isRequired
             />
 
             <CustomDropdownSelector
-              name="bloodGroup"
+              name="blood_group"
               control={control}
               label="Blood Group"
               options={[
-                {label: 'A+', value: 'A+'},
-                {label: 'A-', value: 'A-'},
-                {label: 'B+', value: 'B+'},
-                {label: 'B-', value: 'B-'},
-                {label: 'O+', value: 'O+'},
-                {label: 'O-', value: 'O-'},
-                {label: 'AB+', value: 'AB+'},
-                {label: 'AB-', value: 'AB-'},
+                { label: 'A+', value: 'A+' },
+                { label: 'A-', value: 'A-' },
+                { label: 'B+', value: 'B+' },
+                { label: 'B-', value: 'B-' },
+                { label: 'O+', value: 'O+' },
+                { label: 'O-', value: 'O-' },
+                { label: 'AB+', value: 'AB+' },
+                { label: 'AB-', value: 'AB-' },
               ]}
               isRequired
             />
@@ -129,13 +129,13 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
               control={control}
               label="Province"
               options={[
-                {label: 'Province 1', value: 'Province 1'},
-                {label: 'Province 2', value: 'Province 2'},
-                {label: 'Province 3', value: 'Province 3'},
-                {label: 'Province 4', value: 'Province 4'},
-                {label: 'Province 5', value: 'Province 5'},
-                {label: 'Province 6', value: 'Province 6'},
-                {label: 'Province 7', value: 'Province 7'},
+                { label: 'Province 1', value: 'Province 1' },
+                { label: 'Province 2', value: 'Province 2' },
+                { label: 'Province 3', value: 'Province 3' },
+                { label: 'Province 4', value: 'Province 4' },
+                { label: 'Province 5', value: 'Province 5' },
+                { label: 'Province 6', value: 'Province 6' },
+                { label: 'Province 7', value: 'Province 7' },
               ]}
               isRequired
             />
@@ -145,31 +145,31 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
               control={control}
               label="District"
               options={[
-                {label: 'District 1', value: 'District 1'},
-                {label: 'District 2', value: 'District 2'},
+                { label: 'District 1', value: 'District 1' },
+                { label: 'District 2', value: 'District 2' },
                 // Add other districts as needed
               ]}
               isRequired
             />
 
             <CustomDropdownSelector
-              name="localLevel"
+              name="local"
               control={control}
               label="Local Level"
               options={[
-                {label: 'Local Level 1', value: 'Local Level 1'},
-                {label: 'Local Level 2', value: 'Local Level 2'},
+                { label: 'Local Level 1', value: 'Local Level 1' },
+                { label: 'Local Level 2', value: 'Local Level 2' },
                 // Add other local levels as needed
               ]}
               isRequired
             />
 
             <CustomTextInput
-              name="wardNo"
+              name="ward"
               control={control}
               label="Ward No."
               isRequired
-              error={errors.wardNo}
+              error={errors.ward}
             />
 
             <CustomTextInput
@@ -182,10 +182,19 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
             />
 
             <CustomTextInput
-              name="organizationalPost"
+              name="profession"
+              control={control}
+              label="Profession"
+              error={errors.profession}
+              isRequired={false}
+            />
+
+            <CustomTextInput
+              name="org_position"
               control={control}
               label="Organizational Post"
-              error={errors.organizationalPost}
+              error={errors.org_position}
+              isRequired
             />
 
             {/* Submit Button */}
@@ -225,7 +234,7 @@ const styles = StyleSheet.create({
       Elevation: 10,
     }),
   },
-  FormTitle: {textAlign: 'left', width: '100%', fontSize: 18, marginBottom: 12},
+  FormTitle: { textAlign: 'left', width: '100%', fontSize: 18, marginBottom: 12 },
   ScrollContainer: {
     width: '100%',
     marginBottom: 50,

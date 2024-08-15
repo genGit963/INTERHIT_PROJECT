@@ -11,10 +11,11 @@ export interface BanshaYogdanInterface {
 
 // zod schema
 export const BanshaYogdanZSchema = z.object({
-  fullName: z.string().min(1, {message: 'Full Name is required'}),
+  name: z.string().min(1, {message: 'Full Name is required'}),
   birthPlace: z.string().min(1, {message: 'Birth Place is required'}),
-  yogdanType: z.string().min(1, {message: 'Yogdan Type is required'}),
-  description: z.string().min(1, {message: 'Description is required'}),
+  type: z.string().min(1, {message: 'Yogdan Type is required'}),
+  desc: z.string().min(1, {message: 'Description is required'}),
+  // image: z.string()
 });
 
 export type BanshaYogdanZType = z.infer<typeof BanshaYogdanZSchema>;

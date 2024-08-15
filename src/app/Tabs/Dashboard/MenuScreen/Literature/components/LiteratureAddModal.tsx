@@ -59,6 +59,17 @@ const LiteratureAddModal = ({
             showsVerticalScrollIndicator={false}>
             <ThemedText type="subtitle">Add Literature</ThemedText>
 
+            {/* author_image baaki chha */}
+
+            <CustomTextInput
+              name="title"
+              control={control}
+              placeholder="Eg: Literature title"
+              label="Title"
+              isRequired={true}
+              error={errors.title}
+            />
+
             <CustomTextInput
               name="author"
               control={control}
@@ -69,35 +80,25 @@ const LiteratureAddModal = ({
             />
 
             <CustomTextInput
-              name="birthPlace"
+              name="birth_place"
               control={control}
               placeholder="Eg: Dharan, Sunsari"
               label="Birth Place"
               isRequired={true}
-              error={errors.birthPlace}
+              error={errors.birth_place}
             />
 
             <CustomTextInput
-              name="description"
+              name="content"
               control={control}
               placeholder="Eg: सामाजिक न्याय र एकता नेपालको मनमा, धरतीमा, इतिहासका कथाहरू....  "
               label="Write Description"
               isRequired={true}
               multiline
               style={styles.writeLiterature}
-              error={errors.description}
+              error={errors.content}
             />
 
-            <CustomTextInput
-              name="writeliterature"
-              control={control}
-              placeholder="Eg: सामाजिक न्याय र एकता नेपालको मनमा, धरतीमा, इतिहासका कथाहरू....  "
-              label="Write Literaure"
-              isRequired={true}
-              multiline
-              style={styles.writeLiterature}
-              error={errors.description}
-            />
 
             {/* Submit Button */}
             <HeroButton

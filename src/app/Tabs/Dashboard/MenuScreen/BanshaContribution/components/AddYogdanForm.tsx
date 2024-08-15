@@ -63,12 +63,12 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
             <ThemedText type="subtitle">Add Bansaj Yogdan</ThemedText>
 
             <CustomTextInput
-              name="fullName"
+              name="name"
               control={control}
               placeholder="Eg: Ram Bahadur Gaurgain"
               label="Name of the person"
               isRequired={true}
-              error={errors.fullName}
+              error={errors.name}
             />
 
             <CustomTextInput
@@ -82,7 +82,7 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
 
             {/* Yogdan Type Selector */}
             <CustomDropdownSelector
-              name="yogdanType"
+              name="type"
               control={control}
               label="Yogan Type"
               options={[
@@ -94,14 +94,14 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
             />
 
             <CustomTextInput
-              name="description"
+              name="desc"
               control={control}
               placeholder="Eg: अनुराधा कोइराला नेपालमा मानव बेचबिखन विरुद्ध र महिला संरक्षणको वकालत गर्ने गैर-लाभकारी संस्था माइती नेपालकी संस्थापक र निर्देशक हुन्...।"
               label="Description"
               isRequired={true}
               multiline
               style={styles.Description}
-              error={errors.description}
+              error={errors.desc}
             />
 
             {/* Submit Button */}

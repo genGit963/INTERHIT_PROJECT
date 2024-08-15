@@ -70,36 +70,26 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
             style={styles.ScrollContainer}
             showsVerticalScrollIndicator={false}>
             <CustomTextInput
-              name="fullName"
+              name="full_name"
               placeholder="Eg: Ram Bogati"
               control={control}
               label="Full Name"
               isRequired
-              error={errors.fullName}
+              error={errors.full_name}
             />
 
-            <CustomTextInput
-              name="address"
-              placeholder="Eg: Rupandehi, Khotang"
+<CustomTextInput
+              name="phone"
+              placeholder="Eg: 98XXXXXXXX"
+              keyboardType="numeric"
+              inputMode="numeric"
               control={control}
-              label="Address"
+              label="Phone"
               isRequired
-              error={errors.address}
+              error={errors.phone}
             />
 
-            <CustomDropdownSelector
-              name="contributionType"
-              control={control}
-              label="Contribution Type"
-              options={[
-                {label: 'Donation', value: 'Donation'},
-                {label: 'Funding', value: 'Funding'},
-                {label: 'Crowd Funding', value: 'CrowdFunding'},
-              ]}
-              isRequired
-            />
-
-            <CustomDropdownSelector
+            {/* <CustomDropdownSelector
               name="modeofPayment"
               control={control}
               label="Mode of Payment"
@@ -109,7 +99,7 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
                 {label: 'IME Pay', value: 'IMEpay'},
               ]}
               isRequired
-            />
+            /> */}
 
             <CustomTextInput
               name="amount"
@@ -122,6 +112,17 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
               error={errors.amount}
             />
 
+<CustomTextInput
+              name="eventId"
+              placeholder="Eg: 4JQR56"
+              keyboardType="numeric"
+              inputMode="numeric"
+              control={control}
+              label="Event Id"
+              isRequired ={false}
+              error={errors.eventId}
+            />
+
             <CustomTextInput
               name="purpose"
               placeholder="Eg: KulMandir Construction"
@@ -130,6 +131,8 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
               isRequired
               error={errors.purpose}
             />
+
+            {/* receipt photo and contributor_image left */}
 
             {/* Submit Button */}
             <HeroButton btnText="Submit" onPress={handleSubmit(onSubmit)} />

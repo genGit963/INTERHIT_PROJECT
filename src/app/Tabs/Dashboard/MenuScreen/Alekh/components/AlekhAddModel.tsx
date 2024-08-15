@@ -1,5 +1,5 @@
 // AlekhAddModal.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import {Modal, StyleSheet, View, ScrollView, Platform} from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
 import { ThemedText } from '../../../../../../components/ThemedText';
@@ -22,6 +22,10 @@ const AlekhAddModal = ({
   isVisible: boolean;
   modalVisibile: (val: boolean) => void;
 }) => {
+
+  const [imageName, setImageName] = useState<string | undefined>('');
+  const [imageUri, setImageUri] = useState<string | undefined>(undefined);
+
   const {
     control,
     handleSubmit,
@@ -61,6 +65,15 @@ const AlekhAddModal = ({
 
             {/* image upload */}
             <UploadImage />
+
+            <CustomTextInput
+              name="title"
+              control={control}
+              placeholder="Title"
+              label="Alekh Title"
+              isRequired={true}
+              error={errors.title}
+            />
 
             <CustomTextInput
               name="desc"
