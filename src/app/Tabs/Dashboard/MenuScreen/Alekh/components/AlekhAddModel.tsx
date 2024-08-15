@@ -1,6 +1,6 @@
 // AlekhAddModal.tsx
 import React from 'react';
-import {Modal, StyleSheet, View, ScrollView, Platform} from 'react-native';
+import {Modal, StyleSheet, View, ScrollView, Platform, Text} from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
 import {ThemedText} from '../../../../../../components/ThemedText';
 import {Colors} from '../../../../../../constants/Color';
@@ -13,6 +13,7 @@ import {
 } from '../../../../../../schema/tabs/dashboard/alekh.schema';
 import CustomTextInput from '../../../../../../components/CustomInput';
 import HeroButton from '../../../../../../components/HeroButton';
+import UploadImage from './UploadImage';
 
 const AlekhAddModal = ({
   isVisible,
@@ -57,6 +58,10 @@ const AlekhAddModal = ({
             contentContainerStyle={{}}
             showsVerticalScrollIndicator={false}>
             <ThemedText type="subtitle">Add Alekh</ThemedText>
+
+{/* image upload */}
+           <UploadImage />
+
 
             <CustomTextInput
               name="alekhDetails"

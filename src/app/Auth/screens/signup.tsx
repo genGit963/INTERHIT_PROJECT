@@ -106,7 +106,7 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({navigation}) => {
               {label: 'गण्डकी प्रदेश', value: 'गण्डकी प्रदेश'},
               {label: 'लुम्बिनी प्रदेश', value: 'लुम्बिनी प्रदेश'},
               {label: 'कर्णाली प्रदेश', value: 'कर्णाली प्रदेश'},
-              {label: 'सुदूर पश्चि', value: 'सुदूर पश्चि'},
+              {label: 'सुदूर पश्चिमाञ्च प्रदेश', value: 'सुदूर पश्चिमाञ्च प्रदेश'},
             ]}
             isRequired
           />
