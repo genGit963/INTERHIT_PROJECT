@@ -14,7 +14,7 @@ export const LoginZSchema = z.object({
 export type LoginZType = z.infer<typeof LoginZSchema>;
 
 // ----------------------- Verify Token Schema -----------------------
-export const VerifyTokenZSchema = z.object({
+export const VerifyOTPZSchema = z.object({
   phone: z
     .string()
     .min(1, {message: 'Phone number is required.'})
@@ -24,7 +24,7 @@ export const VerifyTokenZSchema = z.object({
   otp: z.string().min(1, {message: 'OTP is required.'}).trim(),
 });
 
-export type VerifyTokenZType = z.infer<typeof VerifyTokenZSchema>;
+export type VerifyOTPZType = z.infer<typeof VerifyOTPZSchema>;
 
 // ----------------------- Signup Schema -----------------------
 
