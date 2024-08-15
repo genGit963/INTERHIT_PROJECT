@@ -1,6 +1,9 @@
 import React from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
-import {AppScreenNavigationType, AppScreenRouteType} from '../../../core/navigation-type';
+import {
+  AppScreenNavigationType,
+  AppScreenRouteType,
+} from '../../../core/navigation-type';
 import ScreenTopTitle from '../../../components/ScreenTopTitle';
 import {VerifyOTPZSchema, VerifyOTPZType} from '../../../schema/auth';
 import {useForm} from 'react-hook-form';
@@ -9,14 +12,18 @@ import {ThemedText} from '../../../components/ThemedText';
 import CustomTextInput from '../../../components/CustomInput';
 import HeroButton from '../../../components/HeroButton';
 import {Colors} from '../../../constants/Color';
-import { useVerifyOTP } from '../../../hooks/auth';
-import { SCREEN_NAME } from '../../../core/AppScreen';
+import {useVerifyOTP} from '../../../hooks/auth';
+import {SCREEN_NAME} from '../../../core/AppScreen';
+import ApiError from '../../../components/api/ApiError';
 
 // types and interface
 type VerifyOTPScreenProps = {} & AppScreenNavigationType & AppScreenRouteType;
 
 // ----------------- Sign up Screen ---------------------
-const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({navigation, route}) => {
+const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({
+  navigation,
+  route,
+}) => {
   const {
     control,
     handleSubmit,
@@ -24,19 +31,19 @@ const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({navigation, route}) =>
   } = useForm<VerifyOTPZType>({
     resolver: zodResolver(VerifyOTPZSchema),
   });
-console.log(route.params)
-  const {loading, error, handleVerifyOTP} = useVerifyOTP()
+  console.log(route.params);
+  const {loading, error, handleVerifyOTP} = useVerifyOTP();
   const onSubmit = async (data: VerifyOTPZType) => {
     console.log('optData data: ', data);
-    
-    await handleVerifyOTP(data).then(Response =>{
-      if(Response){
-        console.log("OTP verification successful", Response)
-        navigation.navigate(SCREEN_NAME.AUTH.LOGIN)
+
+    await handleVerifyOTP(data).then((Response) => {
+      if (Response) {
+        console.log('OTP verification successful', Response);
+        navigation.navigate(SCREEN_NAME.AUTH.LOGIN);
       }
-    })
+    });
   };
-  
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
@@ -53,7 +60,6 @@ console.log(route.params)
           </ThemedText>
 
           {/* Verify OTP Form */}
-          
 
           <CustomTextInput
             name="otp"
@@ -65,7 +71,13 @@ console.log(route.params)
           />
 
           {/* btn */}
-          <HeroButton btnText={'Verify'} onPress={handleSubmit(onSubmit)} />
+          <HeroButton
+            disabled={loading}
+            btnText={'Verify'}
+            onPress={handleSubmit(onSubmit)}
+          />
+          {/* error */}
+          {error && <ApiError message={error} />}
         </ScrollView>
       </SafeAreaView>
     </View>

@@ -19,7 +19,6 @@ import supplyShadowEffect from '../../../../../utils/Shadow';
 import AlekhAddModal from './components/AlekhAddModel';
 import {AppScreenNavigationType} from '../../../../../core/navigation-type';
 import AddAlekhSvg from '../../../../../assets/svg/solid-plus-circle.svg';
-import {useGetAlekhs} from '../../../../../hooks/tabs/dashboard/alekh';
 
 // types and interface
 type AlekhScreenProps = {} & AppScreenNavigationType;
@@ -106,7 +105,6 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
   const [isAlekhAddVisible, setAlekhAddVisible] = useState<boolean>(false);
 
   //getAlekhs hooks
-  const {loading, error, getAlekhs} = useGetAlekhs();
 
   // const alekhList: AlekhInterface[] = getAlekhs();
 
@@ -125,7 +123,7 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
         {/* Alekh Card Contents */}
         <FlatList
           initialNumToRender={5}
-          data={[]}
+          data={DummyData}
           contentContainerStyle={styles.Flatlist}
           showsVerticalScrollIndicator={false}
           renderItem={(item) => (

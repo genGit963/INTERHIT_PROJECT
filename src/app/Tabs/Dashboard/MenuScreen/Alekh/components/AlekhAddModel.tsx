@@ -1,6 +1,6 @@
 // AlekhAddModal.tsx
 import React from 'react';
-import { Modal, StyleSheet, View, ScrollView, Platform, Text } from 'react-native';
+import {Modal, StyleSheet, View, ScrollView, Platform} from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
 import { ThemedText } from '../../../../../../components/ThemedText';
 import { Colors } from '../../../../../../constants/Color';
@@ -63,16 +63,6 @@ const AlekhAddModal = ({
             <UploadImage />
 
             <CustomTextInput
-              name="alekhTitle"
-              control={control}
-              placeholder="Title name"
-              label="Alekh Title"
-              isRequired={true}
-              error={errors.title}
-            />
-
-
-            <CustomTextInput
               name="desc"
               control={control}
               placeholder="Alekh Details"
@@ -89,15 +79,6 @@ const AlekhAddModal = ({
               isRequired={true}
               error={errors.author}
             />
-
-            {/* <CustomTextInput
-              name="contributionType"
-              control={control}
-              placeholder="Contribution Type"
-              label="Contribution Type"
-              isRequired={true}
-              error={errors.contributionType}
-            /> */}
 
             <CustomTextInput
               name="body"

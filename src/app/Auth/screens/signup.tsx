@@ -20,10 +20,10 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import CustomDropdownSelector from '../../../components/CustomDropdownSelector';
 import {useSignUp} from '../../../hooks/auth';
 import ApiError from '../../../components/api/ApiError';
-import { AppScreenRouteType } from '../../../core/navigation-type';
+import {AppScreenRouteType} from '../../../core/navigation-type';
 
 // types and interface
-type SignUpScreenProps = {} & AppScreenNavigationType;
+type SignUpScreenProps = {} & AppScreenNavigationType & AppScreenRouteType;
 
 // ----------------- Sign up Screen ---------------------
 const SignUpScreen: React.FC<SignUpScreenProps> = ({navigation}) => {
@@ -41,10 +41,9 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({navigation}) => {
     console.log('sign up data: ', data);
     await handleSignUp(data).then((Response) => {
       if (Response) {
-        
         console.log('Sign up successful !', Response);
         navigation.navigate(SCREEN_NAME.AUTH.VERIFY_OTP, {
-          phone: Response.phone
+          phone: Response.phone,
         });
       }
     });
@@ -106,7 +105,10 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({navigation}) => {
               {label: 'गण्डकी प्रदेश', value: 'गण्डकी प्रदेश'},
               {label: 'लुम्बिनी प्रदेश', value: 'लुम्बिनी प्रदेश'},
               {label: 'कर्णाली प्रदेश', value: 'कर्णाली प्रदेश'},
-              {label: 'सुदूर पश्चिमाञ्च प्रदेश', value: 'सुदूर पश्चिमाञ्च प्रदेश'},
+              {
+                label: 'सुदूर पश्चिमाञ्च प्रदेश',
+                value: 'सुदूर पश्चिमाञ्च प्रदेश',
+              },
             ]}
             isRequired
           />
