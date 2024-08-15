@@ -1,12 +1,12 @@
 // AlekhAddModal.tsx
 import React from 'react';
-import {Modal, StyleSheet, View, ScrollView, Platform, Text} from 'react-native';
+import { Modal, StyleSheet, View, ScrollView, Platform, Text } from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
-import {ThemedText} from '../../../../../../components/ThemedText';
-import {Colors} from '../../../../../../constants/Color';
+import { ThemedText } from '../../../../../../components/ThemedText';
+import { Colors } from '../../../../../../constants/Color';
 import BottomSpace from '../../../../../../components/BottomSpace';
-import {useForm} from 'react-hook-form';
-import {zodResolver} from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   AlekhZType,
   AlekhZSchema,
@@ -25,7 +25,7 @@ const AlekhAddModal = ({
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm<AlekhZType>({
     resolver: zodResolver(AlekhZSchema),
   });
@@ -59,26 +59,35 @@ const AlekhAddModal = ({
             showsVerticalScrollIndicator={false}>
             <ThemedText type="subtitle">Add Alekh</ThemedText>
 
-{/* image upload */}
-           <UploadImage />
+            {/* image upload */}
+            <UploadImage />
+
+            <CustomTextInput
+              name="alekhTitle"
+              control={control}
+              placeholder="Title name"
+              label="Alekh Title"
+              isRequired={true}
+              error={errors.title}
+            />
 
 
             <CustomTextInput
-              name="alekhDetails"
+              name="desc"
               control={control}
               placeholder="Alekh Details"
               label="Alekh Details"
               isRequired={true}
-              error={errors.alekhDetails}
+              error={errors.desc}
             />
 
             <CustomTextInput
-              name="authorName"
+              name="author"
               control={control}
               placeholder="Author Name"
               label="Author Name"
               isRequired={true}
-              error={errors.authorName}
+              error={errors.author}
             />
 
             {/* <CustomTextInput
@@ -91,14 +100,14 @@ const AlekhAddModal = ({
             /> */}
 
             <CustomTextInput
-              name="writeAlekh"
+              name="body"
               control={control}
               placeholder="Write Alekh"
               label="Write Alekh"
               isRequired={true}
               multiline
               style={styles.writeAlekh}
-              error={errors.writeAlekh}
+              error={errors.body}
             />
 
             {/* Submit Button */}
@@ -148,12 +157,12 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     // borderWidth: 2,
   },
-  CancelButton: {width: '100%', alignItems: 'flex-end'},
+  CancelButton: { width: '100%', alignItems: 'flex-end' },
   SubmitBtn: {
     borderRadius: 10,
     marginVertical: 30,
   },
-  writeAlekh: {height: Platform.OS === 'ios' ? 100 : 'auto'},
+  writeAlekh: { height: Platform.OS === 'ios' ? 100 : 'auto' },
 });
 
 export default AlekhAddModal;
