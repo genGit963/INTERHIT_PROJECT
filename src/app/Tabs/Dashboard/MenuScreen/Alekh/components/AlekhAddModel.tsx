@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import { Modal, StyleSheet, View, ScrollView, Platform } from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
-import { ThemedText } from '../../../../../../components/ThemedText';
-import { Colors } from '../../../../../../constants/Color';
+import {ThemedText} from '../../../../../../components/ThemedText';
+import {Colors} from '../../../../../../constants/Color';
 import BottomSpace from '../../../../../../components/BottomSpace';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 import {
   AlekhZType,
   AlekhZSchema,
@@ -29,7 +29,7 @@ const AlekhAddModal = ({
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm<AlekhZType>({
     resolver: zodResolver(AlekhZSchema),
   });
@@ -160,12 +160,12 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     // borderWidth: 2,
   },
-  CancelButton: { width: '100%', alignItems: 'flex-end' },
+  CancelButton: {width: '100%', alignItems: 'flex-end'},
   SubmitBtn: {
     borderRadius: 10,
     marginVertical: 30,
   },
-  writeAlekh: { height: Platform.OS === 'ios' ? 100 : 'auto' },
+  writeAlekh: {height: Platform.OS === 'ios' ? 100 : 'auto'},
 });
 
 export default AlekhAddModal;
