@@ -38,7 +38,7 @@ const BanshaContribution: React.FC<BanshaContributionProps> = ({
   //     : banshaYogdanDummyList.filter((item) =>
   //         item.ContributerName.toLowerCase().includes(searchText.toLowerCase()),
   //       );
-  console.log('searchText bansha contribution: ', searchText);
+  // console.log('searchText bansha contribution: ', searchText);
 
   // DD selected value
   const [DDSelectedValue, setDDSelectedValue] = useState<string>('All');

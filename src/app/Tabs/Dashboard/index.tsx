@@ -1,19 +1,19 @@
-import React, {useState} from 'react';
-import {Image, Platform, SafeAreaView, StyleSheet, View} from 'react-native';
+import React, { useState } from 'react';
+import { Image, Platform, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import Header from './components/Header';
 import Caursol from './components/Caursol';
 import TodayUpdate from './components/TodayUpdate';
 import DashboardMenuCompoent from './components/DashboardMenu';
 
-import {ParamListBase} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { ParamListBase } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import DrawerModal from '../../../components/Drawer';
 
 type DashboardScreenProps = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
-const DashboardScreen: React.FC<DashboardScreenProps> = ({navigation}) => {
+const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
   // handle DrawerModal
   const [isDrawerModalVisible, setDrawerModalVisible] =
     useState<boolean>(false);
@@ -27,18 +27,23 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({navigation}) => {
         {/* header */}
         <Header callBackDrawerVisible={setDrawerModalVisible} />
 
-        {/* caursol */}
-        <Caursol />
-        <Image
-          source={require('../../../assets/images/Ellipse.png')}
-          style={styles.MiddleBG}
-        />
+        <ScrollView
+          style={styles.ScrollView}
+          contentContainerStyle={styles.ScrollContent}
+          showsVerticalScrollIndicator={false}>
+          {/* caursol */}
+          <Caursol />
+          <Image
+            source={require('../../../assets/images/Ellipse.png')}
+            style={styles.MiddleBG}
+          />
 
-        {/* today update */}
-        <TodayUpdate />
+          {/* today update */}
+          <TodayUpdate />
 
-        {/*Banshawali*/}
-        <DashboardMenuCompoent navigation={navigation} />
+          {/*Banshawali*/}
+          <DashboardMenuCompoent navigation={navigation} />
+        </ScrollView>
       </SafeAreaView>
 
       {isDrawerModalVisible && (
@@ -52,7 +57,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({navigation}) => {
         source={require('../../../assets/images/Ellipse.png')}
         style={styles.BottomBG}
       />
-    </View>
+    </View >
   );
 };
 
@@ -77,7 +82,7 @@ const styles = StyleSheet.create({
     right: '5%',
     left: '50%',
     zIndex: -1,
-    transform: [{rotate: '70deg'}],
+    transform: [{ rotate: '70deg' }],
 
     // backgroundColor: 'red',
     height: 300,
@@ -88,7 +93,7 @@ const styles = StyleSheet.create({
     bottom: '1%',
     left: 150,
     zIndex: -5,
-    transform: [{rotate: '70deg'}],
+    transform: [{ rotate: '70deg' }],
 
     // backgroundColor: 'green',
     height: 300,
@@ -100,10 +105,15 @@ const styles = StyleSheet.create({
     bottom: -80,
     right: -60,
     zIndex: -2,
-    transform: [{rotate: '120deg'}],
+    transform: [{ rotate: '120deg' }],
 
     // backgroundColor: 'blue',
     height: 300,
     width: 350,
+  },
+  ScrollView: { marginBottom: 10, paddingBottom: 30 },
+  ScrollContent: { paddingBottom: 100 },
+  FlexText: {
+    textAlign: 'center',
   },
 });

@@ -19,6 +19,7 @@ import supplyShadowEffect from '../../../../../utils/Shadow';
 import AlekhAddModal from './components/AlekhAddModel';
 import {AppScreenNavigationType} from '../../../../../core/navigation-type';
 import AddAlekhSvg from '../../../../../assets/svg/solid-plus-circle.svg';
+import SearchInput, { SearchType } from '../../../../../components/SearchInput';
 
 // types and interface
 type AlekhScreenProps = {} & AppScreenNavigationType;
@@ -103,7 +104,8 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
 
   // Add Modal States
   const [isAlekhAddVisible, setAlekhAddVisible] = useState<boolean>(false);
-
+//search text
+  const [searchText, setSearchText] = useState<SearchType['searchText']>('');
   //getAlekhs hooks
 
   // const alekhList: AlekhInterface[] = getAlekhs();
@@ -115,10 +117,15 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
         <ScreenTopTitle navigation={navigation} screenTitle="Alekh" />
 
         {/* Search and filter */}
-        <View style={styles.SearchConatiner}>
+        {/* <View style={styles.SearchConatiner}>
           <ThemedText style={styles.SearchText}>Search Alekh</ThemedText>
           <SearchSvg />
-        </View>
+        </View> */}
+
+         <SearchInput
+          placeHolder={'Bansaj Yogdan'}
+          callBackSetSearchValue={setSearchText}
+        />
 
         {/* Alekh Card Contents */}
         <FlatList

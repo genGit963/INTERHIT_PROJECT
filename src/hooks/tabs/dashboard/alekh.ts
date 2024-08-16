@@ -1,6 +1,6 @@
 // alekhs
 import {useCallback, useState} from 'react';
-import DASHBOARD_SERVICES from '../../../services/tabs/dashboard';
+import DASHBOARD_SERVICES from '../../../services/tabs/dashboard/alekh';
 import {AlekhZType} from '../../../schema/tabs/dashboard/alekh.schema';
 
 export const useGetAlekhs = () => {
@@ -27,11 +27,11 @@ export const useGetAlekhs = () => {
   return {loading, error, getAlekhs};
 };
 
-export const usePostAlekhs = (alekh: AlekhZType) => {
+export const usePostAlekhs = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();
 
-  const postAlekhs = useCallback(async () => {
+  const handlePostAlekhs = useCallback(async (alekh: AlekhZType) => {
     setLoading(true);
     setError(undefined);
     try {
@@ -46,7 +46,7 @@ export const usePostAlekhs = (alekh: AlekhZType) => {
     } finally {
       setLoading(false);
     }
-  }, [alekh]);
+  }, []);
 
-  return {loading, error, postAlekhs};
+  return {loading, error, handlePostAlekhs};
 };

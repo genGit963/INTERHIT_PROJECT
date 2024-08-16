@@ -12,9 +12,12 @@ const DASHBOARD_SERVICES = {
 
   postAlekhs: async (alekh: AlekhZType) => {
     return await API_PRIVATE_SERVICE.request({
-      url: '/user/aalekh?search=%20&verified=true',
+      url: '/user/aalekh',
       method: 'POST',
-      data: alekh,
+      headers:{
+        "Content-Type": "multipart/form-data"
+      },
+      data: alekh
     });
   },
 

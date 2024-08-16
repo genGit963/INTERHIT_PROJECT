@@ -31,14 +31,20 @@ const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({
   } = useForm<VerifyOTPZType>({
     resolver: zodResolver(VerifyOTPZSchema),
   });
-  console.log(route.params);
-  const {loading, error, handleVerifyOTP} = useVerifyOTP();
-  const onSubmit = async (data: VerifyOTPZType) => {
-    console.log('optData data: ', data);
+  // console.log("route.params:", route.params)
 
-    await handleVerifyOTP(data).then((Response) => {
+  const {loading, error, handleVerifyOTP} = useVerifyOTP();
+  // verifyOTPZType has phone,otp and the data coming here is otp only
+  const onSubmit = async (data: Pick<VerifyOTPZType, "otp">) => {
+    const {phone} = route.params as {phone: string};
+    const otpData: VerifyOTPZType = {
+      otp: data.otp,
+      phone: phone,
+    }
+
+    await handleVerifyOTP(otpData).then((Response) => {
       if (Response) {
-        console.log('OTP verification successful', Response);
+        // console.log('OTP verification successful', Response);
         navigation.navigate(SCREEN_NAME.AUTH.LOGIN);
       }
     });
