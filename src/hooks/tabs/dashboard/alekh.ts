@@ -1,6 +1,6 @@
 // alekhs
 import {useCallback, useState} from 'react';
-import DASHBOARD_SERVICES from '../../../services/tabs/dashboard/alekh';
+import DASHBOARD_SERVICES from '../../../services/tabs/dashboard';
 import {AlekhZType} from '../../../schema/tabs/dashboard/alekh.schema';
 
 export const useGetAlekhs = () => {

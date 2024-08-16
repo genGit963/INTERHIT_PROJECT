@@ -14,8 +14,12 @@ export const API_PUBLIC_SERVICE = axios.create({
 });
 
 // Fetch user token asynchronously
-export async function getUserToken(): Promise<string> {
-  return (await asyncGetData('TOKEN')) as string;
+export async function getUserToken(){
+  const token = await asyncGetData("TOKEN") 
+  console.log("getUserToken: ", token)
+if(token){
+  return token as string;
+}
 }
 
 // Create an Axios instance for private services
@@ -30,6 +34,7 @@ export const API_PRIVATE_SERVICE = axios.create({
 API_PRIVATE_SERVICE.interceptors.request.use(
   async (config) => {
     const token = await getUserToken();
+    console.log("private interceptor token: ", token)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

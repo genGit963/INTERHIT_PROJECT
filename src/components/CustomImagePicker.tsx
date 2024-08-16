@@ -6,7 +6,7 @@ import { ImageLibraryOptions, launchImageLibrary } from 'react-native-image-pick
 import { checkPermission, requestPermission } from '../utils/permissions';
 import { Colors } from '../constants/Color';
 import { ThemedText } from './ThemedText';
-import "../utils/truncateFilename"
+import "../utils/stringPrototype"
 interface ImagePickerComponentProps {
     control: Control<any>;
     errors: FieldErrors;
@@ -26,20 +26,20 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
     const [imageUri, setImageUri] = useState<string | undefined>('');
 
     const handleImageUpload = async (onChange: (value: string) => void) => {
-        
-        const imagePickerLauncher = ()=>{
+
+        const imagePickerLauncher = () => {
             const mediaOptions: ImageLibraryOptions = { mediaType: 'photo', selectionLimit: 1 }
             launchImageLibrary(mediaOptions, response => {
                 if (response.didCancel) {
-                console.log('user canceled to upload new photo');
-            } else if (response.assets) {
-                const { uri, fileName } = response.assets[0];   
-                setFilename(fileName?.truncateFilename(20));
-                setImageUri(uri);
-                onChange(String(uri) || '');
-            }
-        });
-    }
+                    console.log('user canceled to upload new photo');
+                } else if (response.assets) {
+                    const { uri, fileName } = response.assets[0];
+                    setFilename(fileName?.truncateFilename(20));
+                    setImageUri(uri);
+                    onChange(String(uri) || '');
+                }
+            });
+        }
         //checking for permission first
         await checkPermission(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE).then(
             res => {
@@ -47,7 +47,7 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
                     requestPermission(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE).then(
                         grantedResponse => {
                             if (grantedResponse) {
-                               imagePickerLauncher()
+                                imagePickerLauncher()
                             }
                         },
                     );
@@ -67,22 +67,22 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
                     {isRequired && <Text style={styles.requiredSymbol}>*</Text>}
                 </ThemedText>
             </View>
-            {imageUri && <Image source={{uri: imageUri}} style={styles.selectedImage}/>}
+            {imageUri && <Image source={{ uri: imageUri }} style={styles.selectedImage} />}
             <Controller
                 control={control}
                 name={controllerName}
                 render={({ field: { onChange } }) => (
                     <View style={styles.imagePickerBox}>
                         <Text
-                            
+
                             style={[
                                 styles.filename,
-                               
+
                             ]}>
                             {filename ? filename : 'eg: filename.jpg'}
                         </Text>
                         <TouchableOpacity onPress={() => handleImageUpload(onChange)}>
-                            <ThemedText type='link'>{imageUri ? "Change Image": "Upload Image"}</ThemedText>
+                            <ThemedText type='link'>{imageUri ? "Change Image" : "Upload Image"}</ThemedText>
                         </TouchableOpacity>
                     </View>
                 )}
@@ -121,22 +121,22 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         borderWidth: 0.5,
-       borderColor: Colors.muteGray,
+        borderColor: Colors.muteGray,
         height: 50,
         borderRadius: 10,
         padding: 10,
-       
+
     },
     filename: {
         fontSize: 15,
-        color:Colors.muteGray,
+        color: Colors.muteGray,
         fontFamily: Platform.OS === 'ios' ? 'Poppins Regular' : 'PoppinsRegular',
     },
     error: {
         color: Colors.redMain,
         marginTop: 4,
     },
-    selectedImage:{
+    selectedImage: {
         width: "100%",
         height: 200,
         resizeMode: "cover",

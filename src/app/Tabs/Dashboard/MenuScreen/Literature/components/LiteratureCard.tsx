@@ -1,13 +1,15 @@
 import React from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {ThemedText} from '../../../../../../components/ThemedText';
-import {LiteratureInterface} from '..';
-import {Colors} from '../../../../../../constants/Color';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ThemedText } from '../../../../../../components/ThemedText';
+
+import { Colors } from '../../../../../../constants/Color';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
+import { LiteratureResInterface } from '../../../../../../schema/tabs/dashboard/literature.schema';
+import "../../../../../../utils/stringPrototype"
 
 type LiteratureCardPropsTypes = {
-  literature: LiteratureInterface;
-  callbackHandlePress: (value: LiteratureInterface) => void;
+  literature: LiteratureResInterface;
+  callbackHandlePress: (value: LiteratureResInterface) => void;
 };
 
 const LiteratureCard: React.FC<LiteratureCardPropsTypes> = ({
@@ -22,17 +24,17 @@ const LiteratureCard: React.FC<LiteratureCardPropsTypes> = ({
         <View style={styles.WriteView}>
           <Image
             source={{
-              uri: literature.image,
+              uri: literature.author_image.secure_url,
             }}
             alt="blog_image"
             style={styles.literatureImg}
           />
           <ThemedText type="semiBold" style={styles.TitleName}>
-            {literature.writer}
+            {literature.author}
           </ThemedText>
         </View>
         <ThemedText type="default" style={styles.Detail}>
-          {literature.intro}
+          {literature.content.truncateContent(40)}...
         </ThemedText>
       </View>
     </TouchableOpacity>
