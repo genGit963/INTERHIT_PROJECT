@@ -34,15 +34,17 @@ const AlekhAddModal = ({
     resolver: zodResolver(AlekhZSchema),
   });
 
-  const {loading, error, handlePostAlekhs} = usePostAlekhs() 
-  const onSubmit = async(data: AlekhZType) => {
+  const { loading, error, handlePostAlekhs } = usePostAlekhs()
+  const onSubmit = async (data: AlekhZType) => {
     console.log('alekh data: ', data);
 
-    await handlePostAlekhs(data).then((Response)=>{
+    await handlePostAlekhs(data).then((Response) => {
       console.log("postAlekhRes: ", Response)
     })
 
-    modalVisibile(false);
+    if (!error) {
+      modalVisibile(false);
+    }
   };
 
   return (
@@ -112,13 +114,13 @@ const AlekhAddModal = ({
             />
 
             {/* Submit Button */}
+            {error && <ApiError message={error} />}
             <HeroButton
-            disabled={loading}
-              btnText={'Submit'}
+              disabled={loading}
+              btnText={loading ? "Loading..." : 'Submit'}
               onPress={handleSubmit(onSubmit)}
               style={styles.SubmitBtn}
             />
-            {error && <ApiError message={error}/>}
           </ScrollView>
           <BottomSpace spaceHeight={'4%'} />
         </View>
@@ -157,13 +159,14 @@ const styles = StyleSheet.create({
 
   ScrollContainer: {
     width: '100%',
+    marginBottom: 50
     // backgroundColor: 'red',
     // borderWidth: 2,
   },
   CancelButton: { width: '100%', alignItems: 'flex-end' },
   SubmitBtn: {
     borderRadius: 10,
-    marginVertical: 30,
+    marginTop: 20,
   },
   writeAlekh: { height: Platform.OS === 'ios' ? 100 : 'auto' },
 });
