@@ -40,6 +40,30 @@ const DASHBOARD_SERVICES = {
       data: literature,
     });
   },
+
+  //albums
+  getAlbum: async () => {
+    return await API_PRIVATE_SERVICE.request({
+      url: '/user/album',
+      method: 'GET',
+    });
+  },
+
+  //yogdan
+  getYogdan: async () => {
+    return await API_PRIVATE_SERVICE.request({
+      url: '/user/yogdan',
+      method: 'GET',
+    });
+  },
+
+  //contribution
+  getContribution: async () => {
+    return await API_PRIVATE_SERVICE.request({
+      url: '/user/contribution',
+      method: 'GET',
+    });
+  },
   //   'https://api.thadaraiadhikari.com/user/aalekh?search=%20&verified=true'
 };
 

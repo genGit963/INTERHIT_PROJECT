@@ -1,26 +1,30 @@
-import React, {useState} from 'react';
-import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
-import {Colors} from '../../../../../constants/Color';
+import React, { useEffect, useState } from 'react';
+import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Colors } from '../../../../../constants/Color';
 import ScreenTopTitle from '../../../../../components/ScreenTopTitle';
-import {AppScreenNavigationType} from '../../../../../core/navigation-type';
-import {GalleryAPIInterface} from '../../../../../schema/tabs/dashboard/gallary.schema';
+import { AppScreenNavigationType } from '../../../../../core/navigation-type';
+import { GalleryAPIInterface } from '../../../../../schema/tabs/dashboard/gallary.schema';
 import EmptyFlatList from '../../../../../components/EmptyFlatList';
 import BottomSpace from '../../../../../components/BottomSpace';
 import GallaryCard from './components/GallaryCard';
 import GallaryViewModal from './components/GalleryViewModal';
+import { useGetAlbum } from '../../../../../hooks/tabs/dashboard/album';
+import Loader from '../../../../../components/Loader';
 
 // types
 type GalleryScreenProps = {} & AppScreenNavigationType;
 
 // interfaces
 
-const Gallery: React.FC<GalleryScreenProps> = ({navigation}) => {
+const Gallery: React.FC<GalleryScreenProps> = ({ navigation }) => {
   // View Modal States
   const [selectedGallary, setSelectedGallary] = useState<
     GalleryAPIInterface | undefined
   >(undefined);
   const [isGallaryModalVisible, setGallaryModalVisible] =
     useState<boolean>(false);
+  const [albumData, setAlbumData] = useState<GalleryAPIInterface[]>([]);
+
   const handleGallaryModalView = (gallary: GalleryAPIInterface) => {
     setSelectedGallary(gallary);
     setGallaryModalVisible(true);
@@ -32,6 +36,22 @@ const Gallery: React.FC<GalleryScreenProps> = ({navigation}) => {
 
   console.log(selectedGallary);
 
+  const { loading, error, handleGetAlbum } = useGetAlbum();
+  const getAlbumData = async () => {
+    await handleGetAlbum().then((Response) => {
+      // console.log("Album response:", Response)
+      setAlbumData(Response);
+    });
+  };
+
+  useEffect(() => {
+    getAlbumData();
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <View style={styles.Page}>
       <SafeAreaView>
@@ -42,7 +62,7 @@ const Gallery: React.FC<GalleryScreenProps> = ({navigation}) => {
         <FlatList
           initialNumToRender={8}
           numColumns={2}
-          data={dummyData}
+          data={albumData}
           style={styles.FlatListContainer}
           contentContainerStyle={styles.FlatlistContentStyle}
           showsVerticalScrollIndicator={false}
@@ -85,7 +105,7 @@ const styles = StyleSheet.create({
     marginBottom: '8%',
     gap: 16,
   },
-  FlatlistFooter: {marginBottom: '6%'},
+  FlatlistFooter: { marginBottom: '6%' },
 });
 
 // dummy data

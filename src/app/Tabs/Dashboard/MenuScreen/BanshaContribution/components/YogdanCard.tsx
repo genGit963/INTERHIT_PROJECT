@@ -1,32 +1,32 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
-import {ThemedText} from '../../../../../../components/ThemedText';
-import {Colors} from '../../../../../../constants/Color';
+import { Image, StyleSheet, View } from 'react-native';
+import { ThemedText } from '../../../../../../components/ThemedText';
+import { Colors } from '../../../../../../constants/Color';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
-import {BanshaYogdanInterface} from '../../../../../../schema/tabs/dashboard/bansha-yogdan.schema';
+import { BanshaYogdanInterface } from '../../../../../../schema/tabs/dashboard/bansha-yogdan.schema';
 
 type YogdanCardPropsTypes = {
   yogdan: BanshaYogdanInterface;
 };
 
-const YogdanCard: React.FC<YogdanCardPropsTypes> = ({yogdan}) => {
+const YogdanCard: React.FC<YogdanCardPropsTypes> = ({ yogdan }) => {
   return (
     <View style={styles.YogdanCard}>
       <View style={styles.YogdanCardBody}>
         <View style={styles.WriteView}>
           <Image
             source={{
-              uri: yogdan.Image,
+              uri: yogdan.image.secure_url,
             }}
             alt="yogandan_image"
             style={styles.YogdanImg}
           />
           <ThemedText type="semiBold" style={styles.TitleName}>
-            {yogdan.ContributerName}
+            {yogdan.name}
           </ThemedText>
         </View>
         <ThemedText type="default" style={styles.Detail}>
-          {yogdan.Description}
+          {yogdan.description}
         </ThemedText>
       </View>
     </View>
