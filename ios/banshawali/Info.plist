@@ -101,17 +101,17 @@
   <!-- <key>NSMotionUsageDescription</key>
   <string>YOUR TEXT</string> -->
   <key>NSPhotoLibraryUsageDescription</key>
-  <string>YOUR TEXT</string>
-  <key>NSPhotoLibraryAddUsageDescription</key>
-  <string>YOUR TEXT</string>
+  <string>Allow app to access device photo library</string>
+  <!-- <key>NSPhotoLibraryAddUsageDescription</key> -->
+  <!-- <string>Access Photo Library to save</string> -->
   <!-- <key>NSRemindersFullAccessUsageDescription</key>
   <string>YOUR TEXT</string> -->
   <!-- <key>NSSpeechRecognitionUsageDescription</key>
   <string>YOUR TEXT</string> -->
   <!-- <key>NSSiriUsageDescription</key>
   <string>YOUR TEXT</string> -->
-  <key>NSUserTrackingUsageDescription</key>
-  <string>YOUR TEXT</string>
+  <!-- <key>NSUserTrackingUsageDescription</key> -->
+  <!-- <string>YOUR TEXT</string> -->
 
 </dict>
 </plist>
