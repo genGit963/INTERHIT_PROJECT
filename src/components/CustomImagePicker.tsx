@@ -64,7 +64,6 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
             },
           );
         } else {
-          //if permission already set, photo directly upload garne feature dine
           imagePickerLauncher();
         }
       },

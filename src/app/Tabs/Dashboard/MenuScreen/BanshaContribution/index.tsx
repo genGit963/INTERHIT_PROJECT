@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -6,23 +6,21 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Colors } from '../../../../../constants/Color';
+import {Colors} from '../../../../../constants/Color';
 import ScreenTopTitle from '../../../../../components/ScreenTopTitle';
-import { AppScreenNavigationType } from '../../../../../core/navigation-type';
+import {AppScreenNavigationType} from '../../../../../core/navigation-type';
 import DropdownYogdan from './components/DropdownYogdan';
-import {
-
-  BanshaYogdanInterface,
-} from '../../../../../schema/tabs/dashboard/bansha-yogdan.schema';
+import {BanshaYogdanInterface} from '../../../../../schema/tabs/dashboard/bansha-yogdan.schema';
 import supplyShadowEffect from '../../../../../utils/Shadow';
 import YogdanCard from './components/YogdanCard';
 import EmptyFlatList from '../../../../../components/EmptyFlatList';
 import BottomSpace from '../../../../../components/BottomSpace';
 import AddYogdanSvg from '../../../../../assets/svg/solid-plus-circle.svg';
 import AddYogdanModal from './components/AddYogdanForm';
-import SearchInput, { SearchType } from '../../../../../components/SearchInput';
-import { useGetYogdan } from '../../../../../hooks/tabs/dashboard/yogdan';
+import SearchInput, {SearchType} from '../../../../../components/SearchInput';
+import {useGetYogdan} from '../../../../../hooks/tabs/dashboard/yogdan';
 import Loader from '../../../../../components/Loader';
+import ApiError from '../../../../../components/api/ApiError';
 
 // types
 type BanshaContributionProps = {} & AppScreenNavigationType;
@@ -32,6 +30,7 @@ const BanshaContribution: React.FC<BanshaContributionProps> = ({
 }) => {
   // search Text
   const [searchText, setSearchText] = useState<SearchType['searchText']>('');
+  console.log('searchText bansha yogdan: ', searchText);
 
   //yogdan data
   const [yogdanData, setYogdanData] = useState<BanshaYogdanInterface[]>([]);
@@ -51,29 +50,41 @@ const BanshaContribution: React.FC<BanshaContributionProps> = ({
   // contribution QR modal
   const [isYogdanAddVisible, setYogdanAddVisible] = useState<boolean>(false);
 
-  useEffect(() => {
-    getYogdanData()
-  }, [])
-
   //get yogdans
-  const { loading, error, handleGetYogdan } = useGetYogdan()
-  const getYogdanData = async () => {
-    await handleGetYogdan().then((Resp) => {
-      console.log("Yogdan data; ", Resp)
-      setYogdanData(Resp)
-    })
-  }
+  const {loading, error, handleGetYogdan} = useGetYogdan();
+
+  useEffect(() => {
+    const getYogdanData = async () => {
+      await handleGetYogdan().then((Resp) => {
+        console.log('Yogdan data; ', Resp);
+        setYogdanData(Resp);
+      });
+    };
+
+    getYogdanData();
+  }, [handleGetYogdan]);
 
   // filteration by DD selected value
   const filterData: BanshaYogdanInterface[] =
     DDSelectedValue === 'All'
       ? yogdanData
       : yogdanData.filter(
-        (item, _) => item.type.toLowerCase() === DDSelectedValue.toLowerCase(),
-      );
+          (item, _) =>
+            item.type.toLowerCase() === DDSelectedValue.toLowerCase(),
+        );
 
+  // Loading
   if (loading) {
-    return <Loader />
+    return <Loader />;
+  }
+
+  // error
+  if (error) {
+    return (
+      <SafeAreaView>
+        <ApiError message={error} />
+      </SafeAreaView>
+    );
   }
 
   return (
@@ -132,9 +143,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
   },
-  FlatListContainer: { marginVertical: 10 },
-  FlatlistContents: { marginBottom: '8%' },
-  FlatlistFooter: { marginBottom: '6%' },
+  FlatListContainer: {marginVertical: 10},
+  FlatlistContents: {marginBottom: '8%'},
+  FlatlistFooter: {marginBottom: '6%'},
   AddYoganBtn: {
     position: 'absolute',
     bottom: '4%',
