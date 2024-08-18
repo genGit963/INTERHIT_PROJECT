@@ -18,13 +18,13 @@ end
 node_require('react-native/scripts/react_native_pods.rb')
 node_require('react-native-permissions/scripts/setup.rb')
 
-# other setup
+
 platform :ios, min_ios_version_supported
 prepare_react_native_project!
 
 # devices access and services permission setup
 
-# ⬇️ uncomment wanted permissions
+# uncomment wanted permissions
 setup_permissions([
   # 'AppTrackingTransparency',
   # 'Bluetooth',
@@ -41,7 +41,7 @@ setup_permissions([
   # 'Motion',
   # 'Notifications',
   'PhotoLibrary',
-  'PhotoLibraryAddOnly',
+  # 'PhotoLibraryAddOnly',
   # 'Reminders',
   # 'Siri',
   # 'SpeechRecognition',

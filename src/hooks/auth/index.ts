@@ -42,18 +42,16 @@ export const useSignUp = () => {
     setLoading(true);
     setError(undefined);
     try {
-      const Response = await AUTH_SERVICE.signup(signUpData)
-        if (Response) {
-          console.log('sign successs res: ', Response.data);
-          
-          const otpResponse = await AUTH_SERVICE.requestOTP(signUpData.phone)
-          if(otpResponse){
-            console.log("otp response: ", otpResponse.data)
-            return {...Response.data, phone: signUpData.phone};
-          }
-          
+      const Response = await AUTH_SERVICE.signup(signUpData);
+      if (Response) {
+        console.log('sign successs res: ', Response.data);
+
+        const otpResponse = await AUTH_SERVICE.requestOTP(signUpData.phone);
+        if (otpResponse) {
+          console.log('otp response: ', otpResponse.data);
+          return {...Response.data, phone: signUpData.phone};
         }
-  
+      }
     } catch (err) {
       setError('Sign Up Failed!');
       console.log('Failed error: ', err);
@@ -75,13 +73,11 @@ export const useVerifyOTP = () => {
     setLoading(true);
     setError(undefined);
     try {
-      const Response = await AUTH_SERVICE.verifyOTP(otpData)
-        if (Response) {
-          console.log('OTP verification response: ', Response.data);
-          return Response.data;
-          
-        }
-  
+      const Response = await AUTH_SERVICE.verifyOTP(otpData);
+      if (Response) {
+        console.log('OTP verification response: ', Response.data);
+        return Response.data;
+      }
     } catch (err) {
       setError('OTP verification failed!');
       console.log('Failed error: ', err);
