@@ -13,7 +13,10 @@ export const AlekhZSchema = z.object({
   body: z.string().min(1, {message: 'Write Alekh is required'}),
   title: z.string().min(1, {message: 'Title required'}),
   image: z.string(),
+<<<<<<< HEAD
 >>>>>>> 9cd9898 (Permission setup to iOS)
+=======
+>>>>>>> main
 });
 
 export type AlekhZType = z.infer<typeof AlekhZSchema>;
