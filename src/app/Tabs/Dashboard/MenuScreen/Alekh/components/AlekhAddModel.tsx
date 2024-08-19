@@ -125,9 +125,7 @@ const AlekhAddModal = ({
               onPress={handleSubmit(onSubmit)}
               style={styles.SubmitBtn}
             />
-            {error && <ApiError message={error} />}
           </ScrollView>
-          <BottomSpace spaceHeight={'4%'} />
         </View>
       </View>
     </Modal>

@@ -59,7 +59,6 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({navigation}) => {
     const getLiteratureData = async () => {
       await handleGetLiterature().then((Response) => {
         setLiteratureData(Response);
-        // console.log('getLIterature Data: ', Response);
       });
     };
     getLiteratureData();
@@ -68,7 +67,7 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({navigation}) => {
   if (loading) {
     return (
       <SafeAreaView>
-        <ThemedText>Loading....</ThemedText>
+        <ThemedText>Loading.... {loading}</ThemedText>
       </SafeAreaView>
     );
   }
@@ -76,6 +75,7 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({navigation}) => {
   if (error) {
     return (
       <SafeAreaView>
+        <ThemedText>{error}</ThemedText>
         <ApiError message={error} />
       </SafeAreaView>
     );
@@ -94,24 +94,23 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({navigation}) => {
         </View>
 
         {/* Literature Card Contents */}
-        {literatureData.length > 0 && (
-          <FlatList
-            initialNumToRender={5}
-            data={literatureData}
-            contentContainerStyle={styles.Flatlist}
-            showsVerticalScrollIndicator={false}
-            renderItem={(item) => (
-              <LiteratureCard
-                callbackHandlePress={handleLiteratureView}
-                literature={item.item}
-              />
-            )}
-            ListEmptyComponent={<EmptyFlatList message="No Literatures" />}
-            keyExtractor={(item) => item._id}
-            ListFooterComponent={<BottomSpace spaceHeight={100} />}
-            ListFooterComponentStyle={styles.FlatlistFooter}
-          />
-        )}
+
+        <FlatList
+          initialNumToRender={5}
+          data={literatureData ? literatureData : []}
+          contentContainerStyle={styles.Flatlist}
+          showsVerticalScrollIndicator={false}
+          renderItem={(item) => (
+            <LiteratureCard
+              callbackHandlePress={handleLiteratureView}
+              literature={item.item}
+            />
+          )}
+          ListEmptyComponent={<EmptyFlatList message="No Literatures" />}
+          keyExtractor={(item) => item._id}
+          ListFooterComponent={<BottomSpace spaceHeight={100} />}
+          ListFooterComponentStyle={styles.FlatlistFooter}
+        />
 
         {/* Literature Detail View Modal */}
         {isLiteratureViewVisible && (

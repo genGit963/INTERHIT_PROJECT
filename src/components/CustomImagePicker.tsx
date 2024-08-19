@@ -16,7 +16,7 @@ import {
 import {checkPermission, requestPermission} from '../utils/permissions';
 import {Colors} from '../constants/Color';
 import {ThemedText} from './ThemedText';
-import '../utils/truncateFilename';
+
 interface ImagePickerComponentProps {
   control: Control<any>;
   errors: FieldErrors;
@@ -36,38 +36,39 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
   const [imageUri, setImageUri] = useState<string | undefined>('');
 
   const handleImageUpload = async (onChange: (value: string) => void) => {
-    const imagePickerLauncher = () => {
+    const imagePickerLauncher = async () => {
       const mediaOptions: ImageLibraryOptions = {
         mediaType: 'photo',
         selectionLimit: 1,
       };
-      launchImageLibrary(mediaOptions, (response) => {
+      await launchImageLibrary(mediaOptions, (response) => {
         if (response.didCancel) {
           console.log('user canceled to upload new photo');
         } else if (response.assets) {
           const {uri, fileName} = response.assets[0];
-          setFilename(fileName?.truncateFilename(20));
+          console.log('launchImageLibrary  res: ', response.assets);
+          setFilename(fileName);
           setImageUri(uri);
           onChange(String(uri) || '');
         }
       });
     };
     //checking for permission first
-    await checkPermission(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE).then(
-      (res) => {
-        if (!res) {
-          requestPermission(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE).then(
-            (grantedResponse) => {
-              if (grantedResponse) {
-                imagePickerLauncher();
-              }
-            },
-          );
-        } else {
-          imagePickerLauncher();
-        }
-      },
-    );
+    const permission =
+      Platform.OS === 'ios'
+        ? PERMISSIONS.IOS.PHOTO_LIBRARY
+        : PERMISSIONS.ANDROID.READ_MEDIA_IMAGES;
+    await checkPermission(permission).then((res) => {
+      if (!res) {
+        requestPermission(permission).then((grantedResponse) => {
+          if (grantedResponse) {
+            imagePickerLauncher();
+          }
+        });
+      } else {
+        imagePickerLauncher();
+      }
+    });
   };
 
   return (

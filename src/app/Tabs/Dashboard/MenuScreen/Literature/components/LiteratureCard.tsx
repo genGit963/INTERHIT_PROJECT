@@ -1,11 +1,11 @@
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { ThemedText } from '../../../../../../components/ThemedText';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {ThemedText} from '../../../../../../components/ThemedText';
 
-import { Colors } from '../../../../../../constants/Color';
+import {Colors} from '../../../../../../constants/Color';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
-import { LiteratureResInterface } from '../../../../../../schema/tabs/dashboard/literature.schema';
-import "../../../../../../utils/stringPrototype"
+import {LiteratureResInterface} from '../../../../../../schema/tabs/dashboard/literature.schema';
+import {truncateContent} from '../../../../../../utils/stringPrototype';
 
 type LiteratureCardPropsTypes = {
   literature: LiteratureResInterface;
@@ -34,7 +34,7 @@ const LiteratureCard: React.FC<LiteratureCardPropsTypes> = ({
           </ThemedText>
         </View>
         <ThemedText type="default" style={styles.Detail}>
-          {literature.content.truncateContent(40)}...
+          {truncateContent(literature.content, 36)}...
         </ThemedText>
       </View>
     </TouchableOpacity>
