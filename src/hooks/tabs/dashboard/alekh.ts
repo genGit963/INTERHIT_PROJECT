@@ -1,7 +1,6 @@
 // alekhs
 import {useCallback, useState} from 'react';
 import DASHBOARD_SERVICES from '../../../services/tabs/dashboard';
-import {AlekhZType} from '../../../schema/tabs/dashboard/alekh.schema';
 
 export const useGetAlekhs = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,21 +27,21 @@ export const useGetAlekhs = () => {
 };
 
 export const usePostAlekhs = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | undefined>();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handlePostAlekhs = useCallback(async (alekh: AlekhZType) => {
+  const handlePostAlekhs = useCallback(async (formData: FormData) => {
     setLoading(true);
-    setError(undefined);
+    setError(null);
     try {
-      await DASHBOARD_SERVICES.postAlekhs(alekh).then(async (Response) => {
-        console.log('postAlekhs: ', Response.data);
-        return Response.data;
-      });
+      const response = await DASHBOARD_SERVICES.postAlekhs(formData);
+      if (response) {
+        console.log('\npostAlekhs hook : ', response.data);
+        return response.data;
+      }
     } catch (err) {
-      setError('Post Alekhs Failed !');
-      console.log('Failed error: ', err);
-      return null;
+      setError('Post Alekh Failed !! ');
+      console.log('post alekh: ' + err);
     } finally {
       setLoading(false);
     }

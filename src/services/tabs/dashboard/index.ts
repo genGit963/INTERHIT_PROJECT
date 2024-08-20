@@ -1,4 +1,3 @@
-import {AlekhZType} from '../../../schema/tabs/dashboard/alekh.schema';
 import {LiteratureZType} from '../../../schema/tabs/dashboard/literature.schema';
 import {API_PRIVATE_SERVICE} from '../../config';
 
@@ -11,14 +10,15 @@ const DASHBOARD_SERVICES = {
     });
   },
 
-  postAlekhs: async (alekh: AlekhZType) => {
+  postAlekhs: async (alekh: FormData) => {
+    console.log('post Alekhs ep:', alekh);
     return await API_PRIVATE_SERVICE.request({
       url: '/user/aalekh',
       method: 'POST',
+      data: alekh,
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-      data: alekh,
     });
   },
 

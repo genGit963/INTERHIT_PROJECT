@@ -1,10 +1,14 @@
-// AlekhAddModal.tsx
 import React from 'react';
-import {Modal, StyleSheet, View, ScrollView, Platform} from 'react-native';
-import supplyShadowEffect from '../../../../../../utils/Shadow';
+import {
+  Modal,
+  StyleSheet,
+  View,
+  ScrollView,
+  Platform,
+  Alert,
+} from 'react-native';
 import {ThemedText} from '../../../../../../components/ThemedText';
 import {Colors} from '../../../../../../constants/Color';
-import BottomSpace from '../../../../../../components/BottomSpace';
 import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {
@@ -16,6 +20,7 @@ import HeroButton from '../../../../../../components/HeroButton';
 import CustomImagePickerComponent from '../../../../../../components/CustomImagePicker';
 import {usePostAlekhs} from '../../../../../../hooks/tabs/dashboard/alekh';
 import ApiError from '../../../../../../components/api/ApiError';
+import {Asset} from 'react-native-image-picker';
 
 const AlekhAddModal = ({
   isVisible,
@@ -33,16 +38,35 @@ const AlekhAddModal = ({
   });
 
   const {loading, error, handlePostAlekhs} = usePostAlekhs();
+
   const onSubmit = async (data: AlekhZType) => {
-    console.log('alekh data: ', data);
+    console.log('handlePostAlekhs data: ', data);
+    const formData = new FormData();
 
-    await handlePostAlekhs(data).then((Response) => {
-      console.log('postAlekhRes: ', Response);
-    });
-
-    if (!error) {
-      modalVisibile(false);
+    if (data.image) {
+      const image = data.image as unknown as Asset;
+      formData.append('image', {
+        uri: image.uri,
+        name: image.fileName,
+        type: image.type,
+      } as any);
     }
+
+    formData.append('title', data.title);
+    formData.append('desc', data.desc);
+    formData.append('author', data.author);
+    formData.append('body', data.body);
+
+    const response = await handlePostAlekhs(formData);
+
+    if (response) {
+      console.log('postAlekhRes: ', response);
+      Alert.alert('Post Alekh', 'Alekh is posted successfully');
+    }
+
+    // if (!error) {
+    //   modalVisibile(false);
+    // }
   };
 
   return (
@@ -55,21 +79,17 @@ const AlekhAddModal = ({
       }}>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
-          {/* Cancel btn */}
           <HeroButton
             btnText="Cancel"
             varient="cancel"
             onPress={() => modalVisibile(false)}
           />
 
-          {/* Content View */}
           <ScrollView
             style={styles.ScrollContainer}
-            contentContainerStyle={{}}
             showsVerticalScrollIndicator={false}>
             <ThemedText type="subtitle">Add Alekh</ThemedText>
 
-            {/* image upload */}
             <CustomImagePickerComponent
               label="Upload Image"
               isRequired
@@ -77,7 +97,6 @@ const AlekhAddModal = ({
               controllerName="image"
               control={control}
             />
-            {/* <UploadImage /> */}
 
             <CustomTextInput
               name="title"
@@ -117,7 +136,6 @@ const AlekhAddModal = ({
               error={errors.body}
             />
 
-            {/* Submit Button */}
             {error && <ApiError message={error} />}
             <HeroButton
               disabled={loading}
@@ -136,7 +154,6 @@ const styles = StyleSheet.create({
   ModelContainer: {
     height: '85%',
     width: '100%',
-    margin: 'auto',
     position: 'absolute',
     bottom: -5,
     borderTopRightRadius: 30,
@@ -148,30 +165,21 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 16,
     height: '100%',
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    ...supplyShadowEffect({
-      X_off: 0,
-      Y_off: 0,
-      Radius: 10,
-      Color: '#000',
-      Opacity: 0.5,
-      Elevation: 10,
-    }),
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+    position: 'relative',
   },
-
   ScrollContainer: {
     width: '100%',
-    marginBottom: 50,
-    // backgroundColor: 'red',
-    // borderWidth: 2,
+    marginBottom: 10,
   },
-  CancelButton: {width: '100%', alignItems: 'flex-end'},
+  writeAlekh: {
+    height: 150,
+  },
   SubmitBtn: {
-    borderRadius: 10,
-    marginTop: 20,
+    marginTop: Platform.OS === 'android' ? 20 : 10,
+    marginBottom: Platform.OS === 'android' ? 70 : 30,
   },
-  writeAlekh: {height: Platform.OS === 'ios' ? 100 : 'auto'},
 });
 
 export default AlekhAddModal;
