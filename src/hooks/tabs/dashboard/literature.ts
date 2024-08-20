@@ -22,6 +22,7 @@ export const useGetLiterature = () => {
       return null;
     } finally {
       setLoading(false);
+      setError(undefined);
     }
   }, []);
 

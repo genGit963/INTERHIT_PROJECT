@@ -1,21 +1,20 @@
 // AlekhAddModal.tsx
-import React, { useState } from 'react';
-import { Modal, StyleSheet, View, ScrollView, Platform } from 'react-native';
+import React from 'react';
+import {Modal, StyleSheet, View, ScrollView, Platform} from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
-import { ThemedText } from '../../../../../../components/ThemedText';
-import { Colors } from '../../../../../../constants/Color';
+import {ThemedText} from '../../../../../../components/ThemedText';
+import {Colors} from '../../../../../../constants/Color';
 import BottomSpace from '../../../../../../components/BottomSpace';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 import {
   AlekhZType,
   AlekhZSchema,
 } from '../../../../../../schema/tabs/dashboard/alekh.schema';
 import CustomTextInput from '../../../../../../components/CustomInput';
 import HeroButton from '../../../../../../components/HeroButton';
-import UploadImage from './UploadImage';
 import CustomImagePickerComponent from '../../../../../../components/CustomImagePicker';
-import { usePostAlekhs } from '../../../../../../hooks/tabs/dashboard/alekh';
+import {usePostAlekhs} from '../../../../../../hooks/tabs/dashboard/alekh';
 import ApiError from '../../../../../../components/api/ApiError';
 
 const AlekhAddModal = ({
@@ -25,22 +24,21 @@ const AlekhAddModal = ({
   isVisible: boolean;
   modalVisibile: (val: boolean) => void;
 }) => {
-
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm<AlekhZType>({
     resolver: zodResolver(AlekhZSchema),
   });
 
-  const { loading, error, handlePostAlekhs } = usePostAlekhs()
+  const {loading, error, handlePostAlekhs} = usePostAlekhs();
   const onSubmit = async (data: AlekhZType) => {
     console.log('alekh data: ', data);
 
     await handlePostAlekhs(data).then((Response) => {
-      console.log("postAlekhRes: ", Response)
-    })
+      console.log('postAlekhRes: ', Response);
+    });
 
     if (!error) {
       modalVisibile(false);
@@ -72,7 +70,13 @@ const AlekhAddModal = ({
             <ThemedText type="subtitle">Add Alekh</ThemedText>
 
             {/* image upload */}
-            <CustomImagePickerComponent label='Upload Image' isRequired errors={errors} controllerName='image' control={control} />
+            <CustomImagePickerComponent
+              label="Upload Image"
+              isRequired
+              errors={errors}
+              controllerName="image"
+              control={control}
+            />
             {/* <UploadImage /> */}
 
             <CustomTextInput
@@ -117,12 +121,11 @@ const AlekhAddModal = ({
             {error && <ApiError message={error} />}
             <HeroButton
               disabled={loading}
-              btnText={loading ? "Loading..." : 'Submit'}
+              btnText={'Submit'}
               onPress={handleSubmit(onSubmit)}
               style={styles.SubmitBtn}
             />
           </ScrollView>
-          <BottomSpace spaceHeight={'4%'} />
         </View>
       </View>
     </Modal>
@@ -159,16 +162,16 @@ const styles = StyleSheet.create({
 
   ScrollContainer: {
     width: '100%',
-    marginBottom: 50
+    marginBottom: 50,
     // backgroundColor: 'red',
     // borderWidth: 2,
   },
-  CancelButton: { width: '100%', alignItems: 'flex-end' },
+  CancelButton: {width: '100%', alignItems: 'flex-end'},
   SubmitBtn: {
     borderRadius: 10,
     marginTop: 20,
   },
-  writeAlekh: { height: Platform.OS === 'ios' ? 100 : 'auto' },
+  writeAlekh: {height: Platform.OS === 'ios' ? 100 : 'auto'},
 });
 
 export default AlekhAddModal;
