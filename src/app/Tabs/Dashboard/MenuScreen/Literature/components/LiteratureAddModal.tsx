@@ -7,13 +7,12 @@ import { Colors } from '../../../../../../constants/Color';
 import BottomSpace from '../../../../../../components/BottomSpace';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import CustomTextInput from '../../../../../../components/CustomInput';
-import {
-  literatureSchema,
-  LiteratureSchemaType,
-} from '../../../../../../schema/tabs/dashboard/literature.schema';
 import HeroButton from '../../../../../../components/HeroButton';
+import {
+  literatureZSchema,
+  LiteratureZType,
+} from '../../../../../../schema/tabs/dashboard/literature.schema';
 
 const LiteratureAddModal = ({
   isVisible,
@@ -26,11 +25,11 @@ const LiteratureAddModal = ({
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<LiteratureSchemaType>({
-    resolver: zodResolver(literatureSchema),
+  } = useForm<LiteratureZType>({
+    resolver: zodResolver(literatureZSchema),
   });
 
-  const onSubmit = (data: LiteratureSchemaType) => {
+  const onSubmit = (data: LiteratureZType) => {
     console.log('formdata: ', data);
     modalVisibile(false);
   };
@@ -98,7 +97,6 @@ const LiteratureAddModal = ({
               style={styles.writeLiterature}
               error={errors.content}
             />
-
 
             {/* Submit Button */}
             <HeroButton

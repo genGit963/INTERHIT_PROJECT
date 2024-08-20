@@ -1,3 +1,4 @@
+import React, {useState} from 'react';
 import {
   Image,
   Platform,
@@ -6,12 +7,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
 import {Control, Controller, FieldErrors} from 'react-hook-form';
 import {PERMISSIONS} from 'react-native-permissions';
 import {
   ImageLibraryOptions,
   launchImageLibrary,
+  Asset,
 } from 'react-native-image-picker';
 import {checkPermission, requestPermission} from '../utils/permissions';
 import {Colors} from '../constants/Color';
@@ -34,8 +35,11 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
 }) => {
   const [filename, setFilename] = useState<string | undefined>('');
   const [imageUri, setImageUri] = useState<string | undefined>('');
+  const [, setImageAsset] = useState<Asset | undefined>();
 
-  const handleImageUpload = async (onChange: (value: string) => void) => {
+  const handleImageUpload = async (
+    onChange: (value: Asset | undefined) => void,
+  ) => {
     const imagePickerLauncher = async () => {
       const mediaOptions: ImageLibraryOptions = {
         mediaType: 'photo',
@@ -43,17 +47,17 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
       };
       await launchImageLibrary(mediaOptions, (response) => {
         if (response.didCancel) {
-          console.log('user canceled to upload new photo');
+          console.log('User canceled the image selection');
         } else if (response.assets) {
-          const {uri, fileName} = response.assets[0];
-          console.log('launchImageLibrary  res: ', response.assets);
-          setFilename(fileName);
-          setImageUri(uri);
-          onChange(String(uri) || '');
+          const asset = response.assets[0];
+          setFilename(asset.fileName);
+          setImageUri(asset.uri);
+          setImageAsset(asset);
+          onChange(asset);
         }
       });
     };
-    //checking for permission first
+
     const permission =
       Platform.OS === 'ios'
         ? PERMISSIONS.IOS.PHOTO_LIBRARY
@@ -87,7 +91,7 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
         name={controllerName}
         render={({field: {onChange}}) => (
           <View style={styles.imagePickerBox}>
-            <Text style={[styles.filename]}>
+            <Text style={styles.filename}>
               {filename ? filename : 'eg: filename.jpg'}
             </Text>
             <TouchableOpacity onPress={() => handleImageUpload(onChange)}>
@@ -100,7 +104,7 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
       />
       {errors[controllerName] && (
         <Text style={styles.error}>
-          {errors[controllerName].message as string}
+          {errors[controllerName]?.message as string}
         </Text>
       )}
     </View>
@@ -140,7 +144,6 @@ const styles = StyleSheet.create({
   filename: {
     fontSize: 15,
     color: Colors.muteGray,
-    fontFamily: Platform.OS === 'ios' ? 'Poppins Regular' : 'PoppinsRegular',
   },
   error: {
     color: Colors.redMain,
