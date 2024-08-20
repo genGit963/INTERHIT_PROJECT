@@ -1,8 +1,9 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {PieChart} from 'react-native-gifted-charts';
-import {ThemedText} from '../../../../components/ThemedText';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import React, { useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { PieChart } from 'react-native-gifted-charts';
+import { ThemedText } from '../../../../components/ThemedText';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { useGetPopByProvince } from '../../../../hooks/tabs/overview/province';
 
 const data = [
   {
@@ -43,6 +44,20 @@ const data = [
 ];
 
 const PieChartProvince: React.FC = () => {
+
+  const { loading, error, handleGetPopByProvince } = useGetPopByProvince()
+
+  useEffect(() => {
+    getPopByProvinceData()
+  }, [])
+
+  const getPopByProvinceData = async () => {
+    await handleGetPopByProvince().then((Resp) => {
+      console.log("Pop by district resp: ", Resp)
+    })
+  }
+
+
   return (
     <View style={styles.PieContainer}>
       <ThemedText type="semiBold" style={styles.PieTitle}>
@@ -52,7 +67,7 @@ const PieChartProvince: React.FC = () => {
       <View style={styles.legendContainer}>
         {data.map((item, index) => (
           <View key={index} style={styles.legendItem}>
-            <View style={[styles.legendColor, {backgroundColor: item.color}]} />
+            <View style={[styles.legendColor, { backgroundColor: item.color }]} />
             <ThemedText style={styles.legendText}>{item.text}</ThemedText>
           </View>
         ))}

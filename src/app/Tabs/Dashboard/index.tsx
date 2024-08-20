@@ -32,7 +32,10 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
           contentContainerStyle={styles.ScrollContent}
           showsVerticalScrollIndicator={false}>
           {/* caursol */}
-          <Caursol />
+          <View style={styles.carousel}>
+            <Caursol />
+          </View>
+
           <Image
             source={require('../../../assets/images/Ellipse.png')}
             style={styles.MiddleBG}
@@ -116,4 +119,8 @@ const styles = StyleSheet.create({
   FlexText: {
     textAlign: 'center',
   },
+  carousel: {
+    width: "100%",
+    height: 160
+  }
 });

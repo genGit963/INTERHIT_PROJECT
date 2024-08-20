@@ -1,12 +1,12 @@
 // LiteratureAddModal.tsx
 import React from 'react';
-import {Modal, StyleSheet, View, ScrollView} from 'react-native';
+import { Modal, StyleSheet, View, ScrollView } from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
-import {ThemedText} from '../../../../../../components/ThemedText';
-import {Colors} from '../../../../../../constants/Color';
+import { ThemedText } from '../../../../../../components/ThemedText';
+import { Colors } from '../../../../../../constants/Color';
 import BottomSpace from '../../../../../../components/BottomSpace';
-import {useForm} from 'react-hook-form';
-import {zodResolver} from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import CustomTextInput from '../../../../../../components/CustomInput';
 import {
@@ -25,7 +25,7 @@ const LiteratureAddModal = ({
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm<LiteratureSchemaType>({
     resolver: zodResolver(literatureSchema),
   });
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     // borderWidth: 2,
   },
-  SubmitBtn: {marginVertical: 30},
+  SubmitBtn: { marginVertical: 30 },
   writeLiterature: {
     height: 100,
   },

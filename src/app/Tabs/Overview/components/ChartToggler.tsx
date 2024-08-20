@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {ThemedText} from '../../../../components/ThemedText';
-import {Colors} from '../../../../constants/Color';
+import React, { useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ThemedText } from '../../../../components/ThemedText';
+import { Colors } from '../../../../constants/Color';
 
 // types
 type ChartTogglerProps = {

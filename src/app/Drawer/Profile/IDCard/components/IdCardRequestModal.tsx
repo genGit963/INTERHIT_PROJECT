@@ -16,6 +16,8 @@ import {
   IdCardZSchema,
   IdCardZType,
 } from '../../../../../schema/drawer/profile/id-card.schema';
+import CustomImagePickerComponent from '../../../../../components/CustomImagePicker';
+import { useRequestIdCard } from '../../../../../hooks/drawer/profile/idCard';
 
 type IDCardRequestModalProps = {
   isVisible: boolean;
@@ -34,9 +36,18 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
     resolver: zodResolver(IdCardZSchema),
   });
 
-  const onSubmit = (data: IdCardZType) => {
+  const { loading, error, handleRequestIdCard } = useRequestIdCard()
+  const onSubmit = async (data: IdCardZType) => {
     console.log('id card: ', data);
-    modalVisibile(false);
+    await handleRequestIdCard(data).then((Resp) => {
+      if (Resp) {
+        console.log("Id card request successful")
+      }
+      else {
+        console.log("Request id card failed", Resp)
+      }
+    })
+    // modalVisibile(false);
   };
 
   return (
@@ -70,6 +81,7 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
               error={errors.full_name}
             />
 
+            <CustomImagePickerComponent isRequired control={control} errors={errors} label='Upload your image' controllerName='image' />
             {/* <CustomDatePicker
               name="dateOfBirth"
               control={control}
@@ -199,6 +211,7 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
 
             {/* Submit Button */}
             <HeroButton btnText="Submit" onPress={handleSubmit(onSubmit)} />
+            {error && <ThemedText>{error}</ThemedText>}
             <BottomSpace spaceHeight={'10%'} />
           </ScrollView>
         </View>

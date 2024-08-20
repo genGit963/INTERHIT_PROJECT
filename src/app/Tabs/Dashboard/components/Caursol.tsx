@@ -1,15 +1,22 @@
-import {StyleSheet, ImageBackground, View} from 'react-native';
+import { StyleSheet, ImageBackground, View, FlatList, Image } from 'react-native';
 import React from 'react';
-import {ThemedText} from '../../../../components/ThemedText';
+import { ThemedText } from '../../../../components/ThemedText';
 
-const Caursol = () => {
-  const image = {
-    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCUJr0DxQCv1qjcqhOLDl0C6MR3Rk762KQ-w&s',
-  };
+interface CarouselInterface {
+  id: string;
+  title: string;
+  uri: string;
+}
+
+type RenderItemProps = {
+  item: CarouselInterface;
+};
+
+const RenderItem: React.FC<RenderItemProps> = ({ item }) => {
   return (
-    <View style={styles.Container}>
+    <View>
       <ImageBackground
-        source={image}
+        source={{ uri: item.uri }}
         imageStyle={styles.BackImage}
         style={styles.ImageBackground}>
         <View style={styles.TextView}>
@@ -25,17 +32,38 @@ const Caursol = () => {
   );
 };
 
+const Caursol = () => {
+  return (
+    // <View style={styles.Container}>
+    <FlatList
+      style={styles.Flatlist}
+      contentContainerStyle={styles.FlatListContent}
+      data={image}
+      renderItem={({ item }) => <RenderItem item={item} />}
+      keyExtractor={(item, index) => item.id}
+      horizontal
+      pagingEnabled
+    />
+    // </View>
+  );
+};
+
 export default Caursol;
 
 const styles = StyleSheet.create({
-  Container: {
-    marginVertical: 16,
-    height: 150,
-    width: '100%',
+  Flatlist: {
+    padding: 4,
+  },
+  FlatListContent: {
+
+    gap: 10,
+    borderWidth: 1
   },
   ImageBackground: {
     flex: 1,
+    width: "100%",
     justifyContent: 'center',
+    alignItems: 'center',
   },
   BackImage: {
     borderRadius: 10,
@@ -55,5 +83,33 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 18,
   },
-  Des: {fontSize: 16, color: '#fffffa'},
+  Des: { fontSize: 16, color: '#fffffa' },
 });
+
+let image: CarouselInterface[] = [
+  {
+    id: '1',
+    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCUJr0DxQCv1qjcqhOLDl0C6MR3Rk762KQ-w&s',
+    title: 'Vawan Nirman',
+  },
+  {
+    id: '2',
+    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCUJr0DxQCv1qjcqhOLDl0C6MR3Rk762KQ-w&s',
+    title: 'Vawan Nirman',
+  },
+  {
+    id: '3',
+    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCUJr0DxQCv1qjcqhOLDl0C6MR3Rk762KQ-w&s',
+    title: 'Vawan Nirman',
+  },
+  {
+    id: '4',
+    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCUJr0DxQCv1qjcqhOLDl0C6MR3Rk762KQ-w&s',
+    title: 'Vawan Nirman',
+  },
+  {
+    id: '5',
+    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCUJr0DxQCv1qjcqhOLDl0C6MR3Rk762KQ-w&s',
+    title: 'Vawan Nirman',
+  },
+];

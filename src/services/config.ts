@@ -30,7 +30,7 @@ export const API_PRIVATE_SERVICE = axios.create({
   headers: {Accept: 'application/json'},
 });
 
-// Add an interceptor to add the Authorization header after resolving the token
+// Add an interceptor to add the Authsorization header after resolving the token
 API_PRIVATE_SERVICE.interceptors.request.use(
   async (config) => {
     const token = await getUserToken();

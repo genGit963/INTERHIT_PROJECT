@@ -1,13 +1,13 @@
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import {ThemedText} from '../../../../../components/ThemedText';
+import { ThemedText } from '../../../../../components/ThemedText';
 import HeroButton from '../../../../../components/HeroButton';
 
 type NoIDCardProps = {
   callBackIDCardReqModalVisible: (val: boolean) => void;
 };
 
-const NoIDCard: React.FC<NoIDCardProps> = ({callBackIDCardReqModalVisible}) => {
+const NoIDCard: React.FC<NoIDCardProps> = ({ callBackIDCardReqModalVisible }) => {
   return (
     <View>
       <ThemedText style={styles.NoIDText}>
