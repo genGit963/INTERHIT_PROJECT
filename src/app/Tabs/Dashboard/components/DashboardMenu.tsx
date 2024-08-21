@@ -1,9 +1,9 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import React from 'react';
-import {ThemedText} from '../../../../components/ThemedText';
-import {menuScreenData} from '../menu-data';
-import {Colors} from '../../../../constants/Color';
-import {AppScreenNavigationType} from '../../../../core/navigation-type';
+import { ThemedText } from '../../../../components/ThemedText';
+import { menuScreenData } from '../menu-data';
+import { Colors } from '../../../../constants/Color';
+import { AppScreenNavigationType } from '../../../../core/navigation-type';
 
 type DashboardMenuComponentProps = {} & AppScreenNavigationType;
 
@@ -40,23 +40,24 @@ export default DashboardMenuComponent;
 
 const styles = StyleSheet.create({
   Container: {
-    marginVertical: 0,
+    marginVertical: 4,
     zIndex: 2,
   },
   Title: {
     fontSize: 18,
+    marginBottom: 8
   },
   MenuContainer: {
     marginVertical: 6,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 24,
+    gap: 18,
     justifyContent: 'space-between',
   },
   MenuCard: {
-    height: 90,
-    width: 110,
+    height: 80,
+    width: 100,
     borderWidth: 1,
     borderColor: Colors.shadow,
     borderRadius: 10,
@@ -66,8 +67,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   MenuIcon: {
-    height: 30,
-    width: 30,
+    height: 26,
+    width: 26,
   },
   MenuLabel: {
     textAlign: 'center',

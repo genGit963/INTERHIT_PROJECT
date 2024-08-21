@@ -17,6 +17,7 @@ import {
 import CustomImagePickerComponent from '../../../../../components/CustomImagePicker';
 import { useClaimContribution } from '../../../../../hooks/drawer/profile/contribution';
 import { Asset } from 'react-native-image-picker';
+import ApiError from '../../../../../components/api/ApiError';
 
 type ContributionFormModalProps = {
   isVisible: boolean;
@@ -35,23 +36,25 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
     resolver: zodResolver(ContributionClaimZSchema),
   });
 
-  const { loading, error, handleClaimContribution } = useClaimContribution()
+  const { loading, error, handleClaimContribution } = useClaimContribution();
 
   const onSubmit = async (data: ContributionClaimType) => {
     console.log('contribution data: ', data);
 
     const formData = new FormData();
 
-    if (data.receipt_photo & data.contributor_image) {
+    if (data.receipt_photo) {
       const receipt_image = data.receipt_photo as unknown as Asset;
-      const contributor_image = data.contributor_image as unknown as Asset;
 
       formData.append('receipt_photo', {
         uri: receipt_image.uri,
         name: receipt_image.fileName,
         type: receipt_image.type,
       } as any);
+    }
 
+    if (data.contributor_image) {
+      const contributor_image = data.contributor_image as unknown as Asset;
       formData.append('contributor_image', {
         uri: contributor_image.uri,
         name: contributor_image.fileName,
@@ -68,11 +71,10 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
     const Resp = await handleClaimContribution(formData);
 
     if (Resp) {
-      console.log("Contribution claim successful", Resp)
-      Alert.alert("Contribution claim successful")
+      console.log('Contribution claim successful', Resp);
+      Alert.alert('Contribution claim successful');
       modalVisibile(false);
     }
-
   };
 
   return (
@@ -171,12 +173,29 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
             />
 
             {/* receipt photo and contributor_image left */}
-            <CustomImagePickerComponent isRequired label='Receipt Image' control={control} errors={errors} controllerName='receipt_photo' />
+            <CustomImagePickerComponent
+              isRequired
+              label="Receipt Image"
+              control={control}
+              errors={errors}
+              controllerName="receipt_photo"
+            />
 
-            <CustomImagePickerComponent isRequired label='Contributor Image' control={control} errors={errors} controllerName='contributor_image' />
+            <CustomImagePickerComponent
+              isRequired
+              label="Contributor Image"
+              control={control}
+              errors={errors}
+              controllerName="contributor_image"
+            />
 
             {/* Submit Button */}
-            <HeroButton btnText="Submit" onPress={handleSubmit(onSubmit)} />
+            <HeroButton
+              disabled={loading}
+              btnText={loading ? 'Loading...' : 'Submit'}
+              onPress={handleSubmit(onSubmit)}
+            />
+            {error && <ApiError message={error} />}
             <BottomSpace spaceHeight={'10%'} />
           </ScrollView>
         </View>

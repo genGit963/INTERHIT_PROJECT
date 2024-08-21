@@ -1,7 +1,7 @@
-import {View, StyleSheet} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import React from 'react';
-import {ThemedText} from '../../../../components/ThemedText';
-import {Colors} from '../../../../constants/Color';
+import { ThemedText } from '../../../../components/ThemedText';
+import { Colors } from '../../../../constants/Color';
 import BirthdaySvg from '../../../../assets/svg/gift_parcel.svg';
 import AnniversarySvg from '../../../../assets/svg/circled_heart.svg';
 import DeathSvg from '../../../../assets/svg/sad_emoji.svg';
@@ -58,7 +58,7 @@ export default TodayUpdate;
 
 const styles = StyleSheet.create({
   Container: {
-    marginVertical: 8,
+    marginVertical: 12,
   },
   Today: {
     fontSize: 18,
@@ -95,5 +95,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignItems: 'center',
   },
-  ReportDetail: {marginLeft: 4, paddingHorizontal: 6, alignItems: 'center'},
+  ReportDetail: { marginLeft: 4, paddingHorizontal: 6, alignItems: 'center' },
 });

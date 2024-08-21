@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {MergeRequestInterface} from '../../../../../schema/drawer/profile/mergeRequest.schema';
-import {ThemedText} from '../../../../../components/ThemedText';
-import {Colors} from '../../../../../constants/Color';
+import { StyleSheet, View } from 'react-native';
+import { MergeRequestInterface } from '../../../../../schema/drawer/profile/mergeRequest.schema';
+import { ThemedText } from '../../../../../components/ThemedText';
+import { Colors } from '../../../../../constants/Color';
 
 // props type
 
@@ -10,7 +10,7 @@ type MergeReqCardProps = {
   MergeReqData: MergeRequestInterface;
 };
 
-const MergeReqCard: React.FC<MergeReqCardProps> = ({MergeReqData}) => {
+const MergeReqCard: React.FC<MergeReqCardProps> = ({ MergeReqData }) => {
   return (
     <View style={styles.MergeReqCardView}>
       {/* Detail */}

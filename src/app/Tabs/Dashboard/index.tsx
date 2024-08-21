@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Image, Platform, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Image,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import Header from './components/Header';
 import Caursol from './components/Caursol';
 import TodayUpdate from './components/TodayUpdate';
@@ -60,7 +67,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
         source={require('../../../assets/images/Ellipse.png')}
         style={styles.BottomBG}
       />
-    </View >
+    </View>
   );
 };
 
@@ -120,7 +127,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   carousel: {
-    width: "100%",
-    height: 160
-  }
+    width: '100%',
+    height: 200,
+    marginVertical: 20,
+  },
 });

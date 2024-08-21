@@ -14,21 +14,21 @@ type RenderItemProps = {
 
 const RenderItem: React.FC<RenderItemProps> = ({ item }) => {
   return (
-    <View>
-      <ImageBackground
-        source={{ uri: item.uri }}
-        imageStyle={styles.BackImage}
-        style={styles.ImageBackground}>
-        <View style={styles.TextView}>
-          <ThemedText type="semiBold" style={styles.Title}>
-            भवन निर्माण
-          </ThemedText>
-          <ThemedText type="default" style={styles.Des}>
-            Organized By: गोदार थापा सेवा समाज दमक
-          </ThemedText>
-        </View>
-      </ImageBackground>
-    </View>
+
+    <ImageBackground
+      source={{ uri: item.uri }}
+      imageStyle={styles.BackImage}
+      style={styles.ImageBackground}>
+      <View style={styles.TextView}>
+        <ThemedText type="semiBold" style={styles.Title}>
+          भवन निर्माण
+        </ThemedText>
+        <ThemedText type="default" style={styles.Des}>
+          Organized By: गोदार थापा सेवा समाज दमक
+        </ThemedText>
+      </View>
+    </ImageBackground>
+
   );
 };
 

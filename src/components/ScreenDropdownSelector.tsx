@@ -1,16 +1,16 @@
 // This dropdown is for filter type and other selection on screen
 
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import { View, StyleSheet, ViewProps } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-import {ThemedText} from './ThemedText';
-import {Colors} from '../constants/Color';
+import { ThemedText } from './ThemedText';
+import { Colors } from '../constants/Color';
 
 // svg
 import DropDownSvg from '../assets/svg/chevron-right.svg';
 
-interface ScreenDropDownSelectorProps {
-  options: {label: string; value: string}[]; // Removed icon field
+interface ScreenDropDownSelectorProps extends ViewProps {
+  options: { label: string; value: string }[]; // Removed icon field
   defaultValue: string;
   callBackSetSelectedValue: (value: string) => void;
   ddViewWidth: number;
@@ -21,9 +21,11 @@ const ScreenDropDownSelector: React.FC<ScreenDropDownSelectorProps> = ({
   defaultValue,
   callBackSetSelectedValue,
   ddViewWidth,
+  style
 }) => {
+
   return (
-    <View style={[styles.inputContainer, {width: ddViewWidth}]}>
+    <View style={[styles.inputContainer, { width: ddViewWidth }, style]}>
       <SelectDropdown
         data={options}
         onSelect={(selectedItem, _) =>
@@ -50,7 +52,7 @@ const ScreenDropDownSelector: React.FC<ScreenDropDownSelectorProps> = ({
             style={[
               styles.dropdownItemStyle,
               // eslint-disable-next-line react-native/no-inline-styles
-              isSelected && {backgroundColor: '#D2D9DF'},
+              isSelected && { backgroundColor: '#D2D9DF' },
             ]}>
             <ThemedText style={styles.dropdownItemTxtStyle}>
               {item.label}
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
     color: '#151E26',
   },
   DDSvgOpen: {
-    transform: [{rotate: '180deg'}],
+    transform: [{ rotate: '180deg' }],
   },
   DDSvgClose: {
     alignItems: 'center',

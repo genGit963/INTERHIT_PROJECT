@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -12,16 +12,17 @@ import AlekhViewModal from './components/AlekhViewModal';
 import AlekhCard from './components/AlekhCard';
 import BottomSpace from '../../../../../components/BottomSpace';
 import EmptyFlatList from '../../../../../components/EmptyFlatList';
-import {Colors} from '../../../../../constants/Color';
+import { Colors } from '../../../../../constants/Color';
 import supplyShadowEffect from '../../../../../utils/Shadow';
 import AlekhAddModal from './components/AlekhAddModel';
-import {AppScreenNavigationType} from '../../../../../core/navigation-type';
+import { AppScreenNavigationType } from '../../../../../core/navigation-type';
 import AddAlekhSvg from '../../../../../assets/svg/solid-plus-circle.svg';
-import SearchInput, {SearchType} from '../../../../../components/SearchInput';
-import {useGenQuery} from '../../../../../hooks/gen-hooks/gen-query';
+import SearchInput, { SearchType } from '../../../../../components/SearchInput';
+import { useGenQuery } from '../../../../../hooks/gen-hooks/gen-query';
 import DASHBOARD_SERVICES from '../../../../../services/tabs/dashboard';
-import {ThemedText} from '../../../../../components/ThemedText';
+import { ThemedText } from '../../../../../components/ThemedText';
 import ApiError from '../../../../../components/api/ApiError';
+import Loader from '../../../../../components/Loader';
 
 // types and interface
 type AlekhScreenProps = {} & AppScreenNavigationType;
@@ -132,7 +133,7 @@ export interface AlekhInterface {
 // ];
 
 // ----------------- Alekh Screen ---------------------
-const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
+const AlekhScreen: React.FC<AlekhScreenProps> = ({ navigation }) => {
   // View Modal States
   const [selectedAlekh, setSelectedAlekh] = useState<
     AlekhInterface | undefined
@@ -155,17 +156,13 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
 
   //getAlekhs hooks
   // const getAlekhData = async () => await DASHBOARD_SERVICES.getAlekhs();
-  const {data, loading, error} = useGenQuery({
+  const { data, loading, error } = useGenQuery({
     queryFn: async () => await DASHBOARD_SERVICES.getAlekhs(),
     cacheTime: 6, // 6 minute cache
   });
 
   if (loading) {
-    return (
-      <SafeAreaView>
-        <ThemedText>Loading....</ThemedText>
-      </SafeAreaView>
-    );
+    return <Loader />
   }
 
   if (error) {
@@ -266,8 +263,8 @@ export const styles = StyleSheet.create({
     color: Colors.muteText,
     fontSize: 18,
   },
-  Flatlist: {marginBottom: '8%'},
-  FlatlistFooter: {marginBottom: '6%'},
+  Flatlist: { marginBottom: '8%' },
+  FlatlistFooter: { marginBottom: '6%' },
   AddAlekhButton: {
     position: 'absolute',
     bottom: '16%',
