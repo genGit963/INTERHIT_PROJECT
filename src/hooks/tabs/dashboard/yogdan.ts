@@ -26,3 +26,29 @@ export const useGetYogdan = () => {
 
   return {loading, error, handleGetYogdan};
 };
+
+export const usePostYogdan = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | undefined>();
+
+  const handlePostYogdan = useCallback(async (yogdanData: FormData) => {
+    setLoading(true);
+    setError(undefined);
+    try {
+      const getYogdanResp = await DASHBOARD_SERVICES.postYogdan(yogdanData);
+      if (getYogdanResp) {
+        return getYogdanResp.data;
+      } else {
+        setError('Post yogdan failed.');
+      }
+    } catch (err) {
+      setError('post Yogdan Failed !');
+      console.log('Failed error: ', err);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  return {loading, error, handlePostYogdan};
+};

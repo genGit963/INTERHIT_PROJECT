@@ -18,6 +18,7 @@ import {
 } from '../../../../../schema/drawer/profile/id-card.schema';
 import CustomImagePickerComponent from '../../../../../components/CustomImagePicker';
 import { useRequestIdCard } from '../../../../../hooks/drawer/profile/idCard';
+import { Asset } from 'react-native-image-picker';
 
 type IDCardRequestModalProps = {
   isVisible: boolean;
@@ -38,8 +39,32 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
 
   const { loading, error, handleRequestIdCard } = useRequestIdCard()
   const onSubmit = async (data: IdCardZType) => {
-    console.log('id card: ', data);
-    await handleRequestIdCard(data).then((Resp) => {
+
+    const formData = new FormData();
+
+    if (data.image) {
+      const image = data.image as unknown as Asset;
+      formData.append('image', {
+        uri: image.uri,
+        name: image.fileName,
+        type: image.type,
+      } as any);
+    }
+
+    formData.append("full_name", data.full_name);
+    formData.append("birth_date", data.birth_date);
+    formData.append("birth_place", data.birth_place);
+    formData.append("gender", data.gender);
+    formData.append('blood_group', data.blood_group);
+    formData.append('province', data.province);
+    formData.append('local', data.local);
+    formData.append('ward', data.ward);
+    formData.append("contact", data.contact);
+    formData.append("org_position", data.org_position);
+    formData.append("profession", data.profession);
+
+    console.log('id card: ', formData);
+    await handleRequestIdCard(formData).then((Resp) => {
       if (Resp) {
         console.log("Id card request successful")
       }
@@ -141,13 +166,16 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
               control={control}
               label="Province"
               options={[
-                { label: 'Province 1', value: 'Province 1' },
-                { label: 'Province 2', value: 'Province 2' },
-                { label: 'Province 3', value: 'Province 3' },
-                { label: 'Province 4', value: 'Province 4' },
-                { label: 'Province 5', value: 'Province 5' },
-                { label: 'Province 6', value: 'Province 6' },
-                { label: 'Province 7', value: 'Province 7' },
+                { label: 'कोशी प्रदेश', value: 'कोशी प्रदेश' },
+                { label: 'मधेश प्रदेश', value: 'मधेश प्रदेश' },
+                { label: 'बागमती प्रदेश', value: 'बागमती प्रदेश' },
+                { label: 'गण्डकी प्रदेश', value: 'गण्डकी प्रदेश' },
+                { label: 'लुम्बिनी प्रदेश', value: 'लुम्बिनी प्रदेश' },
+                { label: 'कर्णाली प्रदेश', value: 'कर्णाली प्रदेश' },
+                {
+                  label: 'सुदूर पश्चिमाञ्च प्रदेश',
+                  value: 'सुदूर पश्चिमाञ्च प्रदेश',
+                }
               ]}
               isRequired
             />
@@ -210,7 +238,7 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
             />
 
             {/* Submit Button */}
-            <HeroButton btnText="Submit" onPress={handleSubmit(onSubmit)} />
+            <HeroButton disabled={loading} btnText={loading ? "Loading..." : "Submit"} onPress={handleSubmit(onSubmit)} />
             {error && <ThemedText>{error}</ThemedText>}
             <BottomSpace spaceHeight={'10%'} />
           </ScrollView>

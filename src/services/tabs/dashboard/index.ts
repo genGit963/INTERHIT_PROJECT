@@ -1,4 +1,3 @@
-import {LiteratureZType} from '../../../schema/tabs/dashboard/literature.schema';
 import {API_PRIVATE_SERVICE} from '../../config';
 
 const DASHBOARD_SERVICES = {
@@ -30,14 +29,14 @@ const DASHBOARD_SERVICES = {
     });
   },
 
-  postLiterature: async (literature: LiteratureZType) => {
+  postLiterature: async (literature: FormData) => {
     return await API_PRIVATE_SERVICE.request({
       url: '/user/literature',
       method: 'POST',
+      data: literature,
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-      data: literature,
     });
   },
 
@@ -49,7 +48,7 @@ const DASHBOARD_SERVICES = {
     });
   },
 
-  //yogdan
+  //------------------yogdan--------------------
   getYogdan: async () => {
     return await API_PRIVATE_SERVICE.request({
       url: '/user/yogdan',
@@ -57,13 +56,24 @@ const DASHBOARD_SERVICES = {
     });
   },
 
-  //contribution
-  getContribution: async () => {
+  postYogdan: async (yogdanData: FormData) => {
     return await API_PRIVATE_SERVICE.request({
-      url: '/user/contribution',
-      method: 'GET',
+      url: '/user/yogdan',
+      method: 'POST',
+      data: yogdanData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     });
   },
+
+  //contribution
+  // getContribution: async () => {
+  //   return await API_PRIVATE_SERVICE.request({
+  //     url: '/user/contribution',
+  //     method: 'GET',
+  //   });
+  // },
   //   'https://api.thadaraiadhikari.com/user/aalekh?search=%20&verified=true'
 };
 

@@ -1,6 +1,20 @@
 // IdCardSchema.ts
 import * as z from 'zod';
 
+
+const imageFileTypes = [
+  'image/jpeg', // JPEG/JPG
+  'image/jpg', // JPEG/JPG
+  'image/png', // PNG
+  // 'image/gif', // GIF
+  // 'image/bmp', // BMP
+  // 'image/tiff', // TIFF
+  // 'image/webp', // WebP
+  // 'image/svg+xml', // SVG
+  // 'image/x-icon', // ICO
+  'image/heic', // HEIC
+];
+
 export const IdCardZSchema = z.object({
   full_name: z.string().min(1, { message: 'Full Name is required' }),
   birth_date: z.string().min(1, { message: 'Date of Birth is required' }),
@@ -16,7 +30,17 @@ export const IdCardZSchema = z.object({
   contact: z.string().min(10, { message: 'Contact must be at least 10 digits' }),
   org_position: z.string().min(1, { message: "Organizational post required" }),
   profession: z.string().optional(),
-  image: z.string()
+  image: z.any().refine(
+    (file) => {
+      if (!file || typeof file !== 'object') {
+        return false;
+      }
+      return imageFileTypes.includes(file.type);
+    },
+    {
+      message: 'Image must be a valid image file (jpg, jpeg, png, heic)',
+    },
+  ),
 });
 
 export type IdCardZType = z.infer<typeof IdCardZSchema>;

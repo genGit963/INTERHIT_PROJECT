@@ -3,10 +3,10 @@ import {IdCardZType} from '../../../schema/drawer/profile/id-card.schema';
 import {PROFILE_SERVICES} from '../../../services/drawer/profile/idCard';
 
 export const useRequestIdCard = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();
 
-  const handleRequestIdCard = useCallback(async (idCardData: IdCardZType) => {
+  const handleRequestIdCard = useCallback(async (idCardData: FormData) => {
     setLoading(true);
     setError(undefined);
     try {

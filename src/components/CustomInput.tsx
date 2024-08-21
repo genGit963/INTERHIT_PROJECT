@@ -8,9 +8,9 @@ import {
   Text,
   Platform,
 } from 'react-native';
-import {Controller} from 'react-hook-form';
-import {ThemedText} from './ThemedText';
-import {Colors} from '../constants/Color';
+import { Controller } from 'react-hook-form';
+import { ThemedText } from './ThemedText';
+import { Colors } from '../constants/Color';
 
 interface CustomTextInputProps extends TextInputProps {
   name: string;
@@ -37,7 +37,7 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
       <Controller
         control={control}
         name={name}
-        render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
           <>
             <TextInput
               style={[styles.input, style]}
@@ -67,6 +67,8 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   input: {
+
+
     borderWidth: 1,
     borderColor: '#ccc',
     backgroundColor: Colors.whiteTunedBG,

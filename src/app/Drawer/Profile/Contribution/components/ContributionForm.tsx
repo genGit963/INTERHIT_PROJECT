@@ -1,19 +1,22 @@
 // ContributionFormModal.tsx
 import React from 'react';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {Modal, ScrollView, StyleSheet, View, Alert} from 'react-native';
-import {useForm} from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Modal, ScrollView, StyleSheet, View, Alert } from 'react-native';
+import { useForm } from 'react-hook-form';
 import CustomTextInput from '../../../../../components/CustomInput';
 import HeroButton from '../../../../../components/HeroButton';
 import supplyShadowEffect from '../../../../../utils/Shadow';
-import {Colors} from '../../../../../constants/Color';
+import { Colors } from '../../../../../constants/Color';
 import CustomDropdownSelector from '../../../../../components/CustomDropdownSelector';
 import BottomSpace from '../../../../../components/BottomSpace';
-import {ThemedText} from '../../../../../components/ThemedText';
+import { ThemedText } from '../../../../../components/ThemedText';
 import {
   ContributionClaimType,
   ContributionClaimZSchema,
 } from '../../../../../schema/drawer/profile/contribution-claim.schema';
+import CustomImagePickerComponent from '../../../../../components/CustomImagePicker';
+import { useClaimContribution } from '../../../../../hooks/drawer/profile/contribution';
+import { Asset } from 'react-native-image-picker';
 
 type ContributionFormModalProps = {
   isVisible: boolean;
@@ -27,14 +30,49 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm<ContributionClaimType>({
     resolver: zodResolver(ContributionClaimZSchema),
   });
 
-  const onSubmit = (data: ContributionClaimType) => {
+  const { loading, error, handleClaimContribution } = useClaimContribution()
+
+  const onSubmit = async (data: ContributionClaimType) => {
     console.log('contribution data: ', data);
-    modalVisibile(false);
+
+    const formData = new FormData();
+
+    if (data.receipt_photo & data.contributor_image) {
+      const receipt_image = data.receipt_photo as unknown as Asset;
+      const contributor_image = data.contributor_image as unknown as Asset;
+
+      formData.append('receipt_photo', {
+        uri: receipt_image.uri,
+        name: receipt_image.fileName,
+        type: receipt_image.type,
+      } as any);
+
+      formData.append('contributor_image', {
+        uri: contributor_image.uri,
+        name: contributor_image.fileName,
+        type: contributor_image.type,
+      } as any);
+    }
+
+    formData.append('full_name', data.full_name);
+    formData.append('phone', data.phone);
+    formData.append('amount', data.amount);
+    formData.append('eventId', data.eventId);
+    formData.append('purpose', data.purpose);
+
+    const Resp = await handleClaimContribution(formData);
+
+    if (Resp) {
+      console.log("Contribution claim successful", Resp)
+      Alert.alert("Contribution claim successful")
+      modalVisibile(false);
+    }
+
   };
 
   return (
@@ -50,7 +88,7 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
           },
           {
             text: 'No',
-            onPress: () => {},
+            onPress: () => { },
           },
         ]);
       }}>
@@ -78,7 +116,7 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
               error={errors.full_name}
             />
 
-<CustomTextInput
+            <CustomTextInput
               name="phone"
               placeholder="Eg: 98XXXXXXXX"
               keyboardType="numeric"
@@ -112,14 +150,14 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
               error={errors.amount}
             />
 
-<CustomTextInput
+            <CustomTextInput
               name="eventId"
               placeholder="Eg: 4JQR56"
               keyboardType="numeric"
               inputMode="numeric"
               control={control}
               label="Event Id"
-              isRequired ={false}
+              isRequired={false}
               error={errors.eventId}
             />
 
@@ -133,6 +171,9 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
             />
 
             {/* receipt photo and contributor_image left */}
+            <CustomImagePickerComponent isRequired label='Receipt Image' control={control} errors={errors} controllerName='receipt_photo' />
+
+            <CustomImagePickerComponent isRequired label='Contributor Image' control={control} errors={errors} controllerName='contributor_image' />
 
             {/* Submit Button */}
             <HeroButton btnText="Submit" onPress={handleSubmit(onSubmit)} />
@@ -171,7 +212,7 @@ const styles = StyleSheet.create({
       Elevation: 10,
     }),
   },
-  FormTitle: {textAlign: 'left', width: '100%', fontSize: 18, marginBottom: 12},
+  FormTitle: { textAlign: 'left', width: '100%', fontSize: 18, marginBottom: 12 },
   ScrollContainer: {
     width: '100%',
     marginBottom: 50,

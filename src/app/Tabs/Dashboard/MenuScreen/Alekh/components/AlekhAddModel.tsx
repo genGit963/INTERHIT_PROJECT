@@ -7,10 +7,10 @@ import {
   Platform,
   Alert,
 } from 'react-native';
-import {ThemedText} from '../../../../../../components/ThemedText';
-import {Colors} from '../../../../../../constants/Color';
-import {useForm} from 'react-hook-form';
-import {zodResolver} from '@hookform/resolvers/zod';
+import { ThemedText } from '../../../../../../components/ThemedText';
+import { Colors } from '../../../../../../constants/Color';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   AlekhZType,
   AlekhZSchema,
@@ -18,9 +18,9 @@ import {
 import CustomTextInput from '../../../../../../components/CustomInput';
 import HeroButton from '../../../../../../components/HeroButton';
 import CustomImagePickerComponent from '../../../../../../components/CustomImagePicker';
-import {usePostAlekhs} from '../../../../../../hooks/tabs/dashboard/alekh';
+import { usePostAlekhs } from '../../../../../../hooks/tabs/dashboard/alekh';
 import ApiError from '../../../../../../components/api/ApiError';
-import {Asset} from 'react-native-image-picker';
+import { Asset } from 'react-native-image-picker';
 
 const AlekhAddModal = ({
   isVisible,
@@ -32,12 +32,12 @@ const AlekhAddModal = ({
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm<AlekhZType>({
     resolver: zodResolver(AlekhZSchema),
   });
 
-  const {loading, error, handlePostAlekhs} = usePostAlekhs();
+  const { loading, error, handlePostAlekhs } = usePostAlekhs();
 
   const onSubmit = async (data: AlekhZType) => {
     console.log('handlePostAlekhs data: ', data);
@@ -62,8 +62,8 @@ const AlekhAddModal = ({
     if (response) {
       console.log('postAlekhRes: ', response);
       Alert.alert('Post Alekh', 'Alekh is posted successfully');
+      modalVisibile(false)
     }
-
     // if (!error) {
     //   modalVisibile(false);
     // }
@@ -139,7 +139,7 @@ const AlekhAddModal = ({
             {error && <ApiError message={error} />}
             <HeroButton
               disabled={loading}
-              btnText={'Submit'}
+              btnText={loading ? "Loading..." : 'Submit'}
               onPress={handleSubmit(onSubmit)}
               style={styles.SubmitBtn}
             />

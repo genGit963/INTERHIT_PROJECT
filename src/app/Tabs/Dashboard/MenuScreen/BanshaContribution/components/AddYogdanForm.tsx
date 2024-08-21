@@ -1,19 +1,22 @@
 // AddYogdanModal.tsx
 import React from 'react';
-import {useForm} from 'react-hook-form';
-import {Modal, StyleSheet, View, ScrollView, Platform} from 'react-native';
+import { useForm } from 'react-hook-form';
+import { Modal, StyleSheet, View, ScrollView, Platform, Alert } from 'react-native';
 import {
   BanshaYogdanZSchema,
   BanshaYogdanZType,
 } from '../../../../../../schema/tabs/dashboard/bansha-yogdan.schema';
-import {zodResolver} from '@hookform/resolvers/zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import HeroButton from '../../../../../../components/HeroButton';
-import {ThemedText} from '../../../../../../components/ThemedText';
+import { ThemedText } from '../../../../../../components/ThemedText';
 import CustomTextInput from '../../../../../../components/CustomInput';
 import BottomSpace from '../../../../../../components/BottomSpace';
-import {Colors} from '../../../../../../constants/Color';
+import { Colors } from '../../../../../../constants/Color';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
 import CustomDropdownSelector from '../../../../../../components/CustomDropdownSelector';
+import CustomImagePickerComponent from '../../../../../../components/CustomImagePicker';
+import { usePostYogdan } from '../../../../../../hooks/tabs/dashboard/yogdan';
+import { Asset } from 'react-native-image-picker';
 
 // types
 type AddYogdanModalProps = {
@@ -28,14 +31,40 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm<BanshaYogdanZType>({
     resolver: zodResolver(BanshaYogdanZSchema),
   });
 
-  const onSubmit = (data: BanshaYogdanZType) => {
-    console.log('formdata: ', data);
-    modalVisibile(false);
+  const { loading, error, handlePostYogdan } = usePostYogdan()
+
+  const onSubmit = async (data: BanshaYogdanZType) => {
+    // console.log('formdata: ', data);
+
+    const formData = new FormData();
+
+    if (data.image) {
+      const image = data.image as unknown as Asset;
+      formData.append('image', {
+        uri: image.uri,
+        name: image.fileName,
+        type: image.type,
+      } as any);
+    }
+
+    formData.append('name', data.name);
+    formData.append('birthPlace', data.birthPlace);
+    formData.append('desc', data.desc);
+    formData.append('type', data.type);
+
+    const Resp = await handlePostYogdan(formData)
+    if (Resp) {
+      // console.log("BANSHA yogdan successful", Resp);
+      Alert.alert("successfully added yogdan")
+      modalVisibile(false);
+    }
+
+
   };
 
   return (
@@ -86,12 +115,14 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
               control={control}
               label="Yogan Type"
               options={[
-                {label: 'Political', value: 'Political'},
-                {label: 'Social', value: 'Social'},
-                {label: 'Other', value: 'Other'},
+                { label: 'POLITICAL', value: 'POLITICAL' },
+                { label: 'SOCIAL', value: 'SOCIAL' },
+                { label: 'OTHERS', value: 'OTHERS' },
               ]}
               isRequired
             />
+
+            <CustomImagePickerComponent isRequired label='Upload Image' control={control} errors={errors} controllerName='image' />
 
             <CustomTextInput
               name="desc"
@@ -106,7 +137,8 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
 
             {/* Submit Button */}
             <HeroButton
-              btnText={'Submit'}
+              disabled={loading}
+              btnText={loading ? "Loading..." : 'Submit'}
               onPress={handleSubmit(onSubmit)}
               style={styles.SubmitBtn}
             />
@@ -151,12 +183,12 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     // borderWidth: 2,
   },
-  CancelButton: {width: '100%', alignItems: 'flex-end'},
+  CancelButton: { width: '100%', alignItems: 'flex-end' },
   SubmitBtn: {
     borderRadius: 10,
     marginVertical: 30,
   },
-  Description: {height: Platform.OS === 'ios' ? 100 : 'auto'},
+  Description: { height: Platform.OS === 'ios' ? 100 : 'auto' },
 });
 
 export default AddYogdanModal;

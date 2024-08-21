@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   Platform,
@@ -7,16 +7,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Control, Controller, FieldErrors} from 'react-hook-form';
-import {PERMISSIONS} from 'react-native-permissions';
+import { Control, Controller, FieldErrors } from 'react-hook-form';
+import { PERMISSIONS } from 'react-native-permissions';
 import {
   ImageLibraryOptions,
   launchImageLibrary,
   Asset,
 } from 'react-native-image-picker';
-import {checkPermission, requestPermission} from '../utils/permissions';
-import {Colors} from '../constants/Color';
-import {ThemedText} from './ThemedText';
+import { checkPermission, requestPermission } from '../utils/permissions';
+import { Colors } from '../constants/Color';
+import { ThemedText } from './ThemedText';
 
 interface ImagePickerComponentProps {
   control: Control<any>;
@@ -61,7 +61,7 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
     const permission =
       Platform.OS === 'ios'
         ? PERMISSIONS.IOS.PHOTO_LIBRARY
-        : PERMISSIONS.ANDROID.READ_MEDIA_IMAGES;
+        : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE;
     await checkPermission(permission).then((res) => {
       if (!res) {
         requestPermission(permission).then((grantedResponse) => {
@@ -84,12 +84,12 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
         </ThemedText>
       </View>
       {imageUri && (
-        <Image source={{uri: imageUri}} style={styles.selectedImage} />
+        <Image source={{ uri: imageUri }} style={styles.selectedImage} />
       )}
       <Controller
         control={control}
         name={controllerName}
-        render={({field: {onChange}}) => (
+        render={({ field: { onChange } }) => (
           <View style={styles.imagePickerBox}>
             <Text style={styles.filename}>
               {filename ? filename : 'eg: filename.jpg'}

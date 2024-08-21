@@ -1,6 +1,6 @@
 // LiteratureAddModal.tsx
 import React from 'react';
-import { Modal, StyleSheet, View, ScrollView } from 'react-native';
+import { Modal, StyleSheet, View, ScrollView, Alert } from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
 import { ThemedText } from '../../../../../../components/ThemedText';
 import { Colors } from '../../../../../../constants/Color';
@@ -13,6 +13,9 @@ import {
   literatureZSchema,
   LiteratureZType,
 } from '../../../../../../schema/tabs/dashboard/literature.schema';
+import CustomImagePickerComponent from '../../../../../../components/CustomImagePicker';
+import { Asset } from 'react-native-image-picker';
+import { usePostLiterature } from '../../../../../../hooks/tabs/dashboard/literature';
 
 const LiteratureAddModal = ({
   isVisible,
@@ -29,9 +32,33 @@ const LiteratureAddModal = ({
     resolver: zodResolver(literatureZSchema),
   });
 
-  const onSubmit = (data: LiteratureZType) => {
-    console.log('formdata: ', data);
-    modalVisibile(false);
+
+  const { loading, error, handlePostLiterature } = usePostLiterature()
+
+  const onSubmit = async (data: LiteratureZType) => {
+    // console.log('literature onsubmit formdata: ', data);
+
+    const formData = new FormData();
+    if (data.image) {
+      const image = data.image as unknown as Asset;
+      console.log("image from litt: ", image)
+      formData.append('image', {
+        uri: image.uri,
+        name: image.fileName,
+        type: image.type,
+      } as any);
+    }
+    formData.append('title', data.title);
+    formData.append('author', data.author);
+    formData.append('birth_place', data.birth_place);
+    formData.append('content', data.content);
+
+    const response = await handlePostLiterature(formData);
+    if (response) {
+      // console.log("Literature post successful");
+      Alert.alert("Literature is posted succesfully. The admin will review and verify the literature.")
+      modalVisibile(false);
+    }
   };
 
   return (
@@ -87,6 +114,8 @@ const LiteratureAddModal = ({
               error={errors.birth_place}
             />
 
+            <CustomImagePickerComponent isRequired controllerName='image' label='Upload Image' control={control} errors={errors} />
+
             <CustomTextInput
               name="content"
               control={control}
@@ -100,7 +129,8 @@ const LiteratureAddModal = ({
 
             {/* Submit Button */}
             <HeroButton
-              btnText="Submit"
+              disabled={loading}
+              btnText={loading ? "Loading..." : "Submit"}
               style={styles.SubmitBtn}
               onPress={handleSubmit(onSubmit)}
             />
