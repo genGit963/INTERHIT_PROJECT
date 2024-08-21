@@ -4,7 +4,7 @@ const DASHBOARD_SERVICES = {
   // ------------------- alekhs -------------------
   getAlekhs: async () => {
     return await API_PRIVATE_SERVICE.request({
-      url: '/user/aalekh?search=%20&verified=true',
+      url: '/user/aalekh',
       method: 'GET',
     });
   },

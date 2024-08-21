@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -18,71 +18,118 @@ import AlekhAddModal from './components/AlekhAddModel';
 import {AppScreenNavigationType} from '../../../../../core/navigation-type';
 import AddAlekhSvg from '../../../../../assets/svg/solid-plus-circle.svg';
 import SearchInput, {SearchType} from '../../../../../components/SearchInput';
+import {useGenQuery} from '../../../../../hooks/gen-hooks/gen-query';
+import DASHBOARD_SERVICES from '../../../../../services/tabs/dashboard';
+import {ThemedText} from '../../../../../components/ThemedText';
+import ApiError from '../../../../../components/api/ApiError';
 
 // types and interface
 type AlekhScreenProps = {} & AppScreenNavigationType;
 export interface AlekhInterface {
-  id: string;
+  image: {
+    secure_url: string;
+    public_id: string;
+  };
+  createdBy: {
+    id: number;
+    name: string;
+    phone: string;
+  };
+  _id: string;
   title: string;
-  intro: string;
-  image: string;
-  writer: string;
-  writeDate: string;
+  desc: string;
+  author: string;
+  body: string;
 }
 
 // dummy data
-const DummyData: AlekhInterface[] = [
-  {
-    id: 'kdakjfdjajfd',
-    title: 'भवन निर्माण',
-    intro:
-      'मान्छेले आफ्ना मातापितासरह कसैलाई माया गर्छ भने त्यो हो-जन्मभूमि । यसअनुसार म आफ्नो जन्मभूमिलाई मातृभूमि',
-    image:
-      'https://english.khabarhub.com/wp-content/uploads/2023/02/Changu_Narayan_Travoal.webp',
-    writer: ' अभिषेक गोदार',
-    writeDate: '2024-05-10',
-  },
-  {
-    id: 'kdakjfdkaajfd',
-    title: 'भवन निर्माण',
-    intro:
-      'मान्छेले आफ्ना मातापितासरह कसैलाई माया गर्छ भने त्यो हो-जन्मभूमि । यसअनुसार म आफ्नो जन्मभूमिलाई मातृभूमि',
-    image:
-      'https://english.khabarhub.com/wp-content/uploads/2023/02/Changu_Narayan_Travoal.webp',
-    writer: ' अभिषेक गोदार',
-    writeDate: '2024-05-10',
-  },
-  {
-    id: 'kdakjfdjajadaf',
-    title: 'भवन निर्माण',
-    intro:
-      'मान्छेले आफ्ना मातापितासरह कसैलाई माया गर्छ भने त्यो हो-जन्मभूमि । यसअनुसार म आफ्नो जन्मभूमिलाई मातृभूमि',
-    image:
-      'https://english.khabarhub.com/wp-content/uploads/2023/02/Changu_Narayan_Travoal.webp',
-    writer: ' अभिषेक गोदार',
-    writeDate: '2024-05-10',
-  },
-  {
-    id: 'kdakjfdadlkajfd',
-    title: 'भवन निर्माण',
-    intro:
-      'मान्छेले आफ्ना मातापितासरह कसैलाई माया गर्छ भने त्यो हो-जन्मभूमि । यसअनुसार म आफ्नो जन्मभूमिलाई मातृभूमि',
-    image:
-      'https://english.khabarhub.com/wp-content/uploads/2023/02/Changu_Narayan_Travoal.webp',
-    writer: ' अभिषेक गोदार',
-    writeDate: '2024-05-10',
-  },
-  {
-    id: 'kdakjdkaddjajfd',
-    title: 'भवन निर्माण',
-    intro:
-      'मान्छेले आफ्ना मातापितासरह कसैलाई माया गर्छ भने त्यो हो-जन्मभूमि । यसअनुसार म आफ्नो जन्मभूमिलाई मातृभूमि',
-    image:
-      'https://english.khabarhub.com/wp-content/uploads/2023/02/Changu_Narayan_Travoal.webp',
-    writer: ' अभिषेक गोदार',
-    writeDate: '2024-05-10',
-  },
-];
+// const DummyData: AlekhInterface[] = [
+//   {
+//     image: {
+//       secure_url:
+//         'https://res.cloudinary.com/dbuffexsp/image/upload/v1723787177/qhc1mryzmatwpfjw89rn.png',
+//       public_id: 'qhc1mryzmatwpfjw89rn',
+//     },
+//     createdBy: {
+//       id: 1,
+//       name: 'John Doe',
+//       phone: '1234567890',
+//     },
+//     _id: '66bee7a911fdd4cef80e577e',
+//     title: 'Alekh_title_1',
+//     desc: 'The short description of the alekh',
+//     author: 'User_1',
+//     body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+//   },
+//   {
+//     image: {
+//       secure_url:
+//         'https://res.cloudinary.com/dbuffexsp/image/upload/v1723803378/nzemgsdllgdpuz94w42e.png',
+//       public_id: 'nzemgsdllgdpuz94w42e',
+//     },
+//     createdBy: {
+//       id: 21,
+//       name: 'Admin',
+//       phone: '1111111111',
+//     },
+//     _id: '66bf26f211fdd4cef80e5791',
+//     title: 'Title',
+//     desc: 'The short description of the alekh2',
+//     author: 'Govinda',
+//     body: "Another new body for the alekh.....Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+//   },
+//   {
+//     image: {
+//       secure_url:
+//         'https://res.cloudinary.com/dbuffexsp/image/upload/v1723958162/axusu1vzagvpisajctpg.png',
+//       public_id: 'axusu1vzagvpisajctpg',
+//     },
+//     createdBy: {
+//       id: 1,
+//       name: 'John Doe',
+//       phone: '1234567890',
+//     },
+//     _id: '66c18393d09ee19e3deced80',
+//     title: 'Title',
+//     desc: 'Description',
+//     author: 'Govinda',
+//     body: 'Alekh body',
+//   },
+//   {
+//     image: {
+//       secure_url:
+//         'https://res.cloudinary.com/dbuffexsp/image/upload/v1723958319/mtahjolxbykqg6dh5b7g.png',
+//       public_id: 'mtahjolxbykqg6dh5b7g',
+//     },
+//     createdBy: {
+//       id: 1,
+//       name: 'John Doe',
+//       phone: '1234567890',
+//     },
+//     _id: '66c18430d09ee19e3deced82',
+//     title: 'Title',
+//     desc: 'Description',
+//     author: 'Govinda',
+//     body: 'यो चै आलेख को बिस्तृत बिवरन हो ।',
+//   },
+//   {
+//     image: {
+//       secure_url:
+//         'https://res.cloudinary.com/dbuffexsp/image/upload/v1724138085/dcp324zvnxeyz11oy4qb.jpg',
+//       public_id: 'dcp324zvnxeyz11oy4qb',
+//     },
+//     createdBy: {
+//       id: 1,
+//       name: 'John Doe',
+//       phone: '1234567890',
+//     },
+//     _id: '66c44265621b0382f94e6bca',
+//     title: 'Rrrfffgggjjj',
+//     desc: 'Dddfff',
+//     author: 'Trtt',
+//     body: 'post alekh: AxiosError: Request failed with status code 401 and I will be there in about an hour or so to get it to you in the ',
+//   },
+// ];
 
 // ----------------- Alekh Screen ---------------------
 const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
@@ -105,9 +152,29 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
   //search text
   const [searchText, setSearchText] = useState<SearchType['searchText']>('');
   console.log('searchText alekh: ', searchText);
-  //getAlekhs hooks
 
-  // const alekhList: AlekhInterface[] = getAlekhs();
+  //getAlekhs hooks
+  // const getAlekhData = async () => await DASHBOARD_SERVICES.getAlekhs();
+  const {data, loading, error} = useGenQuery({
+    queryFn: async () => await DASHBOARD_SERVICES.getAlekhs(),
+    cacheTime: 6, // 6 minute cache
+  });
+
+  if (loading) {
+    return (
+      <SafeAreaView>
+        <ThemedText>Loading....</ThemedText>
+      </SafeAreaView>
+    );
+  }
+
+  if (error) {
+    return (
+      <SafeAreaView>
+        <ApiError message={error as string} />
+      </SafeAreaView>
+    );
+  }
 
   return (
     <View style={styles.Page}>
@@ -122,14 +189,14 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
         </View> */}
 
         <SearchInput
-          placeHolder={'Bansaj Yogdan'}
+          placeHolder={'Aalekh'}
           callBackSetSearchValue={setSearchText}
         />
 
         {/* Alekh Card Contents */}
         <FlatList
           initialNumToRender={5}
-          data={DummyData}
+          data={data ? data : []}
           contentContainerStyle={styles.Flatlist}
           showsVerticalScrollIndicator={false}
           renderItem={(item) => (
@@ -139,7 +206,7 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
             />
           )}
           ListEmptyComponent={<EmptyFlatList message="No Alekhs" />}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item._id}
           ListFooterComponent={<BottomSpace spaceHeight={100} />}
           ListFooterComponentStyle={styles.FlatlistFooter}
         />

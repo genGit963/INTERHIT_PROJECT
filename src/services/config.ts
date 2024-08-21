@@ -32,8 +32,8 @@ export const API_PRIVATE_SERVICE = axios.create({
 API_PRIVATE_SERVICE.interceptors.request.use(
   async (config) => {
     const token = await getUserToken();
+    // console.log('Token interceptor: ', token);
     if (token) {
-      // console.log('Token interceptor: ', token);
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;

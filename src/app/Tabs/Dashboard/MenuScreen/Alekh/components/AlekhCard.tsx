@@ -23,20 +23,20 @@ const AlekhCard: React.FC<AlekhCardPropsTypes> = ({
             {alekh.title}
           </ThemedText>
           <ThemedText type="default" style={styles.Detail}>
-            {alekh.intro}
+            {alekh.desc}
           </ThemedText>
         </View>
         <Image
           source={{
-            uri: alekh.image,
+            uri: alekh.image.secure_url,
           }}
           alt="blog_image"
           style={styles.AlekhImg}
         />
       </View>
       <View style={styles.WriterDate}>
-        <ThemedText style={styles.WriterName}>{alekh.writer}</ThemedText>
-        <ThemedText style={styles.WriteDate}>{alekh.writeDate}</ThemedText>
+        <ThemedText style={styles.WriterName}>{alekh.author}</ThemedText>
+        <ThemedText style={styles.CreatedBy}>{alekh.createdBy.name}</ThemedText>
       </View>
     </TouchableOpacity>
   );
@@ -66,11 +66,10 @@ export const styles = StyleSheet.create({
     textAlign: 'left',
   },
   AlekhImg: {
-    flex: 0.35,
-    height: '95%',
-    width: 120,
+    height: 90,
+    width: 140,
     borderRadius: 10,
-    // backgroundColor: 'green',
+    // borderWidth: 1,
   },
   WriterDate: {
     display: 'flex',
@@ -85,7 +84,7 @@ export const styles = StyleSheet.create({
     // backgroundColor: 'red',
     textAlign: 'right',
   },
-  WriteDate: {
+  CreatedBy: {
     // backgroundColor: 'green',
     textAlign: 'right',
   },
