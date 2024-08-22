@@ -1,10 +1,13 @@
-import React from 'react';
-import {Image, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
-import {AppScreenNavigationType} from '../../../../core/navigation-type';
+import React, { useEffect, useState } from 'react';
+import { Image, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { AppScreenNavigationType } from '../../../../core/navigation-type';
 import ScreenTopTitle from '../../../../components/ScreenTopTitle';
-import {ThemedText} from '../../../../components/ThemedText';
+import { ThemedText } from '../../../../components/ThemedText';
 import BottomSpace from '../../../../components/BottomSpace';
-import {Colors} from '../../../../constants/Color';
+import { Colors } from '../../../../constants/Color';
+import { useGetMessages } from '../../../../hooks/drawer/about/aboutUs';
+import EmptyResponse from '../../../../components/EmptyResponse';
+import Loader from '../../../../components/Loader';
 
 // types and interface
 type EditorMessageScreenProps = {} & AppScreenNavigationType;
@@ -13,6 +16,22 @@ type EditorMessageScreenProps = {} & AppScreenNavigationType;
 const EditorMessageScreen: React.FC<EditorMessageScreenProps> = ({
   navigation,
 }) => {
+
+  const [editorMessage, setEditorMessage] = useState();
+  const { loading, error, handleGetMessage } = useGetMessages();
+
+  const getMessageData = async () => {
+    const messageData = await handleGetMessage('editor');
+    if (messageData) {
+      console.log('message', messageData);
+      setEditorMessage(messageData);
+    }
+  };
+
+  useEffect(() => {
+    getMessageData();
+  }, []);
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
@@ -23,7 +42,7 @@ const EditorMessageScreen: React.FC<EditorMessageScreenProps> = ({
         />
 
         {/* Body */}
-        <ScrollView
+        {editorMessage ? <ScrollView
           style={styles.ScrollView}
           contentContainerStyle={styles.ScrollContent}
           showsVerticalScrollIndicator={false}>
@@ -66,7 +85,9 @@ const EditorMessageScreen: React.FC<EditorMessageScreenProps> = ({
             समुदायलाई समृद्ध भावना, सांस्कृतिक सहभागिता, र सामूहिक अभिवृद्धि
             साधन गर्दछ।
           </ThemedText>
-        </ScrollView>
+        </ScrollView> : (
+          loading ? <Loader /> : <EmptyResponse message='No message from any editor' />
+        )}
         <BottomSpace spaceHeight={'5%'} />
       </SafeAreaView>
     </View>
@@ -82,8 +103,8 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  ScrollView: {marginBottom: 10, paddingBottom: 30},
-  ScrollContent: {paddingBottom: 100},
+  ScrollView: { marginBottom: 10, paddingBottom: 30 },
+  ScrollContent: { paddingBottom: 100 },
   PersonView: {
     // borderWidth: 1,
     display: 'flex',
@@ -94,7 +115,7 @@ export const styles = StyleSheet.create({
   PersonName: {
     fontSize: 18,
   },
-  PersonPost: {fontSize: 16},
+  PersonPost: { fontSize: 16 },
   PersonImg: {
     height: 160,
     width: 150,

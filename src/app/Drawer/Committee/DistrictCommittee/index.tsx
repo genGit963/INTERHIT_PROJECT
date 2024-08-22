@@ -1,18 +1,40 @@
-import React from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
-import {AppScreenNavigationType} from '../../../../core/navigation-type';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { AppScreenNavigationType, AppScreenRouteType } from '../../../../core/navigation-type';
 import ScreenTopTitle from '../../../../components/ScreenTopTitle';
-import {Colors} from '../../../../constants/Color';
-import {dummydataCommitteMember} from '../../../../schema/drawer/committee';
+import { Colors } from '../../../../constants/Color';
+import { dummydataCommitteMember } from '../../../../schema/drawer/committee';
 import MemberCard from './components/MemberCard';
+import { useGetCommitteMembers } from '../../../../hooks/drawer/committee/committee';
+import EmptyResponse from '../../../../components/EmptyResponse';
 
 // types and interface
-type DistrictCommitteeScreenProps = {} & AppScreenNavigationType;
+type DistrictCommitteeScreenProps = {} & AppScreenNavigationType & AppScreenRouteType;
 
 // ----------------- DistrictCommittee screen ---------------------
 const DistrictCommitteeScreen: React.FC<DistrictCommitteeScreenProps> = ({
   navigation,
+  route
 }) => {
+
+  const { endpointType } = route.params as { endpointType: string };
+
+  const [districtCommMembers, setDistrictCommMembers] = useState()
+
+  const { loading, error, handleGetMembers } = useGetCommitteMembers()
+
+  //the district of the user nai as the district parameter pass hunu parchha
+  const getCommitteeMembers = async () => {
+    const membersResponse = await handleGetMembers(endpointType, 2080, "kathmandu")
+    if (membersResponse) {
+      console.log("getCommitteeMembers District: ", membersResponse)
+    }
+  }
+
+  useEffect(() => {
+    getCommitteeMembers()
+  }, [])
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
@@ -28,27 +50,31 @@ const DistrictCommitteeScreen: React.FC<DistrictCommitteeScreenProps> = ({
           showsVerticalScrollIndicator={false}>
           {/* all Sadsaya contents */}
           <View style={styles.MembersView}>
-            {dummydataCommitteMember.map((member, _) => {
-              if (member.Post === 'अध्यक्ष') {
-                return (
-                  <View style={styles.TopMemberView}>
-                    <MemberCard
-                      key={member.Id + member.Name}
-                      memberData={member}
-                    />
-                  </View>
-                );
-              } else {
-                return (
-                  <View style={styles.OtherMemberView}>
-                    <MemberCard
-                      key={member.Id + member.Name}
-                      memberData={member}
-                    />
-                  </View>
-                );
+            {districtCommMembers ? <View>
+
+              {
+                dummydataCommitteMember.map((member, _) => {
+                  if (member.Post === 'अध्यक्ष') {
+                    return (
+                      <View style={styles.TopMemberView} key={member.Id + member.Name}>
+                        <MemberCard
+                          memberData={member}
+                        />
+                      </View>
+                    );
+                  } else {
+                    return (
+                      <View style={styles.OtherMemberView} key={member.Id + member.Name}>
+                        <MemberCard
+                          memberData={member}
+                        />
+                      </View>
+                    );
+                  }
+                })
               }
-            })}
+            </View>
+              : <EmptyResponse message='No members available for now' />}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -65,8 +91,8 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  ScrollView: {marginBottom: 10, paddingBottom: 30},
-  ScrollContent: {paddingBottom: 100},
+  ScrollView: { marginBottom: 10, paddingBottom: 30 },
+  ScrollContent: { paddingBottom: 100 },
   MembersView: {
     // borderWidth: 1,
     display: 'flex',

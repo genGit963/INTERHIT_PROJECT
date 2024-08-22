@@ -11,10 +11,10 @@ import Header from './components/Header';
 import Caursol from './components/Caursol';
 import TodayUpdate from './components/TodayUpdate';
 import DashboardMenuCompoent from './components/DashboardMenu';
-
 import { ParamListBase } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import DrawerModal from '../../../components/Drawer';
+import { DIMENSION } from '../../../constants/dimension';
 
 type DashboardScreenProps = {
   navigation: NativeStackNavigationProp<ParamListBase>;
@@ -39,14 +39,13 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
           contentContainerStyle={styles.ScrollContent}
           showsVerticalScrollIndicator={false}>
           {/* caursol */}
-          <View style={styles.carousel}>
-            <Caursol />
-          </View>
 
-          <Image
+          <Caursol />
+
+          {/* <Image
             source={require('../../../assets/images/Ellipse.png')}
             style={styles.MiddleBG}
-          />
+          /> */}
 
           {/* today update */}
           <TodayUpdate />
@@ -63,6 +62,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
           modalVisibile={setDrawerModalVisible}
         />
       )}
+
       <Image
         source={require('../../../assets/images/Ellipse.png')}
         style={styles.BottomBG}
@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
   Page: {
     backgroundColor: Platform.OS === 'ios' ? '#fff' : '#fff',
     flex: 1,
+    width: DIMENSION.SCREEN.width,
     paddingHorizontal: 24,
   },
   ImageBackground: {
@@ -114,21 +115,20 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -80,
     right: -60,
-    zIndex: -2,
+    zIndex: 10,
     transform: [{ rotate: '120deg' }],
 
     // backgroundColor: 'blue',
     height: 300,
     width: 350,
   },
-  ScrollView: { marginBottom: 10, paddingBottom: 30 },
+  ScrollView: {
+    marginBottom: 10,
+    paddingBottom: 30,
+    zIndex: 1,
+  },
   ScrollContent: { paddingBottom: 100 },
   FlexText: {
     textAlign: 'center',
-  },
-  carousel: {
-    width: '100%',
-    height: 200,
-    marginVertical: 20,
   },
 });

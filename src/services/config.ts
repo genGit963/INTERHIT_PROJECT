@@ -4,7 +4,8 @@ import {asyncGetData} from '../core/AsyncStorage';
 //   http://52.55.135.178:8080
 
 export const API_PUBLIC_SERVICE = axios.create({
-  baseURL: 'http://192.168.16.153:4444',
+  // baseURL: 'http://192.168.16.153:4444',
+  baseURL: 'https://api.thadaraiadhikari.com',
   timeout: 20000, // in 20sec
   headers: {
     Accept: '*/*',
@@ -23,7 +24,8 @@ export async function getUserToken() {
 
 // Create an Axios instance for private services
 export const API_PRIVATE_SERVICE = axios.create({
-  baseURL: 'http://192.168.16.153:4444',
+  // baseURL: 'http://192.168.16.153:4444',
+  baseURL: 'https://api.thadaraiadhikari.com',
   timeout: 20000, // in 20 sec
   headers: {Accept: '*/*'},
 });

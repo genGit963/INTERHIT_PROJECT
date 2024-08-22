@@ -5,13 +5,14 @@ import BuildingSvg from '../../assets/svg/octicon_organization-16.svg';
 import EnvelopeSvg from '../../assets/svg/wpf_message-outline.svg';
 
 // committee screens data
-import {SvgProps} from 'react-native-svg';
-import {SCREEN_NAME} from '../../core/AppScreen';
+import { SvgProps } from 'react-native-svg';
+import { SCREEN_NAME } from '../../core/AppScreen';
 
 interface drawerOptionsInterface {
   Icon: React.FC<SvgProps>;
   Title: string;
   route: string;
+  endpointType?: string
 }
 
 export const committeeOptionsData: drawerOptionsInterface[] = [
@@ -19,36 +20,45 @@ export const committeeOptionsData: drawerOptionsInterface[] = [
     Icon: CommitteeSvg,
     Title: 'Sadhashya Member',
     route: SCREEN_NAME.DRAWER.COMMITTEE.SADHASHYA_MEMBER,
+
   },
   {
     Icon: CommitteeSvg,
     Title: 'Central Commitee',
     route: SCREEN_NAME.DRAWER.COMMITTEE.CENTRAL_COMMITTEE,
+    endpointType: "CENTRAL"
   },
   {
     Icon: HistorySvg,
     Title: 'Commitee History',
     route: SCREEN_NAME.DRAWER.COMMITTEE.COMMITTEE_HISTORY,
+
   },
   {
     Icon: CommitteeSvg,
     Title: 'Province Commitee',
     route: SCREEN_NAME.DRAWER.COMMITTEE.PROVINCE_COMMITTEE,
+    endpointType: "PROVINCE"
+
   },
   {
     Icon: CommitteeSvg,
     Title: 'District Committee',
     route: SCREEN_NAME.DRAWER.COMMITTEE.DISTRICT_COMMITTEE,
+    endpointType: "DISTRICT"
+
   },
   {
     Icon: CommitteeSvg,
     Title: 'Banshawali Committee',
     route: SCREEN_NAME.DRAWER.COMMITTEE.BANSHAWALI_COMMITTEE,
+    endpointType: "FAMTREE"
   },
   {
     Icon: CommitteeSvg,
     Title: 'Finance Committee',
     route: SCREEN_NAME.DRAWER.COMMITTEE.FINANCE_COMMITTEE,
+    endpointType: "ACCOUNT"
   },
 ];
 

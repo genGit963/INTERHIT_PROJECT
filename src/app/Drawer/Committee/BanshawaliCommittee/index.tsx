@@ -1,18 +1,38 @@
-import React from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
-import {AppScreenNavigationType} from '../../../../core/navigation-type';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { AppScreenNavigationType, AppScreenRouteType } from '../../../../core/navigation-type';
 import ScreenTopTitle from '../../../../components/ScreenTopTitle';
-import {Colors} from '../../../../constants/Color';
-import {dummydataCommitteMember} from '../../../../schema/drawer/committee';
+import { Colors } from '../../../../constants/Color';
+import { dummydataCommitteMember } from '../../../../schema/drawer/committee';
 import MemberCard from './components/MemberCard';
+import { useGetCommitteMembers } from '../../../../hooks/drawer/committee/committee';
+import EmptyResponse from '../../../../components/EmptyResponse';
 
 // types and interface
-type BanshawaliCommitteeScreenProps = {} & AppScreenNavigationType;
+type BanshawaliCommitteeScreenProps = {} & AppScreenNavigationType & AppScreenRouteType;
 
 // ----------------- ProvinceCommittee screen ---------------------
 const BanshawaliCommitteeScreen: React.FC<BanshawaliCommitteeScreenProps> = ({
   navigation,
+  route
 }) => {
+  const { endpointType } = route.params as { endpointType: string };
+
+  const [banshawaliCommMembers, setBanshawaliCommMembers] = useState()
+
+  const { loading, error, handleGetMembers } = useGetCommitteMembers()
+
+  //the district of the user nai as the district parameter pass hunu parchha
+  const getCommitteeMembers = async () => {
+    const membersResponse = await handleGetMembers(endpointType, 2080, null, "कोशी प्रदेश")
+    if (membersResponse) {
+      console.log("getCommitteeMembers Banshawali: ", membersResponse)
+    }
+  }
+
+  useEffect(() => {
+    getCommitteeMembers()
+  }, [])
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
@@ -27,7 +47,7 @@ const BanshawaliCommitteeScreen: React.FC<BanshawaliCommitteeScreenProps> = ({
           contentContainerStyle={styles.ScrollContent}
           showsVerticalScrollIndicator={false}>
           {/* all Sadsaya contents */}
-          <View style={styles.MembersView}>
+          {banshawaliCommMembers ? <View style={styles.MembersView}>
             {dummydataCommitteMember.map((member, _) => {
               if (member.Post === 'अध्यक्ष') {
                 return (
@@ -49,7 +69,7 @@ const BanshawaliCommitteeScreen: React.FC<BanshawaliCommitteeScreenProps> = ({
                 );
               }
             })}
-          </View>
+          </View> : <EmptyResponse message='No members available now' />}
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -65,8 +85,8 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  ScrollView: {marginBottom: 10, paddingBottom: 30},
-  ScrollContent: {paddingBottom: 100},
+  ScrollView: { marginBottom: 10, paddingBottom: 30 },
+  ScrollContent: { paddingBottom: 100 },
   MembersView: {
     // borderWidth: 1,
     display: 'flex',

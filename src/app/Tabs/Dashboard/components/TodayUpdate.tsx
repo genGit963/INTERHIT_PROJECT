@@ -1,17 +1,56 @@
 import { View, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ThemedText } from '../../../../components/ThemedText';
 import { Colors } from '../../../../constants/Color';
 import BirthdaySvg from '../../../../assets/svg/gift_parcel.svg';
 import AnniversarySvg from '../../../../assets/svg/circled_heart.svg';
 import DeathSvg from '../../../../assets/svg/sad_emoji.svg';
+import NepaliDate from 'nepali-datetime';
+import { useGetStatistics } from '../../../../hooks/tabs/dashboard/statistics';
+
+
+interface todayUpdate {
+  total_created: number,
+  created_today: number,
+  birthday_today: number,
+  anniversary_today: number,
+  death_anniversary_today: number,
+}
 
 const TodayUpdate = () => {
+
+  const [todayStats, setTodayStats] = useState<todayUpdate>({
+    created_today: 0,
+    total_created: 0,
+    birthday_today: 0,
+    anniversary_today: 0,
+    death_anniversary_today: 0
+  })
+
+  const todayDate_Nepali = new NepaliDate().formatNepali("dddd MMMM DD YYYY")
+
+  const { loading, error, handleGetStatistics } = useGetStatistics()
+
+  const getStatsData = async () => {
+    const statsData = await handleGetStatistics()
+    // console.log("resp", Resp)
+    if (statsData) {
+      setTodayStats(statsData)
+    }
+
+  }
+
+  useEffect(() => {
+    getStatsData()
+  }, [])
+
+
   return (
     <View style={styles.Container}>
       <View>
+
         <ThemedText type="mediumBold" style={styles.Today}>
-          Today, {new Date().toDateString()}
+          आज, {todayDate_Nepali}
         </ThemedText>
       </View>
 
@@ -22,7 +61,7 @@ const TodayUpdate = () => {
           <BirthdaySvg height={45} width={45} />
           <View style={styles.ReportDetail}>
             <ThemedText style={styles.ReportNumber} type="semiBold">
-              237
+              {todayStats.birthday_today}
             </ThemedText>
             <ThemedText style={styles.ReportNumber}>Birthday</ThemedText>
           </View>
@@ -33,7 +72,7 @@ const TodayUpdate = () => {
           <AnniversarySvg height={45} width={45} />
           <View style={styles.ReportDetail}>
             <ThemedText style={styles.ReportNumber} type="semiBold">
-              67
+              {todayStats.anniversary_today}
             </ThemedText>
             <ThemedText style={styles.ReportNumber}>Anniversary</ThemedText>
           </View>
@@ -44,7 +83,7 @@ const TodayUpdate = () => {
           <DeathSvg height={38} width={38} />
           <View style={styles.ReportDetail}>
             <ThemedText style={styles.ReportNumber} type="semiBold">
-              112
+              {todayStats.death_anniversary_today}
             </ThemedText>
             <ThemedText style={styles.ReportNumber}>Death</ThemedText>
           </View>
@@ -64,6 +103,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'gray',
     marginBottom: 10,
+    paddingVertical: 2
   },
   TodayReport: {
     display: 'flex',

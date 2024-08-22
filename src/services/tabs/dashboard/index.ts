@@ -67,6 +67,15 @@ const DASHBOARD_SERVICES = {
     });
   },
 
+  //------------todays statistics --------
+
+  getStatistics: async () => {
+    return await API_PRIVATE_SERVICE.request({
+      url: '/statistics/birth-death-stats',
+      method: 'GET',
+    });
+  },
+
   //contribution
   // getContribution: async () => {
   //   return await API_PRIVATE_SERVICE.request({

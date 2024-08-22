@@ -1,9 +1,9 @@
 import React from 'react';
-import {SvgProps} from 'react-native-svg';
-import {AppScreenNavigationType} from '../../core/navigation-type';
-import {StyleSheet, TouchableOpacity} from 'react-native';
-import {ThemedText} from '../ThemedText';
-import {Colors} from '../../constants/Color';
+import { SvgProps } from 'react-native-svg';
+import { AppScreenNavigationType } from '../../core/navigation-type';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { ThemedText } from '../ThemedText';
+import { Colors } from '../../constants/Color';
 
 // ---------------------- Drawer Bar Button ----------------------
 type DrawerBarBtnProps = {
@@ -11,6 +11,7 @@ type DrawerBarBtnProps = {
   Title: string;
   route: string;
   callbackModalVisible: (value: boolean) => void;
+  endpointType?: string
 } & AppScreenNavigationType;
 
 const DrawerBarBtn: React.FC<DrawerBarBtnProps> = ({
@@ -19,10 +20,13 @@ const DrawerBarBtn: React.FC<DrawerBarBtnProps> = ({
   route,
   navigation,
   callbackModalVisible,
+  endpointType
 }) => {
   // on tapping bar button
   const handleTapping = () => {
-    navigation.navigate(route);
+    navigation.navigate(route, {
+      endpointType
+    });
     callbackModalVisible(false);
   };
   return (
