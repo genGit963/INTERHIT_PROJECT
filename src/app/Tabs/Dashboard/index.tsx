@@ -42,11 +42,6 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
 
           <Caursol />
 
-          {/* <Image
-            source={require('../../../assets/images/Ellipse.png')}
-            style={styles.MiddleBG}
-          /> */}
-
           {/* today update */}
           <TodayUpdate />
 
@@ -105,8 +100,6 @@ const styles = StyleSheet.create({
     left: 150,
     zIndex: -5,
     transform: [{ rotate: '70deg' }],
-
-    // backgroundColor: 'green',
     height: 300,
     width: 350,
   },
@@ -115,10 +108,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: -80,
     right: -60,
-    zIndex: 10,
+    zIndex: -1,
     transform: [{ rotate: '120deg' }],
-
-    // backgroundColor: 'blue',
     height: 300,
     width: 350,
   },

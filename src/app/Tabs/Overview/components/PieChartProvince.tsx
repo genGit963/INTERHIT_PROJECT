@@ -1,76 +1,81 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
 import { ThemedText } from '../../../../components/ThemedText';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { useGetPopByProvince } from '../../../../hooks/tabs/overview/province';
+import Loader from '../../../../components/Loader';
 
-const data = [
-  {
-    text: 'कोशी प्रदेश',
-    value: 50,
-    color: 'green',
-  },
-  {
-    text: 'गण्डकी प्रदेश',
-    value: 72,
-    color: 'blue',
-  },
-  {
-    text: 'बागमती प्रदेश',
-    value: 33,
-    color: 'red',
-  },
-  {
-    text: 'लुम्बिनी प्रदेश',
-    value: 85,
-    color: 'yellow',
-  },
-  {
-    text: 'मधेश प्रदेश',
-    value: 64,
-    color: 'purple',
-  },
-  {
-    text: 'कर्णाली प्रदेश',
-    value: 28,
-    color: 'orange',
-  },
-  {
-    text: 'सुदूरपश्चिम प्रदेश',
-    value: 91,
-    color: 'pink',
-  },
-];
+interface IProvincePopulation {
+  name: string;
+  text: string;
+  value: number;
+  color?: string;
+}
+
+//because the backend_resp is {name, value} only, ani piechart lai label chai text key le pathauna,
+//also to differentiate, colors assign gareko aafai
+const createProvinceData = (
+  name: string,
+  value: number,
+  color: string,
+): IProvincePopulation => {
+  return {
+    name,
+    value,
+    text: name,
+    color,
+  };
+};
 
 const PieChartProvince: React.FC = () => {
+  const [provinceData, setProvinceData] = useState<IProvincePopulation[]>([]);
 
-  const { loading, error, handleGetPopByProvince } = useGetPopByProvince()
+  const { loading, error, handleGetPopByProvince } = useGetPopByProvince();
 
   useEffect(() => {
-    getPopByProvinceData()
-  }, [])
+    getPopByProvinceData();
+  }, []);
+
+  //asign proper colors later
+  const colors = ['red', 'green', 'blue', 'yellow', 'pink', 'black', 'white'];
 
   const getPopByProvinceData = async () => {
-    await handleGetPopByProvince().then((Resp) => {
-      console.log("Pop by district resp: ", Resp)
-    })
-  }
+    await handleGetPopByProvince().then((provinceResponse) => {
 
+      const mappedData = provinceResponse.map(
+        (item: { name: string; value: number }, index: any) => {
+          return createProvinceData(
+            item.name,
+            item.value,
+            colors[index % provinceResponse.length],
+          );
+        },
+      );
+
+      setProvinceData(mappedData);
+    });
+  };
 
   return (
     <View style={styles.PieContainer}>
       <ThemedText type="semiBold" style={styles.PieTitle}>
         विभिन्न प्रदेशमा बन्धु संख्या
       </ThemedText>
-      <PieChart data={data} focusOnPress />
+      <PieChart data={provinceData} focusOnPress />
+
       <View style={styles.legendContainer}>
-        {data.map((item, index) => (
-          <View key={index} style={styles.legendItem}>
-            <View style={[styles.legendColor, { backgroundColor: item.color }]} />
-            <ThemedText style={styles.legendText}>{item.text}</ThemedText>
-          </View>
-        ))}
+        {provinceData.length > 0
+          ? provinceData.map((item, index) => (
+            <View key={index} style={styles.legendItem}>
+              <View
+                style={[styles.legendColor, { backgroundColor: item.color }]}
+              />
+              <ThemedText style={styles.legendText}>{item.name}</ThemedText>
+              <ThemedText type="mediumBold"> {item.value}</ThemedText>
+            </View>
+          ))
+          : loading && <Loader />}
       </View>
     </View>
   );

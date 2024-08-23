@@ -1,45 +1,46 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
-import {SoceityContributionInterface} from '../../../../schema/tabs/contribution/contributions.schema';
-import {ThemedText} from '../../../../components/ThemedText';
-import {Colors} from '../../../../constants/Color';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { SoceityContributionInterface, SocietyContributionRespInterface } from '../../../../schema/tabs/contribution/contributions.schema';
+import { ThemedText } from '../../../../components/ThemedText';
+import { Colors } from '../../../../constants/Color';
+import { truncateContent } from '../../../../utils/stringPrototype';
 
 type ContributionCardPropsTypes = {
-  contributionData: SoceityContributionInterface;
+  contributionData: SocietyContributionRespInterface;
 };
 
 const ContributionCard: React.FC<ContributionCardPropsTypes> = ({
   contributionData,
 }) => {
   return (
-    <View style={styles.ContributionCard}>
+    <TouchableOpacity style={styles.ContributionCard}>
       <View style={styles.ContributionCardBody}>
         <View style={styles.DetailView}>
           {/* title */}
           <ThemedText type="mediumBold" style={styles.Title}>
-            {contributionData.Title}
+            {contributionData.title}
           </ThemedText>
 
           {/* OrganizedBy */}
           <ThemedText style={styles.OrganizedBy}>
             <ThemedText type="mediumBold">Organized By:</ThemedText>{' '}
-            {contributionData.OrganizedBy}
+            {contributionData.organizer}
           </ThemedText>
 
           {/* Description */}
           <ThemedText type="default" style={styles.Description}>
-            {contributionData.Description}
+            {truncateContent(contributionData.description, 25)}...
           </ThemedText>
         </View>
         <Image
           source={{
-            uri: contributionData.Image,
+            uri: contributionData.image.secure_url,
           }}
           alt="blog_image"
           style={styles.contributionDataImg}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

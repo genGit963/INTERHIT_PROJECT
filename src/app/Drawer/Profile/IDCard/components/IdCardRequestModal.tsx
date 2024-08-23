@@ -1,10 +1,9 @@
 // IDCardRequestModal.tsx
 import React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Modal, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, Modal, ScrollView, StyleSheet, View } from 'react-native';
 import { useForm } from 'react-hook-form';
 import CustomTextInput from '../../../../../components/CustomInput';
-// import CustomDatePicker from '../../../../../components/CustomDatePicker';
 import HeroButton from '../../../../../components/HeroButton';
 import supplyShadowEffect from '../../../../../utils/Shadow';
 import { Colors } from '../../../../../constants/Color';
@@ -37,9 +36,8 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
     resolver: zodResolver(IdCardZSchema),
   });
 
-  const { loading, error, handleRequestIdCard } = useRequestIdCard()
+  const { loading, error, handleRequestIdCard } = useRequestIdCard();
   const onSubmit = async (data: IdCardZType) => {
-
     const formData = new FormData();
 
     if (data.image) {
@@ -51,28 +49,29 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
       } as any);
     }
 
-    formData.append("full_name", data.full_name);
-    formData.append("birth_date", data.birth_date);
-    formData.append("birth_place", data.birth_place);
-    formData.append("gender", data.gender);
+    formData.append('full_name', data.full_name);
+    formData.append('birth_date', data.birth_date);
+    formData.append('birth_place', data.birth_place);
+    formData.append('gender', data.gender);
     formData.append('blood_group', data.blood_group);
     formData.append('province', data.province);
     formData.append('local', data.local);
     formData.append('ward', data.ward);
-    formData.append("contact", data.contact);
-    formData.append("org_position", data.org_position);
-    formData.append("profession", data.profession);
+    formData.append('contact', data.contact);
+    formData.append('org_position', data.org_position);
+    formData.append('profession', data.profession);
+    formData.append('district', data.district);
 
     console.log('id card: ', formData);
     await handleRequestIdCard(formData).then((Resp) => {
       if (Resp) {
-        console.log("Id card request successful")
+        console.log('Id card request successful');
+        Alert.alert('Id card request successful');
+        modalVisibile(false);
+      } else {
+        console.log('Request id card failed', Resp);
       }
-      else {
-        console.log("Request id card failed", Resp)
-      }
-    })
-    // modalVisibile(false);
+    });
   };
 
   return (
@@ -106,13 +105,13 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
               error={errors.full_name}
             />
 
-            <CustomImagePickerComponent isRequired control={control} errors={errors} label='Upload your image' controllerName='image' />
-            {/* <CustomDatePicker
-              name="dateOfBirth"
-              control={control}
-              label="Date of Birth"
+            <CustomImagePickerComponent
               isRequired
-            /> */}
+              control={control}
+              errors={errors}
+              label="Upload your image"
+              controllerName="image"
+            />
 
             {/* date of birth */}
             <CustomTextInput
@@ -175,7 +174,7 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
                 {
                   label: 'सुदूर पश्चिमाञ्च प्रदेश',
                   value: 'सुदूर पश्चिमाञ्च प्रदेश',
-                }
+                },
               ]}
               isRequired
             />
@@ -238,7 +237,11 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
             />
 
             {/* Submit Button */}
-            <HeroButton disabled={loading} btnText={loading ? "Loading..." : "Submit"} onPress={handleSubmit(onSubmit)} />
+            <HeroButton
+              disabled={loading}
+              btnText={loading ? 'Loading...' : 'Submit'}
+              onPress={handleSubmit(onSubmit)}
+            />
             {error && <ThemedText>{error}</ThemedText>}
             <BottomSpace spaceHeight={'10%'} />
           </ScrollView>

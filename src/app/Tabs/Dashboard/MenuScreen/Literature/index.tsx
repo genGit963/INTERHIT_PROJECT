@@ -23,6 +23,7 @@ import { useGetLiterature } from '../../../../../hooks/tabs/dashboard/literature
 import { LiteratureResInterface } from '../../../../../schema/tabs/dashboard/literature.schema';
 import ApiError from '../../../../../components/api/ApiError';
 import Loader from '../../../../../components/Loader';
+import { DIMENSION } from '../../../../../constants/dimension';
 
 // types and interface
 type LiteratureScreenProps = {} & AppScreenNavigationType;
@@ -55,20 +56,18 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({ navigation }) => {
     useState<boolean>(false);
 
   const { loading, error, handleGetLiterature } = useGetLiterature();
+  const getLiteratureData = async () => {
+    await handleGetLiterature().then((Response) => {
+      setLiteratureData(Response);
+    });
+  };
 
   useEffect(() => {
-    const getLiteratureData = async () => {
-      await handleGetLiterature().then((Response) => {
-        setLiteratureData(Response);
-      });
-    };
     getLiteratureData();
-  }, [handleGetLiterature]);
+  }, []);
 
   if (loading) {
-    return (
-      <Loader />
-    );
+    return <Loader />;
   }
 
   if (error) {
@@ -111,6 +110,11 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({ navigation }) => {
           ListFooterComponentStyle={styles.FlatlistFooter}
         />
 
+        {/* Dark Overlay */}
+        {(isLiteratureViewVisible || isLiteratureAddVisible) && (
+          <View style={styles.Overlay} />
+        )}
+
         {/* Literature Detail View Modal */}
         {isLiteratureViewVisible && (
           <LiteratureViewModal
@@ -146,10 +150,10 @@ export const styles = StyleSheet.create({
   Page: {
     backgroundColor: Colors.screenBackground,
     flex: 1,
-    paddingHorizontal: 24,
   },
   Screen: {
     backgroundColor: Colors.screenBackground,
+    paddingHorizontal: 24,
   },
   SearchConatiner: {
     display: 'flex',
@@ -184,6 +188,15 @@ export const styles = StyleSheet.create({
       Opacity: 0.6,
       Elevation: 5,
     }),
+  },
+  Overlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    zIndex: 5,
   },
 });
 

@@ -8,6 +8,35 @@ export interface SoceityContributionInterface {
 
 // generated dummy data
 
+export interface SocietyContributionRespInterface {
+
+  image: {
+    secure_url: string,
+    public_id: string,
+  },
+  donation: {
+    image_secure_url: string,
+    image_public_id: string,
+  },
+  createdBy: {
+    id: number,
+    name: string,
+    phone: string,
+  },
+  _id: string,
+  title: string,
+  description: string,
+  event_date: string,
+  event_time: string,
+  organizer: string,
+  event_location: string,
+  district: string,
+  createdAt: string,
+  updatedAt: string,
+  __v: number
+}
+
+
 export const SoceityContributionDummyData: SoceityContributionInterface[] = [
   {
     Title: 'भवन निर्माण',

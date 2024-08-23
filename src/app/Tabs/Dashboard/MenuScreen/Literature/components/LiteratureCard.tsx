@@ -1,11 +1,11 @@
 import React from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {ThemedText} from '../../../../../../components/ThemedText';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ThemedText } from '../../../../../../components/ThemedText';
 
-import {Colors} from '../../../../../../constants/Color';
+import { Colors } from '../../../../../../constants/Color';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
-import {LiteratureResInterface} from '../../../../../../schema/tabs/dashboard/literature.schema';
-import {truncateContent} from '../../../../../../utils/stringPrototype';
+import { LiteratureResInterface } from '../../../../../../schema/tabs/dashboard/literature.schema';
+import { truncateContent } from '../../../../../../utils/stringPrototype';
 
 type LiteratureCardPropsTypes = {
   literature: LiteratureResInterface;

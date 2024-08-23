@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -6,17 +6,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {AppScreenNavigationType} from '../../../core/navigation-type';
+import { AppScreenNavigationType } from '../../../core/navigation-type';
 import ScreenTopTitle from '../../../components/ScreenTopTitle';
 import BottomSpace from '../../../components/BottomSpace';
-import {SoceityContributionDummyData} from '../../../schema/tabs/contribution/contributions.schema';
+import { SoceityContributionDummyData, SocietyContributionRespInterface } from '../../../schema/tabs/contribution/contributions.schema';
 import EmptyFlatList from '../../../components/EmptyFlatList';
 import ContributionCard from './components/SContributionCard';
-import {Colors} from '../../../constants/Color';
-import SearchInput, {SearchType} from '../../../components/SearchInput';
+import { Colors } from '../../../constants/Color';
+import SearchInput, { SearchType } from '../../../components/SearchInput';
 import AddContributionSvg from '../../../assets/svg/solid-plus-circle.svg';
 import supplyShadowEffect from '../../../utils/Shadow';
 import SoceityContributionQRModal from './components/SContributionQRModal';
+import { useGetAllContributionEvents } from '../../../hooks/tabs/contribution/contribution';
 // types and interface
 type ContributionTabScreenProps = {} & AppScreenNavigationType;
 
@@ -28,9 +29,26 @@ const ContributionTabScreen: React.FC<ContributionTabScreenProps> = ({
   const [searchText, setSearchText] = useState<SearchType['searchText']>('');
   console.log('searchText contribution: ', searchText);
 
+  //contributionEventData
+  const [societyContributionData, setSocietyContributionData] = useState<SocietyContributionRespInterface[]>([])
+
   // contribution QR modal
   const [isContributionAddQRVisible, setContributionAddQRVisible] =
     useState<boolean>(false);
+
+  const { handleGetContributionEvents } = useGetAllContributionEvents()
+
+  const getContributionEventData = async () => {
+    const getContributionEventResp = await handleGetContributionEvents()
+    if (getContributionEventResp) {
+      // console.log("Contribution events: ", getContributionEventResp)
+      setSocietyContributionData(getContributionEventResp)
+    }
+  }
+
+  useEffect(() => {
+    getContributionEventData()
+  }, [])
 
   return (
     <View style={styles.Page}>
@@ -47,7 +65,7 @@ const ContributionTabScreen: React.FC<ContributionTabScreenProps> = ({
         {/*  Contribution Contents */}
         <FlatList
           initialNumToRender={5}
-          data={SoceityContributionDummyData}
+          data={societyContributionData}
           style={styles.FlatListContainer}
           contentContainerStyle={styles.FlatlistContents}
           showsVerticalScrollIndicator={false}
@@ -55,7 +73,7 @@ const ContributionTabScreen: React.FC<ContributionTabScreenProps> = ({
             <ContributionCard contributionData={item.item} />
           )}
           ListEmptyComponent={<EmptyFlatList message="No Contributions" />}
-          keyExtractor={(item) => item.Id}
+          keyExtractor={(item) => item._id}
           ListFooterComponent={<BottomSpace spaceHeight={100} />}
           ListFooterComponentStyle={styles.FlatlistFooter}
         />
@@ -94,9 +112,9 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  FlatListContainer: {marginVertical: 10},
-  FlatlistContents: {marginBottom: '8%'},
-  FlatlistFooter: {marginBottom: '6%'},
+  FlatListContainer: { marginVertical: 10 },
+  FlatlistContents: { marginBottom: '8%' },
+  FlatlistFooter: { marginBottom: '6%' },
   AddContribtionBtn: {
     position: 'absolute',
     bottom: '16%',

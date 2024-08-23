@@ -7,7 +7,7 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ThemedText } from '../../../../components/ThemedText';
 import { Colors } from '../../../../constants/Color';
 
@@ -24,7 +24,7 @@ type RenderItemProps = {
 
 const RenderItem: React.FC<RenderItemProps> = ({ item }) => {
   return (
-    <View style={styles.imageContainer} key={item.id}>
+    <View style={styles.imageContainer} key={item.uri}>
       <ImageBackground
         source={{ uri: item.uri }}
         imageStyle={styles.BackImage}
@@ -44,6 +44,9 @@ const RenderItem: React.FC<RenderItemProps> = ({ item }) => {
 
 const Caursol: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [index, setIndex] = useState<number>(0)
+
+  const flatListRef = useRef<FlatList<any | null>>(null)
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const X_offset = event.nativeEvent.contentOffset.x;
@@ -52,15 +55,29 @@ const Caursol: React.FC = () => {
     setActiveIndex(active_index);
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (flatListRef.current) {
+        const nextIndex = (index + 1) % image.length
+        setIndex(nextIndex)
+        flatListRef.current.scrollToIndex({
+          index,
+          animated: true
+        })
+      }
+    }, 2800)
+
+    return () => clearInterval(interval)
+  }, [index])
+
   return (
     <View style={styles.carouselContainer}>
       <View>
         <FlatList
-          // style={styles.Flatlist}
-          // contentContainerStyle={styles.FlatListContent}
+          ref={flatListRef}
           data={image}
           renderItem={({ item }) => <RenderItem item={item} />}
-          keyExtractor={(item, index) => item.id}
+          keyExtractor={(_, index) => index.toString()}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
@@ -101,13 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 20,
   },
-  // Flatlist: {
-  //   padding: 4,
-  // },
-  // FlatListContent: {
-  //   gap: 10,
-  //   borderWidth: 1
-  // },
+
   imageContainer: {
     flex: 1,
     width: width - 48, //image container lai pani manually width deko so that the image could fit within it

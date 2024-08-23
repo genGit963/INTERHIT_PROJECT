@@ -1,12 +1,12 @@
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import {ThemedText} from '../../../components/ThemedText';
+import { ThemedText } from '../../../components/ThemedText';
 
 type AuthScreenTopProps = {
   screenTitle: string;
 };
 
-const AuthScreenTop: React.FC<AuthScreenTopProps> = ({screenTitle}) => {
+const AuthScreenTop: React.FC<AuthScreenTopProps> = ({ screenTitle }) => {
   return (
     <View style={styles.Container}>
       <ThemedText type="mediumBold" style={styles.Route}>
@@ -23,8 +23,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 40,
     width: '100%',
-
-    // borderWidth: 1,
   },
   Route: {
     fontSize: 18,

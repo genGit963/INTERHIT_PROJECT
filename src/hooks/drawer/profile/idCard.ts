@@ -1,5 +1,4 @@
 import {useCallback, useState} from 'react';
-import {IdCardZType} from '../../../schema/drawer/profile/id-card.schema';
 import {PROFILE_SERVICES} from '../../../services/drawer/profile/idCard';
 
 export const useRequestIdCard = () => {
@@ -12,6 +11,7 @@ export const useRequestIdCard = () => {
     try {
       const requestIdResp = await PROFILE_SERVICES.requestIdCard(idCardData);
       if (requestIdResp) {
+        console.log('id card req: ', requestIdResp.data);
         return requestIdResp.data;
       } else {
         setError('Unable to request id card now');
