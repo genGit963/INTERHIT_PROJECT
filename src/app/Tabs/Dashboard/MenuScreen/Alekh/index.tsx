@@ -143,6 +143,7 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({ navigation }) => {
     setSelectedAlekh(alekh);
     setAlekhViewVisible(true);
   };
+
   const handleCloseAlekhView = () => {
     setSelectedAlekh(undefined);
     setAlekhViewVisible(false);
