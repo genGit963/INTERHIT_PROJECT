@@ -1,8 +1,17 @@
 import {View, Image, StyleSheet} from 'react-native';
 import React from 'react';
 import {ThemedText} from '../../../../components/ThemedText';
+import HeroButton from '../../../../components/HeroButton';
+import {Colors} from '../../../../constants/Color';
 
-const ProfileUserSection = () => {
+// types
+type ProfileUserSectionProps = {
+  callBackSetQRModalVisible: (val: boolean) => void;
+};
+
+const ProfileUserSection: React.FC<ProfileUserSectionProps> = ({
+  callBackSetQRModalVisible,
+}) => {
   return (
     <View style={styles.UserView}>
       <Image
@@ -18,6 +27,12 @@ const ProfileUserSection = () => {
           Bhakta Bahadur Godar
         </ThemedText>
         <ThemedText>example@gmail.com</ThemedText>
+        <HeroButton
+          btnText="Show My QR"
+          onPress={() => callBackSetQRModalVisible(true)}
+          varient="done"
+          style={styles.QRButton}
+        />
       </View>
     </View>
   );
@@ -39,6 +54,10 @@ const styles = StyleSheet.create({
   UserInfo: {},
   UserName: {
     fontSize: 18,
+  },
+  QRButton: {
+    width: 130,
+    alignItems: 'flex-start',
   },
 });
 

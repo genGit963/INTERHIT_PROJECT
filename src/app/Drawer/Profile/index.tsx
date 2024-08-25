@@ -23,7 +23,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
         <ScreenTopTitle navigation={navigation} screenTitle="Profile" />
 
         {/* User View */}
-        <ProfileUserSection />
+        <ProfileUserSection callBackSetQRModalVisible={setQRModalVisible} />
 
         {/* Profile Body*/}
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -31,12 +31,6 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
           <ProfileMenuComponent navigation={navigation} />
 
           {/* User QR component*/}
-          <HeroButton
-            btnText="Show My QR"
-            onPress={() => setQRModalVisible(true)}
-            varient="ghost"
-            style={styles.QRButton}
-          />
 
           {isQRModalVisible && (
             <ShowMyQRModal
@@ -66,7 +60,6 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.screenBackground,
   },
   QRCode: {fontSize: 18, textAlign: 'center', marginVertical: 6},
-  QRButton: {marginVertical: 30, fontSize: 18},
 });
 
 export default ProfileScreen;
