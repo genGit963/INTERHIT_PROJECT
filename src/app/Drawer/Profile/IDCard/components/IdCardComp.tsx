@@ -1,17 +1,14 @@
 // ProfileIcon.tsx
 import React from 'react';
-import { ThemedText } from '../../../../../components/ThemedText';
+import {ThemedText} from '../../../../../components/ThemedText';
+import {IdCardZType} from '../../../../../schema/drawer/profile/id-card.schema';
 
-interface ProfileIconProps {
-    name: string;
-    idNumber: string;
-}
+type ProfileIconProps = {
+  idCardData: IdCardZType;
+};
 
-const ProfileIcon: React.FC<ProfileIconProps> = ({ name, idNumber }) => {
-    return (
-        <ThemedText>Id card</ThemedText>
-
-    );
+const ProfileIcon: React.FC<ProfileIconProps> = ({idCardData}) => {
+  return <ThemedText>{idCardData.full_name}</ThemedText>;
 };
 
 export default ProfileIcon;

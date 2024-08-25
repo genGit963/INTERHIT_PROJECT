@@ -1,24 +1,39 @@
-import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { AppScreenNavigationType } from '../../../../core/navigation-type';
+import React, {useState} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {AppScreenNavigationType} from '../../../../core/navigation-type';
 import ScreenTopTitle from '../../../../components/ScreenTopTitle';
 import BottomSpace from '../../../../components/BottomSpace';
-import { Colors } from '../../../../constants/Color';
+import {Colors} from '../../../../constants/Color';
 import NoIDCard from './components/NoIDCard';
 import IDCardRequestModal from './components/IdCardRequestModal';
-import { ThemedText } from '../../../../components/ThemedText';
+import {ThemedText} from '../../../../components/ThemedText';
 import ProfileIcon from './components/IdCardComp';
+import {IdCardZType} from '../../../../schema/drawer/profile/id-card.schema';
 
 // types and interface
 type IDCardScreenProps = {} & AppScreenNavigationType;
 
 // ----------------- Id Card Screen ---------------------
-const IDCardScreen: React.FC<IDCardScreenProps> = ({ navigation }) => {
+const IDCardScreen: React.FC<IDCardScreenProps> = ({navigation}) => {
   // open Id card field
   const [isIDCardRequestModalVisible, setIDCardRequestModalVisible] =
     useState<boolean>(false);
 
-  const [isIDCard, setIDCard] = useState<boolean>(true)
+  const [isIDCard, setIDCard] = useState<boolean>(true);
+
+  const idCardDummyData: IdCardZType = {
+    full_name: 'Mahesh Bogati',
+    birth_date: '2056-20-14',
+    birth_place: 'Dhulangari, Teesta',
+    gender: 'Male',
+    blood_group: 'AB-',
+    province: 'Khoshi',
+    district: 'Sunsari',
+    local: 'Dharan',
+    ward: '02',
+    contact: '9080989809',
+    org_position: 'Banshawali',
+  };
 
   return (
     <View style={styles.Page}>
@@ -27,21 +42,24 @@ const IDCardScreen: React.FC<IDCardScreenProps> = ({ navigation }) => {
         <ScreenTopTitle navigation={navigation} screenTitle="ID Card" />
 
         {/*  Screen Body */}
-        {isIDCard ? <ProfileIcon name='Hari' idNumber='111' /> : <ScrollView showsVerticalScrollIndicator={false}>
-          {/* No ID card view */}
-          <NoIDCard
-            callBackIDCardReqModalVisible={setIDCardRequestModalVisible}
-          />
-
-          {/* Request Id Modal */}
-          {isIDCardRequestModalVisible && (
-            <IDCardRequestModal
-              isVisible={isIDCardRequestModalVisible}
-              modalVisibile={setIDCardRequestModalVisible}
+        {isIDCard ? (
+          <ProfileIcon idCardData={idCardDummyData} />
+        ) : (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {/* No ID card view */}
+            <NoIDCard
+              callBackIDCardReqModalVisible={setIDCardRequestModalVisible}
             />
-          )}
-        </ScrollView>}
 
+            {/* Request Id Modal */}
+            {isIDCardRequestModalVisible && (
+              <IDCardRequestModal
+                isVisible={isIDCardRequestModalVisible}
+                modalVisibile={setIDCardRequestModalVisible}
+              />
+            )}
+          </ScrollView>
+        )}
 
         <BottomSpace spaceHeight={'5%'} />
       </SafeAreaView>
