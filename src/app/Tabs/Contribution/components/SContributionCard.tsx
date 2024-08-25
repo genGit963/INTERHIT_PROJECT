@@ -7,13 +7,15 @@ import { truncateContent } from '../../../../utils/stringPrototype';
 
 type ContributionCardPropsTypes = {
   contributionData: SocietyContributionRespInterface;
+  callbackHandlePress: (event: SocietyContributionRespInterface) => void,
 };
 
 const ContributionCard: React.FC<ContributionCardPropsTypes> = ({
   contributionData,
+  callbackHandlePress
 }) => {
   return (
-    <TouchableOpacity style={styles.ContributionCard}>
+    <TouchableOpacity style={styles.ContributionCard} onPress={() => callbackHandlePress(contributionData)}>
       <View style={styles.ContributionCardBody}>
         <View style={styles.DetailView}>
           {/* title */}

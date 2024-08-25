@@ -23,7 +23,6 @@ import { useGetLiterature } from '../../../../../hooks/tabs/dashboard/literature
 import { LiteratureResInterface } from '../../../../../schema/tabs/dashboard/literature.schema';
 import ApiError from '../../../../../components/api/ApiError';
 import Loader from '../../../../../components/Loader';
-import { DIMENSION } from '../../../../../constants/dimension';
 
 // types and interface
 type LiteratureScreenProps = {} & AppScreenNavigationType;

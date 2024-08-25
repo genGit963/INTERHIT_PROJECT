@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   ChartContainer: {
     backgroundColor: Colors.screenBackground,
     paddingVertical: 30,
-    paddingHorizontal: 10,
+    // paddingHorizontal: 10,
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "flex-start",

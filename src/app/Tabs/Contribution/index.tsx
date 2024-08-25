@@ -9,15 +9,17 @@ import {
 import { AppScreenNavigationType } from '../../../core/navigation-type';
 import ScreenTopTitle from '../../../components/ScreenTopTitle';
 import BottomSpace from '../../../components/BottomSpace';
-import { SoceityContributionDummyData, SocietyContributionRespInterface } from '../../../schema/tabs/contribution/contributions.schema';
+import { SocietyContributionRespInterface } from '../../../schema/tabs/contribution/contributions.schema';
 import EmptyFlatList from '../../../components/EmptyFlatList';
 import ContributionCard from './components/SContributionCard';
 import { Colors } from '../../../constants/Color';
 import SearchInput, { SearchType } from '../../../components/SearchInput';
-import AddContributionSvg from '../../../assets/svg/solid-plus-circle.svg';
+import AddContributionSvg from '../../../assets/svg/organization-contribution.svg';
 import supplyShadowEffect from '../../../utils/Shadow';
 import SoceityContributionQRModal from './components/SContributionQRModal';
 import { useGetAllContributionEvents } from '../../../hooks/tabs/contribution/contribution';
+import SContributionViewModal from './components/SContributionViewModal';
+import Loader from '../../../components/Loader';
 // types and interface
 type ContributionTabScreenProps = {} & AppScreenNavigationType;
 
@@ -32,12 +34,19 @@ const ContributionTabScreen: React.FC<ContributionTabScreenProps> = ({
   //contributionEventData
   const [societyContributionData, setSocietyContributionData] = useState<SocietyContributionRespInterface[]>([])
 
+  //modalVisible
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
+
+  //selected contribution_event for detail data
+  const [selectedContributionEvent, setSelectedContributionEvent] = useState<SocietyContributionRespInterface>();
+
   // contribution QR modal
   const [isContributionAddQRVisible, setContributionAddQRVisible] =
     useState<boolean>(false);
 
-  const { handleGetContributionEvents } = useGetAllContributionEvents()
+  const { loading, error, handleGetContributionEvents } = useGetAllContributionEvents()
 
+  //get all event data
   const getContributionEventData = async () => {
     const getContributionEventResp = await handleGetContributionEvents()
     if (getContributionEventResp) {
@@ -49,6 +58,16 @@ const ContributionTabScreen: React.FC<ContributionTabScreenProps> = ({
   useEffect(() => {
     getContributionEventData()
   }, [])
+
+  const handleContributionEventView = (contributionEvent: SocietyContributionRespInterface) => {
+    setSelectedContributionEvent(contributionEvent)
+    setIsModalVisible(true)
+  }
+
+  const handleCloseModal = () => {
+    setSelectedContributionEvent(undefined)
+    setIsModalVisible(false)
+  }
 
   return (
     <View style={styles.Page}>
@@ -70,13 +89,15 @@ const ContributionTabScreen: React.FC<ContributionTabScreenProps> = ({
           contentContainerStyle={styles.FlatlistContents}
           showsVerticalScrollIndicator={false}
           renderItem={(item) => (
-            <ContributionCard contributionData={item.item} />
+            <ContributionCard contributionData={item.item} callbackHandlePress={handleContributionEventView} />
           )}
-          ListEmptyComponent={<EmptyFlatList message="No Contributions" />}
+          ListEmptyComponent={loading ? <Loader /> : <EmptyFlatList message="No Contributions" />}
           keyExtractor={(item) => item._id}
           ListFooterComponent={<BottomSpace spaceHeight={100} />}
           ListFooterComponentStyle={styles.FlatlistFooter}
         />
+
+        {isModalVisible && <SContributionViewModal isVisible={isModalVisible} modalVisible={handleCloseModal} data={selectedContributionEvent} />}
 
         {/* Alekh Add Button Opener */}
         <TouchableOpacity
@@ -120,7 +141,9 @@ export const styles = StyleSheet.create({
     bottom: '16%',
     right: '1.5%',
     zIndex: 10,
-    backgroundColor: 'rgba(0,0,0)',
+    backgroundColor: Colors.primary,
+    padding: 20,
+    borderRadius: 50
   },
   AddContribtionIcon: {
     ...supplyShadowEffect({
@@ -128,8 +151,8 @@ export const styles = StyleSheet.create({
       Y_off: 0,
       Radius: 6,
       Color: 'black',
-      Opacity: 0.6,
-      Elevation: 5,
+      Opacity: 0.8,
+      Elevation: 1,
     }),
   },
 });

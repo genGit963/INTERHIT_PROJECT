@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 
-import {AppScreenNavigationType} from '../../../core/navigation-type';
+import { AppScreenNavigationType } from '../../../core/navigation-type';
 import ScreenTopTitle from '../../../components/ScreenTopTitle';
 import BottomSpace from '../../../components/BottomSpace';
-import {Colors} from '../../../constants/Color';
+import { Colors } from '../../../constants/Color';
 import ChartToggler from './components/ChartToggler';
 import PieChartProvince from './components/PieChartProvince';
 import BarChartDistricts from './components/BarChartDistricts';
@@ -14,7 +14,7 @@ import BiBarChartGender from './components/BiBarChartGender';
 type OverviewTabScreenProps = {} & AppScreenNavigationType;
 
 // ----------------- Overivew Tab Screen ---------------------
-const OverviewTabScreen: React.FC<OverviewTabScreenProps> = ({navigation}) => {
+const OverviewTabScreen: React.FC<OverviewTabScreenProps> = ({ navigation }) => {
   // Chart value toggle
   const [chartToggle, setChartToggle] = useState<string>('pie-chart-province');
   return (

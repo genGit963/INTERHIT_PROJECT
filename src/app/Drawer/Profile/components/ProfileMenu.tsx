@@ -1,8 +1,8 @@
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import React from 'react';
-import {ThemedText} from '../../../../components/ThemedText';
-import {AppScreenNavigationType} from '../../../../core/navigation-type';
-import {profileMenuData} from '../menu-data';
+import { ThemedText } from '../../../../components/ThemedText';
+import { AppScreenNavigationType } from '../../../../core/navigation-type';
+import { profileMenuData } from '../menu-data';
 import supplyShadowEffect from '../../../../utils/Shadow';
 
 type ProfileMenuComponentProps = {} & AppScreenNavigationType;
@@ -33,7 +33,7 @@ const ProfileMenuComponent: React.FC<ProfileMenuComponentProps> = ({
 export default ProfileMenuComponent;
 
 const styles = StyleSheet.create({
-  MenuContainer: {gap: 12, width: '100%', marginVertical: 6},
+  MenuContainer: { gap: 12, width: '100%', marginVertical: 6 },
   MenuCard: {
     margin: 4,
     // borderWidth: 0.5,
