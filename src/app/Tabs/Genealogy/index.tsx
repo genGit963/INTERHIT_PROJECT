@@ -1,10 +1,11 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { AppScreenNavigationType } from '../../../core/navigation-type';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {AppScreenNavigationType} from '../../../core/navigation-type';
 import ScreenTopTitle from '../../../components/ScreenTopTitle';
 import BottomSpace from '../../../components/BottomSpace';
-import { Colors } from '../../../constants/Color';
+import {Colors} from '../../../constants/Color';
 import WebView from 'react-native-webview';
+import TabScreenTopTitle from '../../../components/TabScreenTopTitle';
 
 // types and interface
 type GenealogyTabScreenProps = {} & AppScreenNavigationType;
@@ -14,24 +15,23 @@ const GenealogyTabScreen: React.FC<GenealogyTabScreenProps> = ({
   navigation,
 }) => {
   return (
-    <WebView source={{
-      uri: "https://thadaraiadhikari.com/family", headers: {
+    <View style={styles.Page}>
+      <SafeAreaView style={styles.Screen}>
+        {/* Title */}
+        <TabScreenTopTitle screenTitle={'Genealogy'} />
 
-      }
-    }} style={{ flex: 1, width: "100%", height: "100%" }} />
-    // <View style={styles.Page}>
-    //   <SafeAreaView style={styles.Screen}>
-    //     {/* Title */}
-    //     <ScreenTopTitle navigation={navigation} screenTitle="Genealogy" />
+        {/*  Screen Body */}
+        <WebView
+          source={{
+            uri: 'https://thadaraiadhikari.com/family',
+            headers: {},
+          }}
+          style={{flex: 1, width: '100%', height: '100%'}}
+        />
 
-    //     {/*  Screen Body */}
-    //     <ScrollView style={{ flex: 1 }}>
-
-    //     </ScrollView>
-
-    //     <BottomSpace spaceHeight={'5%'} />
-    //   </SafeAreaView>
-    // </View>
+        <BottomSpace spaceHeight={'5%'} />
+      </SafeAreaView>
+    </View>
   );
 };
 
@@ -39,10 +39,11 @@ export const styles = StyleSheet.create({
   Page: {
     backgroundColor: Colors.screenBackground,
     flex: 1,
-    paddingHorizontal: 24,
   },
   Screen: {
     backgroundColor: Colors.screenBackground,
+    height: '100%',
+    width: '100%',
   },
 });
 
