@@ -1,9 +1,10 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
-import {AppScreenNavigationType} from '../../../core/navigation-type';
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { AppScreenNavigationType } from '../../../core/navigation-type';
 import ScreenTopTitle from '../../../components/ScreenTopTitle';
 import BottomSpace from '../../../components/BottomSpace';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import { Colors } from '../../../constants/Color';
+import WebView from 'react-native-webview';
 
 // types and interface
 type GenealogyTabScreenProps = {} & AppScreenNavigationType;
@@ -13,16 +14,24 @@ const GenealogyTabScreen: React.FC<GenealogyTabScreenProps> = ({
   navigation,
 }) => {
   return (
-    <View style={styles.Page}>
-      <SafeAreaView style={styles.Screen}>
-        {/* Title */}
-        <ScreenTopTitle navigation={navigation} screenTitle="Genealogy" />
+    <WebView source={{
+      uri: "https://thadaraiadhikari.com/family", headers: {
 
-        {/*  Screen Body */}
+      }
+    }} style={{ flex: 1, width: "100%", height: "100%" }} />
+    // <View style={styles.Page}>
+    //   <SafeAreaView style={styles.Screen}>
+    //     {/* Title */}
+    //     <ScreenTopTitle navigation={navigation} screenTitle="Genealogy" />
 
-        <BottomSpace spaceHeight={'5%'} />
-      </SafeAreaView>
-    </View>
+    //     {/*  Screen Body */}
+    //     <ScrollView style={{ flex: 1 }}>
+
+    //     </ScrollView>
+
+    //     <BottomSpace spaceHeight={'5%'} />
+    //   </SafeAreaView>
+    // </View>
   );
 };
 
