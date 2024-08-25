@@ -35,7 +35,7 @@ export const useGenQuery = ({
 
     try {
       const response = await queryFn();
-      console.log('useGenQuery queryFn Res: ', response.data);
+      // console.log('useGenQuery queryFn Res: ', response.data);
       if (response) {
         setData(response.data);
       }

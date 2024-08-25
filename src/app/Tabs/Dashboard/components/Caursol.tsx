@@ -7,11 +7,12 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import { ThemedText } from '../../../../components/ThemedText';
-import { Colors } from '../../../../constants/Color';
+import React, {useEffect, useRef, useState} from 'react';
+import {ThemedText} from '../../../../components/ThemedText';
+import {Colors} from '../../../../constants/Color';
+import {generateUUID} from '../../../../utils/uuid-generator';
 
-const { width } = Dimensions.get('screen');
+const {width} = Dimensions.get('screen');
 interface CarouselInterface {
   id: string;
   title: string;
@@ -22,11 +23,11 @@ type RenderItemProps = {
   item: CarouselInterface;
 };
 
-const RenderItem: React.FC<RenderItemProps> = ({ item }) => {
+const RenderItem: React.FC<RenderItemProps> = ({item}) => {
   return (
-    <View style={styles.imageContainer} key={item.uri}>
+    <View style={styles.imageContainer}>
       <ImageBackground
-        source={{ uri: item.uri }}
+        source={{uri: item.uri}}
         imageStyle={styles.BackImage}
         style={styles.ImageBackground}>
         <View style={styles.TextView}>
@@ -44,9 +45,9 @@ const RenderItem: React.FC<RenderItemProps> = ({ item }) => {
 
 const Caursol: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [index, setIndex] = useState<number>(0)
+  const [index, setIndex] = useState<number>(0);
 
-  const flatListRef = useRef<FlatList<any | null>>(null)
+  const flatListRef = useRef<FlatList<any | null>>(null);
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const X_offset = event.nativeEvent.contentOffset.x;
@@ -58,17 +59,17 @@ const Caursol: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (flatListRef.current) {
-        const nextIndex = (index + 1) % image.length
-        setIndex(nextIndex)
+        const nextIndex = (index + 1) % image.length;
+        setIndex(nextIndex);
         flatListRef.current.scrollToIndex({
           index,
-          animated: true
-        })
+          animated: true,
+        });
       }
-    }, 2800)
+    }, 2800);
 
-    return () => clearInterval(interval)
-  }, [index])
+    return () => clearInterval(interval);
+  }, [index]);
 
   return (
     <View style={styles.carouselContainer}>
@@ -76,8 +77,8 @@ const Caursol: React.FC = () => {
         <FlatList
           ref={flatListRef}
           data={image}
-          renderItem={({ item }) => <RenderItem item={item} />}
-          keyExtractor={(_, index) => index.toString()}
+          renderItem={({item}) => <RenderItem item={item} />}
+          keyExtractor={(item) => item.id}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}
@@ -86,23 +87,19 @@ const Caursol: React.FC = () => {
       </View>
 
       {/* indicator */}
-      <View
-        style={{
-          flexDirection: 'row',
-          gap: 10,
-          justifyContent: 'center',
-          marginTop: 4,
-        }}>
+      <View style={styles.IndicatiorContainer}>
         {image.map((_, index) => {
           return (
             <View
-              style={{
-                width: 10,
-                height: 10,
-                borderRadius: 10,
-                backgroundColor:
-                  activeIndex == index ? Colors.primary : Colors.muteGray,
-              }}></View>
+              key={index + generateUUID()}
+              style={[
+                styles.IndicatorCircle,
+                {
+                  backgroundColor:
+                    activeIndex == index ? Colors.primary : Colors.muteGray,
+                },
+              ]}
+            />
           );
         })}
       </View>
@@ -154,7 +151,18 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 18,
   },
-  Des: { fontSize: 16, color: '#fffffa' },
+  Des: {fontSize: 16, color: '#fffffa'},
+  IndicatiorContainer: {
+    flexDirection: 'row',
+    gap: 10,
+    justifyContent: 'center',
+    marginTop: 4,
+  },
+  IndicatorCircle: {
+    width: 10,
+    height: 10,
+    borderRadius: 10,
+  },
 });
 
 let image: CarouselInterface[] = [

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import DashboardTabNavigationStackScreen from './dashboard';
 import NoticeTabNavigationStackScreen from './notice';
 import GenealogyTabNavigationStackScreen from './genealogy';
@@ -12,13 +12,13 @@ import HomeFocusedIcon from '../../../assets/svg/home-focused.svg';
 import NoticeIcon from '../../../assets/svg/pepicons-pop_bulletin-notice.svg';
 import NoticeFocusedIcon from '../../../assets/svg/notice-focused.svg';
 import GenealogyIcon from '../../../assets/svg/ph_tree-structure.svg';
-import GenealogyFocusedIcon from "../../../assets/svg/genealogy-focused.svg"
+import GenealogyFocusedIcon from '../../../assets/svg/genealogy-focused.svg';
 import ContributionIcon from '../../../assets/svg/support-contribution-ruppe.svg';
-import ContributionFocusedIcon from "../../../assets/svg/contribution-focused.svg"
+import ContributionFocusedIcon from '../../../assets/svg/contribution-focused.svg';
 import OverviewIcon from '../../../assets/svg/solar_pie-chart-bold.svg';
 import OverviewFocusedIcon from '../../../assets/svg/overview-focused.svg';
 import TabBarIcon from './components/tabbar-icon';
-import { Colors } from '../../../constants/Color';
+import {Colors} from '../../../constants/Color';
 import supplyShadowEffect from '../../../utils/Shadow';
 
 // tabs
@@ -29,7 +29,7 @@ const Tab = createBottomTabNavigator();
 function TabNavigationStackScreen() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={({route}) => ({
         headerShown: false,
         tabBarStyle: {
           height: 75,
@@ -40,44 +40,54 @@ function TabNavigationStackScreen() {
         name="Home"
         component={DashboardTabNavigationStackScreen}
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({focused, color, size}) => (
             <TabBarIcon
               label="Home"
               IconComponent={focused ? HomeFocusedIcon : HomeIcon}
               color={focused ? Colors.primary : Colors.text}
-
             />
           ),
         }}
       />
-      <Tab.Screen name="Notice" component={NoticeTabNavigationStackScreen} options={{
-        tabBarIcon: ({ focused, color, size }) => (
-          <TabBarIcon
-            label="Notice"
-            IconComponent={focused ? NoticeFocusedIcon : NoticeIcon}
-            color={focused ? Colors.primary : Colors.text}
-          />
-        ),
-      }} />
+      <Tab.Screen
+        name="Notice"
+        component={NoticeTabNavigationStackScreen}
+        options={{
+          tabBarIcon: ({focused, color, size}) => (
+            <TabBarIcon
+              label="Notice"
+              IconComponent={focused ? NoticeFocusedIcon : NoticeIcon}
+              color={focused ? Colors.primary : Colors.text}
+            />
+          ),
+        }}
+      />
       <Tab.Screen
         name="Genealogy"
         component={GenealogyTabNavigationStackScreen}
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({focused, color, size}) => (
             <TabBarIcon
-              label='Genealogy'
+              label="Genealogy"
               IconComponent={GenealogyIcon}
               color={focused ? Colors.primary : Colors.text}
               style={{
                 width: 70,
                 height: 70,
                 borderRadius: 50,
-                justifyContent: "center",
-                alignItems: "center",
-                position: "absolute",
-                bottom: "20%",
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'absolute',
+                bottom: '20%',
                 backgroundColor: Colors.primary,
-                ...supplyShadowEffect({ X_off: 0, Y_off: 0, Radius: 5, Color: "black", Elevation: 10, Opacity: 0.15 })
+                ...supplyShadowEffect({
+                  X_off: 0,
+                  Y_off: 0,
+                  Radius: 5,
+                  Color: 'black',
+                  Elevation: 10,
+                  Opacity: 0.15,
+                }),
               }}
             />
           ),
@@ -87,12 +97,13 @@ function TabNavigationStackScreen() {
         name="Contribution"
         component={ContributionTabNavigationStackScreen}
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({focused, color, size}) => (
             <TabBarIcon
               label="Contribution"
-              IconComponent={focused ? ContributionFocusedIcon : ContributionIcon}
+              IconComponent={
+                focused ? ContributionFocusedIcon : ContributionIcon
+              }
               color={focused ? Colors.primary : Colors.text}
-
             />
           ),
         }}
@@ -101,7 +112,7 @@ function TabNavigationStackScreen() {
         name="Overview"
         component={OverviewTabNavigationStackScreen}
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({focused, color, size}) => (
             <TabBarIcon
               label="Overview"
               IconComponent={focused ? OverviewFocusedIcon : OverviewIcon}
