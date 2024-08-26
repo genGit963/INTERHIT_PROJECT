@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   Platform,
@@ -15,6 +15,8 @@ import { ParamListBase } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import DrawerModal from '../../../components/Drawer';
 import { DIMENSION } from '../../../constants/dimension';
+import { useGetAllContributionEvents } from '../../../hooks/tabs/contribution/contribution';
+import { SocietyContributionRespInterface } from '../../../schema/tabs/contribution/contributions.schema';
 
 type DashboardScreenProps = {
   navigation: NativeStackNavigationProp<ParamListBase>;
@@ -24,6 +26,22 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
   // handle DrawerModal
   const [isDrawerModalVisible, setDrawerModalVisible] =
     useState<boolean>(false);
+  const [societyContributionData, setSocietyContributionData] = useState<SocietyContributionRespInterface[]>([])
+
+  const { handleGetContributionEvents } = useGetAllContributionEvents()
+
+  const getContributionEventData = async () => {
+    const getContributionEventResp = await handleGetContributionEvents()
+    if (getContributionEventResp) {
+      // console.log("Contribution events: ", getContributionEventResp)
+      setSocietyContributionData(getContributionEventResp)
+    }
+  }
+
+  useEffect(() => {
+    getContributionEventData()
+  }, [])
+  console.log("hh", societyContributionData)
   return (
     <View style={styles.Page}>
       <Image
@@ -40,7 +58,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
           showsVerticalScrollIndicator={false}>
           {/* caursol */}
 
-          <Caursol />
+          <Caursol data={societyContributionData} />
 
           {/* today update */}
           <TodayUpdate />

@@ -23,6 +23,7 @@ import { useGetLiterature } from '../../../../../hooks/tabs/dashboard/literature
 import { LiteratureResInterface } from '../../../../../schema/tabs/dashboard/literature.schema';
 import ApiError from '../../../../../components/api/ApiError';
 import Loader from '../../../../../components/Loader';
+import SearchInput, { SearchType } from '../../../../../components/SearchInput';
 
 // types and interface
 type LiteratureScreenProps = {} & AppScreenNavigationType;
@@ -40,6 +41,8 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({ navigation }) => {
 
   const [isLiteratureViewVisible, setLiteratureViewVisible] =
     useState<boolean>(false);
+
+  const [searchText, setSearchText] = useState<SearchType['searchText']>('');
 
   const handleLiteratureView = (Literature: LiteratureResInterface) => {
     setSelectedLiterature(Literature);
@@ -60,6 +63,12 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({ navigation }) => {
       setLiteratureData(Response);
     });
   };
+
+  const searchedLiterature: LiteratureResInterface[] = literatureData.filter((item) =>
+    item.title.toLowerCase().includes(searchText.toLowerCase()) ||
+    item.content.toLowerCase().includes(searchText.toLowerCase()) ||
+    item.author.toLowerCase().includes(searchText.toLowerCase())
+  ) || []
 
   useEffect(() => {
     getLiteratureData();
@@ -85,16 +94,16 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({ navigation }) => {
         <ScreenTopTitle navigation={navigation} screenTitle="Literature" />
 
         {/* Search and filter */}
-        <View style={styles.SearchConatiner}>
-          <ThemedText style={styles.SearchText}>Search Literature</ThemedText>
-          <SearchSvg />
-        </View>
+        <SearchInput
+          placeHolder={'Literature'}
+          callBackSetSearchValue={setSearchText}
+        />
 
         {/* Literature Card Contents */}
 
         <FlatList
           initialNumToRender={5}
-          data={literatureData ? literatureData : []}
+          data={searchText ? searchedLiterature : literatureData ? literatureData : []}
           contentContainerStyle={styles.Flatlist}
           showsVerticalScrollIndicator={false}
           renderItem={(item) => (

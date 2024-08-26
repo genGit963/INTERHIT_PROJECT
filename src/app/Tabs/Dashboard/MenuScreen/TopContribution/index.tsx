@@ -1,21 +1,36 @@
-import React, {useState} from 'react';
-import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
-import {Colors} from '../../../../../constants/Color';
+import React, { useEffect, useState } from 'react';
+import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Colors } from '../../../../../constants/Color';
 import ScreenTopTitle from '../../../../../components/ScreenTopTitle';
-import {AppScreenNavigationType} from '../../../../../core/navigation-type';
-import SearchInput, {SearchType} from '../../../../../components/SearchInput';
-import {topContributionDummyData} from '../../../../../schema/tabs/dashboard/top-contribution.schema';
+import { AppScreenNavigationType } from '../../../../../core/navigation-type';
+import SearchInput, { SearchType } from '../../../../../components/SearchInput';
 import TopContributionCard from './components/TopContributionCard';
 import EmptyFlatList from '../../../../../components/EmptyFlatList';
 import BottomSpace from '../../../../../components/BottomSpace';
+import { useGetTopContributions } from '../../../../../hooks/tabs/dashboard/topContribution';
+import { TopContributionInterface } from '../../../../../schema/tabs/dashboard/top-contribution.schema';
 
 // types
 type TopContributionProps = {} & AppScreenNavigationType;
 
-const TopContribution: React.FC<TopContributionProps> = ({navigation}) => {
+const TopContribution: React.FC<TopContributionProps> = ({ navigation }) => {
   // search Text;
   const [searchText, setSearchText] = useState<SearchType['searchText']>('');
-  console.log('searchText Top Contribution: ', searchText);
+
+  const [topContributionData, setTopContributionData] = useState<TopContributionInterface[]>([])
+
+  const { loading, error, handleGetTopContribution } = useGetTopContributions()
+
+  const getTopContributions = async () => {
+    await handleGetTopContribution().then((Resp) => {
+      setTopContributionData(Resp)
+    })
+  }
+
+  useEffect(() => {
+    getTopContributions()
+  }, [])
+
   return (
     <View style={styles.Page}>
       <SafeAreaView>
@@ -34,7 +49,7 @@ const TopContribution: React.FC<TopContributionProps> = ({navigation}) => {
         {/* Flatlist contents */}
         <FlatList
           initialNumToRender={5}
-          data={topContributionDummyData}
+          data={topContributionData.length > 0 ? topContributionData : []}
           style={styles.FlatListContainer}
           contentContainerStyle={styles.FlatlistContents}
           showsVerticalScrollIndicator={false}
@@ -42,7 +57,7 @@ const TopContribution: React.FC<TopContributionProps> = ({navigation}) => {
             <TopContributionCard topContribution={item.item} />
           )}
           ListEmptyComponent={<EmptyFlatList message="No Top Contributions" />}
-          keyExtractor={(item) => item.Id}
+          keyExtractor={(item) => item._id}
           ListFooterComponent={<BottomSpace spaceHeight={100} />}
           ListFooterComponentStyle={styles.FlatlistFooter}
         />
@@ -57,9 +72,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
   },
-  FlatListContainer: {marginVertical: 20},
-  FlatlistContents: {marginBottom: '8%', gap: 10},
-  FlatlistFooter: {marginBottom: '6%'},
+  FlatListContainer: { marginVertical: 20 },
+  FlatlistContents: { marginBottom: '8%', gap: 10 },
+  FlatlistFooter: { marginBottom: '6%' },
 });
 
 export default TopContribution;

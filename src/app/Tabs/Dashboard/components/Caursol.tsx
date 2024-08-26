@@ -7,35 +7,36 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
-import {ThemedText} from '../../../../components/ThemedText';
-import {Colors} from '../../../../constants/Color';
-import {generateUUID} from '../../../../utils/uuid-generator';
+import React, { useEffect, useRef, useState } from 'react';
+import { ThemedText } from '../../../../components/ThemedText';
+import { Colors } from '../../../../constants/Color';
+import { generateUUID } from '../../../../utils/uuid-generator';
+import { SocietyContributionRespInterface } from '../../../../schema/tabs/contribution/contributions.schema';
+import EmptyResponse from '../../../../components/EmptyResponse';
+import Loader from '../../../../components/Loader';
 
-const {width} = Dimensions.get('screen');
+const { width } = Dimensions.get('screen');
+
 interface CarouselInterface {
-  id: string;
-  title: string;
-  uri: string;
+  data: SocietyContributionRespInterface[];
 }
 
 type RenderItemProps = {
-  item: CarouselInterface;
+  item: SocietyContributionRespInterface;
 };
 
-const RenderItem: React.FC<RenderItemProps> = ({item}) => {
+const RenderItem: React.FC<RenderItemProps> = ({ item }) => {
   return (
-    <View style={styles.imageContainer}>
+    <View style={styles.imageContainer} key={item._id}>
       <ImageBackground
-        source={{uri: item.uri}}
-        imageStyle={styles.BackImage}
+        source={{ uri: item.image.secure_url }}
         style={styles.ImageBackground}>
         <View style={styles.TextView}>
           <ThemedText type="semiBold" style={styles.Title}>
             {item.title}
           </ThemedText>
           <ThemedText type="default" style={styles.Des}>
-            Organized By: गोदार थापा सेवा समाज दमक
+            Organized By: {item.organizer}
           </ThemedText>
         </View>
       </ImageBackground>
@@ -43,10 +44,8 @@ const RenderItem: React.FC<RenderItemProps> = ({item}) => {
   );
 };
 
-const Caursol: React.FC = () => {
+const Carousel: React.FC<CarouselInterface> = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
-  const [index, setIndex] = useState<number>(0);
-
   const flatListRef = useRef<FlatList<any | null>>(null);
 
   const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -59,66 +58,65 @@ const Caursol: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (flatListRef.current) {
-        const nextIndex = (index + 1) % image.length;
-        setIndex(nextIndex);
+        const nextIndex = (activeIndex + 1) % data.length;
         flatListRef.current.scrollToIndex({
-          index,
+          index: nextIndex,
           animated: true,
         });
+        setActiveIndex(nextIndex);
       }
     }, 2800);
 
     return () => clearInterval(interval);
-  }, [index]);
+  }, [activeIndex, data.length]);
 
   return (
     <View style={styles.carouselContainer}>
-      <View>
-        <FlatList
-          ref={flatListRef}
-          data={image}
-          renderItem={({item}) => <RenderItem item={item} />}
-          keyExtractor={(item) => item.id}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          onScroll={handleScroll}
-        />
-      </View>
+      {data.length > 0 ? <View>
+        <View>
+          <FlatList
+            ref={flatListRef}
+            data={data}
+            renderItem={({ item }) => <RenderItem item={item} />}
+            keyExtractor={(item) => item._id}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onScroll={handleScroll}
+          />
+        </View>
 
-      {/* indicator */}
-      <View style={styles.IndicatiorContainer}>
-        {image.map((_, index) => {
-          return (
+        {/* Indicator */}
+        <View style={styles.IndicatorContainer}>
+          {data.map((_, index) => (
             <View
-              key={index + generateUUID()}
+              key={generateUUID()}
               style={[
                 styles.IndicatorCircle,
                 {
                   backgroundColor:
-                    activeIndex == index ? Colors.primary : Colors.muteGray,
+                    activeIndex === index ? Colors.primary : Colors.muteGray,
                 },
               ]}
             />
-          );
-        })}
-      </View>
+          ))}
+        </View>
+      </View> : null}
     </View>
   );
 };
 
-export default Caursol;
+export default Carousel;
 
 const styles = StyleSheet.create({
   carouselContainer: {
-    width: width - 48, //subtracting the padding of the original container
+    width: width - 48, // Subtracting the padding of the original container
     justifyContent: 'center',
     marginBottom: 20,
   },
-
   imageContainer: {
     flex: 1,
-    width: width - 48, //image container lai pani manually width deko so that the image could fit within it
+    width: width - 48, // Image container manually set to fit within the container
     justifyContent: 'center',
     height: 200,
     padding: 4,
@@ -129,12 +127,6 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  BackImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-    borderRadius: 10,
   },
   TextView: {
     height: '100%',
@@ -151,8 +143,11 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 18,
   },
-  Des: {fontSize: 16, color: '#fffffa'},
-  IndicatiorContainer: {
+  Des: {
+    fontSize: 16,
+    color: '#fffffa',
+  },
+  IndicatorContainer: {
     flexDirection: 'row',
     gap: 10,
     justifyContent: 'center',
@@ -164,31 +159,3 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
-
-let image: CarouselInterface[] = [
-  {
-    id: '1',
-    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCUJr0DxQCv1qjcqhOLDl0C6MR3Rk762KQ-w&s',
-    title: 'Vawan Nirman',
-  },
-  {
-    id: '2',
-    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCUJr0DxQCv1qjcqhOLDl0C6MR3Rk762KQ-w&s',
-    title: 'Vawan Nirman',
-  },
-  {
-    id: '3',
-    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCUJr0DxQCv1qjcqhOLDl0C6MR3Rk762KQ-w&s',
-    title: 'Vawan Nirman',
-  },
-  {
-    id: '4',
-    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCUJr0DxQCv1qjcqhOLDl0C6MR3Rk762KQ-w&s',
-    title: 'Vawan Nirman',
-  },
-  {
-    id: '5',
-    uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCUJr0DxQCv1qjcqhOLDl0C6MR3Rk762KQ-w&s',
-    title: 'Vawan Nirman',
-  },
-];

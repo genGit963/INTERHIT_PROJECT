@@ -1,8 +1,8 @@
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
-import {ThemedText} from '../../../../../../components/ThemedText';
-import {TopContributionInterface} from '../../../../../../schema/tabs/dashboard/top-contribution.schema';
-import {Colors} from '../../../../../../constants/Color';
+import { Image, StyleSheet, View } from 'react-native';
+import { ThemedText } from '../../../../../../components/ThemedText';
+import { TopContributionInterface } from '../../../../../../schema/tabs/dashboard/top-contribution.schema';
+import { Colors } from '../../../../../../constants/Color';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
 
 // type
@@ -16,25 +16,25 @@ const TopContributionCard: React.FC<TopContributionCardProps> = ({
   return (
     <View style={styles.TopContributionCard}>
       <Image
-        source={{uri: topContribution.Image}}
+        source={{ uri: topContribution.payments[0].receipt.secure_url }}
         resizeMode="cover"
         style={styles.ContributrImage}
-        alt={topContribution.ContributerName}
+        alt={topContribution.full_name}
       />
       {/* Contributer and Date */}
       <View style={styles.ContributerDateView}>
         <ThemedText type="mediumBold">
-          {topContribution.ContributerName}
+          {topContribution.full_name}
         </ThemedText>
         <ThemedText type="muted">
-          {topContribution.DateofContribution}
+          {topContribution.payments[0].date}
         </ThemedText>
       </View>
 
       {/* Amt and purpose */}
       <View style={styles.AmtPurposeView}>
-        <ThemedText type="mediumBold">Rs: {topContribution.Amount}</ThemedText>
-        <ThemedText type="muted">{topContribution.Purpose}</ThemedText>
+        <ThemedText type="mediumBold">Rs: {topContribution.payments[0].amount}</ThemedText>
+        <ThemedText type="muted">{topContribution.payments[0].purpose}</ThemedText>
       </View>
     </View>
   );

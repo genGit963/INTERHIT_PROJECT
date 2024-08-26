@@ -76,13 +76,13 @@ const DASHBOARD_SERVICES = {
     });
   },
 
-  //contribution
-  // getContribution: async () => {
-  //   return await API_PRIVATE_SERVICE.request({
-  //     url: '/user/contribution',
-  //     method: 'GET',
-  //   });
-  // },
+  // top-------contribution
+  getContribution: async () => {
+    return await API_PRIVATE_SERVICE.request({
+      url: '/user/contribution',
+      method: 'GET',
+    });
+  },
   //   'https://api.thadaraiadhikari.com/user/aalekh?search=%20&verified=true'
 };
 

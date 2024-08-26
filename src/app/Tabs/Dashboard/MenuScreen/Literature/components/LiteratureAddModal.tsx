@@ -82,7 +82,8 @@ const LiteratureAddModal = ({
           <ScrollView
             style={styles.ScrollContainer}
             contentContainerStyle={{}}
-            showsVerticalScrollIndicator={false}>
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled">
             <ThemedText type="subtitle">Add Literature</ThemedText>
 
             {/* author_image baaki chha */}

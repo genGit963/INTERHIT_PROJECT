@@ -1,5 +1,5 @@
 import {LoginZType, SignupZType, VerifyOTPZType} from '../../schema/auth';
-import {API_PUBLIC_SERVICE} from '../config';
+import {API_PRIVATE_SERVICE, API_PUBLIC_SERVICE} from '../config';
 
 const AUTH_SERVICE = {
   // login
@@ -35,6 +35,16 @@ const AUTH_SERVICE = {
       url: '/auth/verify-otp',
       method: 'PATCH',
       data: otpData,
+    });
+  },
+
+  //refreshToken
+  refreshToken: async (refreshToken: string) => {
+    return await API_PRIVATE_SERVICE.request({
+      url: '/auth/refreshtoken',
+      method: 'POST',
+      headers: {'Content-Type': 'aplication/json'},
+      data: {refreshToken},
     });
   },
 };

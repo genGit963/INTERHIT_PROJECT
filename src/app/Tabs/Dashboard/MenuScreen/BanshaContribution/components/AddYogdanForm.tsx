@@ -88,7 +88,8 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
           <ScrollView
             style={styles.ScrollContainer}
             contentContainerStyle={{}}
-            showsVerticalScrollIndicator={false}>
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps='handled'>
             <ThemedText type="subtitle">Add Bansaj Yogdan</ThemedText>
 
             <CustomTextInput

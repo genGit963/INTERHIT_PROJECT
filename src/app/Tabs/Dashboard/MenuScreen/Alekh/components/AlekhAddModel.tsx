@@ -87,7 +87,7 @@ const AlekhAddModal = ({
 
           <ScrollView
             style={styles.ScrollContainer}
-            showsVerticalScrollIndicator={false}>
+            showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='handled'>
             <ThemedText type="subtitle">Add Alekh</ThemedText>
 
             <CustomImagePickerComponent

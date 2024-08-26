@@ -57,6 +57,8 @@ const SearchInput: React.FC<SearchProps> = ({
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              returnKeyType='search'
+              onSubmitEditing={handleSubmit(onSubmit)}
               {...rest}
             />
             {errors.searchText && (
@@ -76,9 +78,6 @@ export default SearchInput;
 
 const styles = StyleSheet.create({
   SearchContainer: {
-    // borderWidth: 1,
-    // borderColor: '#ccc',
-
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 10,
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
     }),
   },
   input: {
-    flex: 0.7,
+    flex: 1,
     fontSize: Platform.OS === 'ios' ? 16 : 16,
     alignItems: 'center',
     justifyContent: 'center',
