@@ -9,6 +9,8 @@ import EmptyFlatList from '../../../../../components/EmptyFlatList';
 import BottomSpace from '../../../../../components/BottomSpace';
 import { useGetTopContributions } from '../../../../../hooks/tabs/dashboard/topContribution';
 import { TopContributionInterface } from '../../../../../schema/tabs/dashboard/top-contribution.schema';
+import Loader from '../../../../../components/Loader';
+import EmptyResponse from '../../../../../components/EmptyResponse';
 
 // types
 type TopContributionProps = {} & AppScreenNavigationType;
@@ -26,6 +28,10 @@ const TopContribution: React.FC<TopContributionProps> = ({ navigation }) => {
       setTopContributionData(Resp)
     })
   }
+
+  const searchedTopContributors: TopContributionInterface[] = topContributionData.filter((contribution) =>
+    contribution.full_name.toLowerCase().includes(searchText.toLowerCase())
+  )
 
   useEffect(() => {
     getTopContributions()
@@ -47,20 +53,26 @@ const TopContribution: React.FC<TopContributionProps> = ({ navigation }) => {
         />
 
         {/* Flatlist contents */}
-        <FlatList
-          initialNumToRender={5}
-          data={topContributionData.length > 0 ? topContributionData : []}
-          style={styles.FlatListContainer}
-          contentContainerStyle={styles.FlatlistContents}
-          showsVerticalScrollIndicator={false}
-          renderItem={(item) => (
-            <TopContributionCard topContribution={item.item} />
-          )}
-          ListEmptyComponent={<EmptyFlatList message="No Top Contributions" />}
-          keyExtractor={(item) => item._id}
-          ListFooterComponent={<BottomSpace spaceHeight={100} />}
-          ListFooterComponentStyle={styles.FlatlistFooter}
-        />
+        <View>
+
+          {
+            topContributionData.length > 0 ?
+              <FlatList
+                initialNumToRender={5}
+                data={searchText ? searchedTopContributors : topContributionData}
+                style={styles.FlatListContainer}
+                contentContainerStyle={styles.FlatlistContents}
+                showsVerticalScrollIndicator={false}
+                renderItem={(item) => (
+                  <TopContributionCard topContribution={item.item} />
+                )}
+                ListEmptyComponent={<EmptyFlatList message="No Top Contributions" />}
+                keyExtractor={(item) => item._id}
+                ListFooterComponent={<BottomSpace spaceHeight={100} />}
+                ListFooterComponentStyle={styles.FlatlistFooter}
+              /> : loading ? <Loader /> : <EmptyResponse message='no top contribution' />
+          }
+        </View>
       </SafeAreaView>
     </View>
   );

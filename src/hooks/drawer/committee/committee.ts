@@ -14,7 +14,7 @@ export const useGetCommitteMembers = () => {
     ) => {
       setLoading(true);
       setError(undefined);
-      console.log(type, year);
+
       try {
         const getMembersResponse = await COMMITTEE_SERVICES.getCommitteeMembers(
           type,

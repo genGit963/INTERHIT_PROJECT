@@ -7,6 +7,8 @@ import { dummydataCommitteMember } from '../../../../schema/drawer/committee';
 import MemberCard from './components/MemberCard';
 import { useGetCommitteMembers } from '../../../../hooks/drawer/committee/committee';
 import EmptyResponse from '../../../../components/EmptyResponse';
+import ScreenDropDownSelector from '../../../../components/ScreenDropdownSelector';
+import Loader from '../../../../components/Loader';
 
 // types and interface
 type DistrictCommitteeScreenProps = {} & AppScreenNavigationType & AppScreenRouteType;
@@ -19,21 +21,23 @@ const DistrictCommitteeScreen: React.FC<DistrictCommitteeScreenProps> = ({
 
   const { endpointType } = route.params as { endpointType: string };
 
-  const [districtCommMembers, setDistrictCommMembers] = useState()
+  const [districtCommMembers, setDistrictCommMembers] = useState([])
+
+  const [DDSelectedYear, setDDSelectedYear] = useState<string>("2080");
 
   const { loading, error, handleGetMembers } = useGetCommitteMembers()
 
   //the district of the user nai as the district parameter pass hunu parchha
-  const getCommitteeMembers = async () => {
-    const membersResponse = await handleGetMembers(endpointType, 2080, "kathmandu")
+  const getCommitteeMembers = async (year: number = 2080) => {
+    const membersResponse = await handleGetMembers(endpointType, year, "kathmandu")
     if (membersResponse) {
       console.log("getCommitteeMembers District: ", membersResponse)
     }
   }
 
   useEffect(() => {
-    getCommitteeMembers()
-  }, [])
+    getCommitteeMembers(parseInt(DDSelectedYear))
+  }, [DDSelectedYear])
 
   return (
     <View style={styles.Page}>
@@ -43,6 +47,18 @@ const DistrictCommitteeScreen: React.FC<DistrictCommitteeScreenProps> = ({
           navigation={navigation}
           screenTitle="District committee"
         />
+
+        <ScreenDropDownSelector
+          defaultValue='2080'
+          callBackSetSelectedValue={setDDSelectedYear}
+          ddViewWidth={160}
+          options={[
+            { label: '2070-2073', value: '2070' },
+            { label: '2076-2079', value: '2076' },
+            { label: '2080-2083', value: '2080' },
+          ]}
+        />
+
         {/* Body */}
         <ScrollView
           style={styles.ScrollView}
@@ -50,7 +66,7 @@ const DistrictCommitteeScreen: React.FC<DistrictCommitteeScreenProps> = ({
           showsVerticalScrollIndicator={false}>
           {/* all Sadsaya contents */}
           <View style={styles.MembersView}>
-            {districtCommMembers ? <View>
+            {districtCommMembers.length > 0 ? <View>
 
               {
                 dummydataCommitteMember.map((member, _) => {
@@ -74,7 +90,7 @@ const DistrictCommitteeScreen: React.FC<DistrictCommitteeScreenProps> = ({
                 })
               }
             </View>
-              : <EmptyResponse message='No members available for now' />}
+              : loading ? <Loader /> : <EmptyResponse message='No members available for now' />}
           </View>
         </ScrollView>
       </SafeAreaView>

@@ -7,7 +7,6 @@ export const COMMITTEE_SERVICES = {
     district?: string | null,
     province?: string | null,
   ) => {
-    console.log('getcommittee members ep: ', type, year, district, province);
     return await API_PRIVATE_SERVICE.request({
       url: district
         ? `/user/committee?type=${type}&year=${year}&district=${district}`

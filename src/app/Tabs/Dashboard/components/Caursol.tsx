@@ -6,14 +6,15 @@ import {
   Dimensions,
   NativeSyntheticEvent,
   NativeScrollEvent,
+  TouchableOpacity,
 } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { ThemedText } from '../../../../components/ThemedText';
 import { Colors } from '../../../../constants/Color';
 import { generateUUID } from '../../../../utils/uuid-generator';
 import { SocietyContributionRespInterface } from '../../../../schema/tabs/contribution/contributions.schema';
-import EmptyResponse from '../../../../components/EmptyResponse';
-import Loader from '../../../../components/Loader';
+import { AppScreenNavigationType } from '../../../../core/navigation-type';
+import { SCREEN_NAME } from '../../../../core/AppScreen';
 
 const { width } = Dimensions.get('screen');
 
@@ -23,14 +24,16 @@ interface CarouselInterface {
 
 type RenderItemProps = {
   item: SocietyContributionRespInterface;
-};
-
-const RenderItem: React.FC<RenderItemProps> = ({ item }) => {
+  navigation: AppScreenNavigationType['navigation']
+}
+const RenderItem: React.FC<RenderItemProps> = ({ item, navigation }) => {
   return (
-    <View style={styles.imageContainer} key={item._id}>
+    <TouchableOpacity style={styles.imageContainer} key={item._id} onPress={() => navigation.navigate(SCREEN_NAME.TABS.CONTRIBUTION.MAIN)} activeOpacity={1}>
       <ImageBackground
         source={{ uri: item.image.secure_url }}
-        style={styles.ImageBackground}>
+        style={styles.ImageBackground}
+        imageStyle={{ borderRadius: 10 }}
+      >
         <View style={styles.TextView}>
           <ThemedText type="semiBold" style={styles.Title}>
             {item.title}
@@ -40,11 +43,11 @@ const RenderItem: React.FC<RenderItemProps> = ({ item }) => {
           </ThemedText>
         </View>
       </ImageBackground>
-    </View>
+    </TouchableOpacity>
   );
 };
 
-const Carousel: React.FC<CarouselInterface> = ({ data }) => {
+const Carousel: React.FC<CarouselInterface & AppScreenNavigationType> = ({ data, navigation }) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const flatListRef = useRef<FlatList<any | null>>(null);
 
@@ -77,7 +80,7 @@ const Carousel: React.FC<CarouselInterface> = ({ data }) => {
           <FlatList
             ref={flatListRef}
             data={data}
-            renderItem={({ item }) => <RenderItem item={item} />}
+            renderItem={({ item }) => <RenderItem item={item} navigation={navigation} />}
             keyExtractor={(item) => item._id}
             horizontal
             pagingEnabled
@@ -113,6 +116,7 @@ const styles = StyleSheet.create({
     width: width - 48, // Subtracting the padding of the original container
     justifyContent: 'center',
     marginBottom: 20,
+    borderRadius: 10
   },
   imageContainer: {
     flex: 1,
@@ -120,6 +124,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 200,
     padding: 4,
+
   },
   ImageBackground: {
     flex: 1,
@@ -127,6 +132,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+
   },
   TextView: {
     height: '100%',
@@ -135,7 +141,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-end',
     padding: 8,
-    backgroundColor: 'rgba(28,26,26,0.55)',
+    backgroundColor: 'rgba(28,26,26,0.30)',
     borderRadius: 10,
   },
   Title: {

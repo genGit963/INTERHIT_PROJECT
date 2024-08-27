@@ -10,6 +10,8 @@ import { dummydataCommitteMember } from '../../../../schema/drawer/committee';
 import MemberCard from './components/MemberCard';
 import { useGetCommitteMembers } from '../../../../hooks/drawer/committee/committee';
 import EmptyResponse from '../../../../components/EmptyResponse';
+import ScreenDropDownSelector from '../../../../components/ScreenDropdownSelector';
+import Loader from '../../../../components/Loader';
 
 // types and interface
 type CentralCommitteeScreenProps = {} & AppScreenNavigationType &
@@ -22,21 +24,23 @@ const CentralCommitteeScreen: React.FC<CentralCommitteeScreenProps> = ({
 }) => {
   const { endpointType } = route.params as { endpointType: string };
 
-  const [centralCommMembers, setCentralCommMembers] = useState();
+  const [centralCommMembers, setCentralCommMembers] = useState([]);
+
+  const [DDSelectedYear, setDDSelectedYear] = useState<string>("2080");
 
   const { loading, error, handleGetMembers } = useGetCommitteMembers();
 
   //the district of the user nai as the district parameter pass hunu parchha
-  const getCommitteeMembers = async () => {
-    const membersResponse = await handleGetMembers(endpointType, 2080);
+  const getCommitteeMembers = async (year: number = 2080) => {
+    const membersResponse = await handleGetMembers(endpointType, year);
     if (membersResponse) {
       console.log('getCommitteeMembers Central: ', membersResponse);
     }
   };
 
   useEffect(() => {
-    getCommitteeMembers();
-  }, []);
+    getCommitteeMembers(parseInt(DDSelectedYear));
+  }, [DDSelectedYear]);
 
   return (
     <View style={styles.Page}>
@@ -46,13 +50,25 @@ const CentralCommitteeScreen: React.FC<CentralCommitteeScreenProps> = ({
           navigation={navigation}
           screenTitle="Central committee"
         />
+
+        <ScreenDropDownSelector
+          defaultValue='2080'
+          callBackSetSelectedValue={setDDSelectedYear}
+          ddViewWidth={160}
+          options={[
+            { label: '2070-2073', value: '2070' },
+            { label: '2076-2079', value: '2076' },
+            { label: '2080-2083', value: '2080' },
+          ]}
+        />
+
         {/* Body */}
         <ScrollView
           style={styles.ScrollView}
           contentContainerStyle={styles.ScrollContent}
           showsVerticalScrollIndicator={false}>
           {/* all Sadsaya contents */}
-          {centralCommMembers ? (
+          {centralCommMembers.length > 0 ? (
             <View style={styles.MembersView}>
               {dummydataCommitteMember.map((member, _) => {
                 if (member.Post === 'अध्यक्ष') {
@@ -77,7 +93,7 @@ const CentralCommitteeScreen: React.FC<CentralCommitteeScreenProps> = ({
               })}
             </View>
           ) : (
-            <EmptyResponse message="No members available now" />
+            loading ? <Loader /> : <EmptyResponse message="No members available now" />
           )}
         </ScrollView>
       </SafeAreaView>

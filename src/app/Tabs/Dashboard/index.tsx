@@ -58,7 +58,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
           showsVerticalScrollIndicator={false}>
           {/* caursol */}
 
-          <Caursol data={societyContributionData} />
+          <Caursol data={societyContributionData} navigation={navigation} />
 
           {/* today update */}
           <TodayUpdate />

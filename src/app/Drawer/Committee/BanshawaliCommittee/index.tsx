@@ -1,38 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { AppScreenNavigationType, AppScreenRouteType } from '../../../../core/navigation-type';
+import {
+  AppScreenNavigationType,
+  AppScreenRouteType,
+} from '../../../../core/navigation-type';
 import ScreenTopTitle from '../../../../components/ScreenTopTitle';
 import { Colors } from '../../../../constants/Color';
 import { dummydataCommitteMember } from '../../../../schema/drawer/committee';
 import MemberCard from './components/MemberCard';
 import { useGetCommitteMembers } from '../../../../hooks/drawer/committee/committee';
 import EmptyResponse from '../../../../components/EmptyResponse';
+import ScreenDropDownSelector from '../../../../components/ScreenDropdownSelector';
+import Loader from '../../../../components/Loader';
 
 // types and interface
-type BanshawaliCommitteeScreenProps = {} & AppScreenNavigationType & AppScreenRouteType;
+type BanshawaliCommitteeScreenProps = {} & AppScreenNavigationType &
+  AppScreenRouteType;
 
 // ----------------- ProvinceCommittee screen ---------------------
 const BanshawaliCommitteeScreen: React.FC<BanshawaliCommitteeScreenProps> = ({
   navigation,
-  route
+  route,
 }) => {
   const { endpointType } = route.params as { endpointType: string };
 
-  const [banshawaliCommMembers, setBanshawaliCommMembers] = useState()
+  const [banshawaliCommMembers, setBanshawaliCommMembers] = useState([]);
 
-  const { loading, error, handleGetMembers } = useGetCommitteMembers()
+  const [DDSelectedYear, setDDSelectedYear] = useState<string>("2080");
+
+  const { loading, error, handleGetMembers } = useGetCommitteMembers();
 
   //the district of the user nai as the district parameter pass hunu parchha
-  const getCommitteeMembers = async () => {
-    const membersResponse = await handleGetMembers(endpointType, 2080, null, "कोशी प्रदेश")
+  const getCommitteeMembers = async (year: number = 2080) => {
+    const membersResponse = await handleGetMembers(
+      endpointType,
+      year,
+      null,
+      'कोशी प्रदेश',
+    );
     if (membersResponse) {
-      console.log("getCommitteeMembers Banshawali: ", membersResponse)
+      console.log('getCommitteeMembers Banshawali: ', membersResponse);
     }
-  }
+  };
 
   useEffect(() => {
-    getCommitteeMembers()
-  }, [])
+    const year = parseInt(DDSelectedYear as string)
+    getCommitteeMembers(year);
+  }, [DDSelectedYear]);
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
@@ -41,35 +56,49 @@ const BanshawaliCommitteeScreen: React.FC<BanshawaliCommitteeScreenProps> = ({
           navigation={navigation}
           screenTitle="Banshawali Committee"
         />
+        <ScreenDropDownSelector
+          defaultValue='2080'
+          callBackSetSelectedValue={setDDSelectedYear}
+          ddViewWidth={160}
+          options={[
+            { label: '2070-2073', value: '2070' },
+            { label: '2076-2079', value: '2076' },
+            { label: '2080-2083', value: '2080' },
+          ]}
+        />
         {/* Body */}
         <ScrollView
           style={styles.ScrollView}
           contentContainerStyle={styles.ScrollContent}
           showsVerticalScrollIndicator={false}>
           {/* all Sadsaya contents */}
-          {banshawaliCommMembers ? <View style={styles.MembersView}>
-            {dummydataCommitteMember.map((member, _) => {
-              if (member.Post === 'अध्यक्ष') {
-                return (
-                  <View style={styles.TopMemberView}>
-                    <MemberCard
-                      key={member.Id + member.Name}
-                      memberData={member}
-                    />
-                  </View>
-                );
-              } else {
-                return (
-                  <View style={styles.OtherMemberView}>
-                    <MemberCard
-                      key={member.Id + member.Name}
-                      memberData={member}
-                    />
-                  </View>
-                );
-              }
-            })}
-          </View> : <EmptyResponse message='No members available now' />}
+          {banshawaliCommMembers.length > 0 ? (
+            <View style={styles.MembersView}>
+              {dummydataCommitteMember.map((member, _) => {
+                if (member.Post === 'अध्यक्ष') {
+                  return (
+                    <View style={styles.TopMemberView}>
+                      <MemberCard
+                        key={member.Id + member.Name}
+                        memberData={member}
+                      />
+                    </View>
+                  );
+                } else {
+                  return (
+                    <View style={styles.OtherMemberView}>
+                      <MemberCard
+                        key={member.Id + member.Name}
+                        memberData={member}
+                      />
+                    </View>
+                  );
+                }
+              })}
+            </View>
+          ) : (
+            loading ? <Loader /> : <EmptyResponse message="No members available now" />
+          )}
         </ScrollView>
       </SafeAreaView>
     </View>
