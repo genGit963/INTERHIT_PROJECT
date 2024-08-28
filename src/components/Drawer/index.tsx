@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   Modal,
   View,
@@ -7,12 +7,12 @@ import {
   SafeAreaView,
 } from 'react-native';
 import BottomSpace from '../BottomSpace';
-import { ThemedText } from '../ThemedText';
-import { AppScreenNavigationType } from '../../core/navigation-type';
-import { SCREEN_NAME } from '../../core/AppScreen';
+import {ThemedText} from '../ThemedText';
+import {AppScreenNavigationType} from '../../core/navigation-type';
+import {SCREEN_NAME} from '../../core/AppScreen';
 import DrawerBarBtn from './DrawerBarButton';
-import { stylesDC } from './Drawer.stylesheet';
-import { aboutUsOptionsData, committeeOptionsData } from './drawer-data';
+import {stylesDC} from './Drawer.stylesheet';
+import {aboutUsOptionsData, committeeOptionsData} from './drawer-data';
 import RNRestart from 'react-native-restart';
 
 // svg
@@ -31,7 +31,7 @@ import PrivacypolicySvg from '../../assets/svg/shield.svg';
 import HelpFAQsSvg from '../../assets/svg/help-circle.svg';
 import TermsConditionsSvg from '../../assets/svg/file-text.svg';
 import UserDrawerView from './UserDrawerView';
-import { asyncRemoveData } from '../../core/AsyncStorage';
+import {asyncRemoveData} from '../../core/AsyncStorage';
 
 // type
 type DrawerModalProps = {
@@ -59,7 +59,7 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
   };
   return (
     <Modal
-      animationType="slide"
+      animationType="none"
       transparent={true}
       visible={isVisible}
       onRequestClose={() => modalVisibile(false)}>

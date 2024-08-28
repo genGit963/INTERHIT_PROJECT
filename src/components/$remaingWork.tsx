@@ -126,6 +126,9 @@ const RemainingWork = () => {
       <ThemedText>
         <LowPriority /> 28. Downlaod Screen
       </ThemedText>
+      <ThemedText>
+        <TopPriority /> 28. TurnOff the Landscape mode for all screen
+      </ThemedText>
     </View>
   );
 };
