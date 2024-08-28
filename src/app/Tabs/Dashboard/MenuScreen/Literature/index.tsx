@@ -126,11 +126,6 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({navigation}) => {
           ListFooterComponentStyle={styles.FlatlistFooter}
         />
 
-        {/* Dark Overlay */}
-        {(isLiteratureViewVisible || isLiteratureAddVisible) && (
-          <View style={styles.Overlay} />
-        )}
-
         {/* Literature Detail View Modal */}
         {isLiteratureViewVisible && (
           <LiteratureViewModal

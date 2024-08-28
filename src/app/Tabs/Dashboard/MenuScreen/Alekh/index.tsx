@@ -118,11 +118,6 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
           ListFooterComponentStyle={styles.FlatlistFooter}
         />
 
-        {/* Dark Overlay */}
-        {(isAlekhViewVisible || isAlekhAddVisible) && (
-          <View style={styles.Overlay} />
-        )}
-
         {/* Alekh Detail View Modal */}
         {isAlekhViewVisible && (
           <AlekhViewModal
