@@ -5,6 +5,7 @@ import HeroButton from '../../../../components/HeroButton';
 import {Colors} from '../../../../constants/Color';
 import {useUserDataProvider} from '../../../../hooks/tabs/dashboard';
 import {StoredUserType} from '../../../../schema/auth';
+import {getShortHandOfName} from '../../../../utils/nameParser';
 
 // types
 type ProfileUserSectionProps = {
@@ -42,7 +43,7 @@ const ProfileUserSection: React.FC<ProfileUserSectionProps> = ({
       ) : (
         <View style={styles.NoImageView}>
           <ThemedText style={styles.NoImageText} type="title">
-            MB
+            {getShortHandOfName(String(APPUSER?.user.name))}
           </ThemedText>
         </View>
       )}
@@ -77,22 +78,25 @@ const styles = StyleSheet.create({
     borderRadius: 70,
   },
   NoImageView: {
-    // borderWidth: 1,
-    borderRadius: 38,
-    height: 64,
-    width: 64,
+    borderWidth: 1,
+    height: 90,
+    width: 90,
+    borderRadius: 70,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 13,
+    paddingVertical: 20,
     backgroundColor: Colors.primary,
   },
   NoImageText: {
     textAlign: 'center',
     color: Colors.whiteTunedBG,
-    fontSize: 28,
+    fontSize: 36,
     // backgroundColor: 'green',
+    paddingTop: 16,
   },
-  UserInfo: {},
+  UserInfo: {
+    marginVertical: 2,
+  },
   UserName: {
     fontSize: 18,
   },

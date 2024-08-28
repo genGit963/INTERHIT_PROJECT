@@ -2,10 +2,34 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ThemedText} from './ThemedText';
 
+const TopPriority = () => {
+  return <ThemedText style={{color: 'red'}}>Top</ThemedText>;
+};
+
+const MediumPriority = () => {
+  return <ThemedText style={{color: 'green'}}>Top</ThemedText>;
+};
+
+const LowPriority = () => {
+  return <ThemedText style={{color: 'black'}}>Top</ThemedText>;
+};
+
+function DoneRW() {
+  return {
+    color: 'green',
+    fontSize: 12,
+    textDecorationLine: 'line-through',
+  };
+}
+
 const RemainingWork = () => {
   return (
     <View style={styles.Container}>
-      <ThemedText type="subtitle">Remaining Work </ThemedText>
+      <ThemedText
+        type="subtitle"
+        style={{textDecorationLine: 'underline', color: 'purple'}}>
+        Remaining Work
+      </ThemedText>
       <ThemedText>1. Language Translation</ThemedText>
       <ThemedText>
         2. ID Card and Contribtuion Certificate Svg Dynamic

@@ -7,6 +7,7 @@ import NepaliFlagSvg from '../../../../assets/svg/nepali_flag.svg';
 import {useUserDataProvider} from '../../../../hooks/tabs/dashboard';
 import {StoredUserType} from '../../../../schema/auth';
 import {SOCIETY_DATA} from '../../../../core/SocietyData';
+import {getShortHandOfName} from '../../../../utils/nameParser';
 
 type HeaderProps = {
   callBackDrawerVisible: (value: boolean) => void;
@@ -45,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({callBackDrawerVisible}) => {
         ) : (
           <View style={styles.NoImageView}>
             <ThemedText style={styles.NoImageText} type="title">
-              MB
+              {getShortHandOfName(String(APPUSER?.user.name))}
             </ThemedText>
           </View>
         )}
