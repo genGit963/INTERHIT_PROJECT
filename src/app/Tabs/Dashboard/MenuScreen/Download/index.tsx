@@ -12,6 +12,7 @@ import SearchInput, {SearchType} from '../../../../../components/SearchInput';
 import {Colors} from '../../../../../constants/Color';
 import supplyShadowEffect from '../../../../../utils/Shadow';
 import {ThemedText} from '../../../../../components/ThemedText';
+import RemainingWork from '../../../../../components/$remaingWork';
 
 // types
 type DownloadScreenProps = {} & AppScreenNavigationType;
@@ -33,17 +34,8 @@ const DownloadScreen: React.FC<DownloadScreenProps> = ({navigation}) => {
           callBackSetSearchValue={setSearchText}
         />
 
-        <View>
-          <ThemedText type="subtitle">Remaining Work </ThemedText>
-          <ThemedText>1. Language Translation</ThemedText>
-          <ThemedText>
-            2. ID Card and Contribtuion Certificate Svg Dynamic
-          </ThemedText>
-          <ThemedText>3. What to do in Notice Tab</ThemedText>
-          <ThemedText>4. Geneology Work</ThemedText>
-          <ThemedText>5. OverView Finishing</ThemedText>
-          <ThemedText>6. Search Implementation on All</ThemedText>
-        </View>
+        {/* Just for now  */}
+        <RemainingWork />
       </SafeAreaView>
     </View>
   );
