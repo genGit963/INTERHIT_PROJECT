@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Controller, useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ThemedText } from './ThemedText';
+import {Controller, useForm} from 'react-hook-form';
+import {z} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {ThemedText} from './ThemedText';
 import SearchIconSvg from '../assets/svg/search.svg';
 import supplyShadowEffect from '../utils/Shadow';
-import { Colors } from '../constants/Color';
+import {Colors} from '../constants/Color';
 
 const SearchSchema = z.object({
   searchText: z.string(),
@@ -35,7 +35,7 @@ const SearchInput: React.FC<SearchProps> = ({
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm<SearchType>({
     resolver: zodResolver(SearchSchema),
   });
@@ -49,7 +49,7 @@ const SearchInput: React.FC<SearchProps> = ({
       <Controller
         control={control}
         name={'searchText'}
-        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+        render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
           <>
             <TextInput
               style={[styles.input, style]}
@@ -57,7 +57,7 @@ const SearchInput: React.FC<SearchProps> = ({
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              returnKeyType='search'
+              returnKeyType="search"
               onSubmitEditing={handleSubmit(onSubmit)}
               {...rest}
             />
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 8,
 
     ...supplyShadowEffect({
       X_off: 0,
