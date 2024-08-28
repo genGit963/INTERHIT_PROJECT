@@ -1,43 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { AppScreenNavigationType, AppScreenRouteType } from '../../../../core/navigation-type';
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  AppScreenNavigationType,
+  AppScreenRouteType,
+} from '../../../../core/navigation-type';
 import ScreenTopTitle from '../../../../components/ScreenTopTitle';
-import { Colors } from '../../../../constants/Color';
-import { dummydataCommitteMember } from '../../../../schema/drawer/committee';
+import {Colors} from '../../../../constants/Color';
+import {dummydataCommitteMember} from '../../../../schema/drawer/committee';
 import MemberCard from './components/MemberCard';
-import { useGetCommitteMembers } from '../../../../hooks/drawer/committee/committee';
+import {useGetCommitteMembers} from '../../../../hooks/drawer/committee/committee';
 import EmptyResponse from '../../../../components/EmptyResponse';
 import ScreenDropDownSelector from '../../../../components/ScreenDropdownSelector';
 import Loader from '../../../../components/Loader';
 
 // types and interface
-type DistrictCommitteeScreenProps = {} & AppScreenNavigationType & AppScreenRouteType;
+type DistrictCommitteeScreenProps = {} & AppScreenNavigationType &
+  AppScreenRouteType;
 
 // ----------------- DistrictCommittee screen ---------------------
 const DistrictCommitteeScreen: React.FC<DistrictCommitteeScreenProps> = ({
   navigation,
-  route
+  route,
 }) => {
+  const {endpointType} = route.params as {endpointType: string};
 
-  const { endpointType } = route.params as { endpointType: string };
+  const [districtCommMembers, setDistrictCommMembers] = useState([]);
 
-  const [districtCommMembers, setDistrictCommMembers] = useState([])
+  const [DDSelectedYear, setDDSelectedYear] = useState<string>('2080');
 
-  const [DDSelectedYear, setDDSelectedYear] = useState<string>("2080");
-
-  const { loading, error, handleGetMembers } = useGetCommitteMembers()
+  const {loading, error, handleGetMembers} = useGetCommitteMembers();
 
   //the district of the user nai as the district parameter pass hunu parchha
   const getCommitteeMembers = async (year: number = 2080) => {
-    const membersResponse = await handleGetMembers(endpointType, year, "kathmandu")
+    const membersResponse = await handleGetMembers(
+      endpointType,
+      year,
+      'kathmandu',
+    );
     if (membersResponse) {
-      console.log("getCommitteeMembers District: ", membersResponse)
+      console.log('getCommitteeMembers District: ', membersResponse);
     }
-  }
+  };
 
   useEffect(() => {
-    getCommitteeMembers(parseInt(DDSelectedYear))
-  }, [DDSelectedYear])
+    getCommitteeMembers(parseInt(DDSelectedYear));
+  }, [DDSelectedYear]);
 
   return (
     <View style={styles.Page}>
@@ -49,13 +56,13 @@ const DistrictCommitteeScreen: React.FC<DistrictCommitteeScreenProps> = ({
         />
 
         <ScreenDropDownSelector
-          defaultValue='2080'
+          defaultValue="2080"
           callBackSetSelectedValue={setDDSelectedYear}
           ddViewWidth={160}
           options={[
-            { label: '2070-2073', value: '2070' },
-            { label: '2076-2079', value: '2076' },
-            { label: '2080-2083', value: '2080' },
+            {label: '2070-2073', value: '2070'},
+            {label: '2076-2079', value: '2076'},
+            {label: '2080-2083', value: '2080'},
           ]}
         />
 
@@ -66,31 +73,33 @@ const DistrictCommitteeScreen: React.FC<DistrictCommitteeScreenProps> = ({
           showsVerticalScrollIndicator={false}>
           {/* all Sadsaya contents */}
           <View style={styles.MembersView}>
-            {districtCommMembers.length > 0 ? <View>
-
-              {
-                dummydataCommitteMember.map((member, _) => {
+            {districtCommMembers.length > 0 ? (
+              <View>
+                {dummydataCommitteMember.map((member, _) => {
                   if (member.Post === 'अध्यक्ष') {
                     return (
-                      <View style={styles.TopMemberView} key={member.Id + member.Name}>
-                        <MemberCard
-                          memberData={member}
-                        />
+                      <View
+                        style={styles.TopMemberView}
+                        key={member.Id + member.Name}>
+                        <MemberCard memberData={member} />
                       </View>
                     );
                   } else {
                     return (
-                      <View style={styles.OtherMemberView} key={member.Id + member.Name}>
-                        <MemberCard
-                          memberData={member}
-                        />
+                      <View
+                        style={styles.OtherMemberView}
+                        key={member.Id + member.Name}>
+                        <MemberCard memberData={member} />
                       </View>
                     );
                   }
-                })
-              }
-            </View>
-              : loading ? <Loader /> : <EmptyResponse message='No members available for now' />}
+                })}
+              </View>
+            ) : loading ? (
+              <Loader />
+            ) : (
+              <EmptyResponse message="No members available for now" />
+            )}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -107,8 +116,8 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  ScrollView: { marginBottom: 10, paddingBottom: 30 },
-  ScrollContent: { paddingBottom: 100 },
+  ScrollView: {marginBottom: 10, paddingBottom: 30},
+  ScrollContent: {paddingBottom: 180},
   MembersView: {
     // borderWidth: 1,
     display: 'flex',

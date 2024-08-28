@@ -43,15 +43,24 @@ const AUTH_SERVICE = {
     refTok: string | undefined,
     accessToken: string | undefined,
   ) => {
-    console.log('ep refreshToken: ', refTok, '\n\n', accessToken);
+    console.log(
+      '\n\nep refreshToken: ',
+      refTok,
+      '\n\n ep accessToken:',
+      accessToken,
+    );
     const res = await API_PUBLIC_SERVICE.request({
       url: '/auth/refreshtoken',
       method: 'POST',
       data: {
         refreshToken: refTok,
+        // refreshToken:
+        //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Ijk4NjU5MTQ3MjIiLCJlbWFpbCI6ImJvZ2F0aS5tYWhlc2guMjk5Ljc5Mi40NThAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MjQ4NDE3NzAsImV4cCI6MTcyNTQ0NjU3MH0.LetDBcj7v2MVCa3jq6pu_csLR6C0DAhnYPor881JQRc',
       },
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        // Authorization:
+        //   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Ijk4NjU5MTQ3MjIiLCJlbWFpbCI6ImJvZ2F0aS5tYWhlc2guMjk5Ljc5Mi40NThAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MjQ4NDE3NzAsImV4cCI6MTcyNDg0NTc3MH0.1gxsMWEw-9UFup5UnXQ35wmPe3EZzGsXSUNnDnfTbEo',
       },
     });
     if (res) {
@@ -64,3 +73,7 @@ const AUTH_SERVICE = {
 };
 
 export default AUTH_SERVICE;
+
+// storedAccessToken:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Ijk4NjU5MTQ3MjIiLCJlbWFpbCI6ImJvZ2F0aS5tYWhlc2guMjk5Ljc5Mi40NThAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MjQ4NDE3NzAsImV4cCI6MTcyNDg0NTc3MH0.1gxsMWEw-9UFup5UnXQ35wmPe3EZzGsXSUNnDnfTbEo
+
+// interceptor refreshToken:  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Ijk4NjU5MTQ3MjIiLCJlbWFpbCI6ImJvZ2F0aS5tYWhlc2guMjk5Ljc5Mi40NThAZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3MjQ4NDE3NzAsImV4cCI6MTcyNTQ0NjU3MH0.LetDBcj7v2MVCa3jq6pu_csLR6C0DAhnYPor881JQRc

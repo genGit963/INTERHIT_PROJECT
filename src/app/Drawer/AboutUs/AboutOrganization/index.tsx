@@ -77,8 +77,8 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  ScrollView: {marginBottom: 10, paddingBottom: 30},
-  ScrollContent: {paddingBottom: 100},
+  ScrollView: {marginBottom: 10, paddingBottom: 40},
+  ScrollContent: {paddingBottom: 140},
   OrgTitle: {
     fontSize: 20,
     paddingVertical: 2,

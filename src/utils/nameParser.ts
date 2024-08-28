@@ -4,7 +4,7 @@
  * @returns A string containing the first letters of the first and last names.
  */
 
-function getInitials(fullName: string): string {
+export function getShortHandOfName(fullName: string): string {
   // Trim any leading or trailing whitespace and split the name by spaces
   const nameParts = fullName.trim().split(/\s+/);
 

@@ -46,6 +46,7 @@ API_PRIVATE_SERVICE.interceptors.request.use(
   async (config) => {
     const token = await getUserToken();
     // console.log('interceptor accessToken: ', token);
+    // console.log('interceptor refreshToken: ', await getUserRefreshToken());
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -66,20 +67,17 @@ API_PRIVATE_SERVICE.interceptors.response.use(
       // console.log('Refreshing Token.........');
       if (errorRes.message === 'Unauthorized' && errorRes.statusCode === 401) {
         const expiredRT = await getUserRefreshToken();
-        const accessToken = await getUserToken();
+        const expiredAT = await getUserToken();
 
-        if (expiredRT && accessToken) {
+        if (expiredRT && expiredAT) {
           const refreshTokenRes = await AUTH_SERVICE.refreshToken(
             expiredRT,
-            accessToken,
+            expiredAT,
           );
-          // console.log('\n\nrefreshing tokn: ', refreshTokenRes?.data);
+          console.log('\n\nrefreshing tokn: ', refreshTokenRes?.data);
           if (refreshTokenRes) {
             await asyncStoreData('USER', JSON.stringify(refreshTokenRes?.data));
-            await asyncStoreData(
-              'TOKEN',
-              JSON.stringify(refreshTokenRes?.data.accessToken),
-            );
+            await asyncStoreData('TOKEN', refreshTokenRes?.data.accessToken);
             console.log('Refreshing Token Done.........');
           } else {
             console.log('Failed Refreshment ...');

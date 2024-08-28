@@ -1,42 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { AppScreenNavigationType, AppScreenRouteType } from '../../../../core/navigation-type';
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  AppScreenNavigationType,
+  AppScreenRouteType,
+} from '../../../../core/navigation-type';
 import ScreenTopTitle from '../../../../components/ScreenTopTitle';
-import { Colors } from '../../../../constants/Color';
-import { dummydataCommitteMember } from '../../../../schema/drawer/committee';
+import {Colors} from '../../../../constants/Color';
+import {dummydataCommitteMember} from '../../../../schema/drawer/committee';
 import MemberCard from './components/MemberCard';
-import { useGetCommitteMembers } from '../../../../hooks/drawer/committee/committee';
+import {useGetCommitteMembers} from '../../../../hooks/drawer/committee/committee';
 import EmptyFlatList from '../../../../components/EmptyFlatList';
 import ScreenDropDownSelector from '../../../../components/ScreenDropdownSelector';
 import Loader from '../../../../components/Loader';
 
 // types and interface
-type FinanceCommitteeScreenProps = {} & AppScreenNavigationType & AppScreenRouteType;
+type FinanceCommitteeScreenProps = {} & AppScreenNavigationType &
+  AppScreenRouteType;
 
 // ----------------- ProvinceCommittee screen ---------------------
 const FinanceCommitteeScreen: React.FC<FinanceCommitteeScreenProps> = ({
   navigation,
-  route
+  route,
 }) => {
-  const { endpointType } = route.params as { endpointType: string };
+  const {endpointType} = route.params as {endpointType: string};
 
-  const [financeCommitteeMembers, setFinanceCommitteeMembers] = useState([])
+  const [financeCommitteeMembers, setFinanceCommitteeMembers] = useState([]);
 
-  const [DDSelectedYear, setDDSelectedYear] = useState<string>("2080");
+  const [DDSelectedYear, setDDSelectedYear] = useState<string>('2080');
 
-  const { loading, error, handleGetMembers } = useGetCommitteMembers()
+  const {loading, error, handleGetMembers} = useGetCommitteMembers();
 
   //the district of the user nai as the district parameter pass hunu parchha
   const getCommitteeMembers = async (year: number) => {
-    const membersResponse = await handleGetMembers(endpointType, year)
+    const membersResponse = await handleGetMembers(endpointType, year);
     if (membersResponse) {
-      console.log("getCommitteeMembers Account: ", membersResponse)
+      console.log('getCommitteeMembers Account: ', membersResponse);
     }
-  }
+  };
 
   useEffect(() => {
-    getCommitteeMembers(parseInt(DDSelectedYear))
-  }, [DDSelectedYear])
+    getCommitteeMembers(parseInt(DDSelectedYear));
+  }, [DDSelectedYear]);
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
@@ -47,16 +51,15 @@ const FinanceCommitteeScreen: React.FC<FinanceCommitteeScreenProps> = ({
         />
 
         <ScreenDropDownSelector
-          defaultValue='2080'
+          defaultValue="2080"
           callBackSetSelectedValue={setDDSelectedYear}
           ddViewWidth={160}
           options={[
-            { label: '2070-2073', value: '2070' },
-            { label: '2076-2079', value: '2076' },
-            { label: '2080-2083', value: '2080' },
+            {label: '2070-2073', value: '2070'},
+            {label: '2076-2079', value: '2076'},
+            {label: '2080-2083', value: '2080'},
           ]}
         />
-
 
         {/* Body */}
         <ScrollView
@@ -64,29 +67,33 @@ const FinanceCommitteeScreen: React.FC<FinanceCommitteeScreenProps> = ({
           contentContainerStyle={styles.ScrollContent}
           showsVerticalScrollIndicator={false}>
           {/* all Sadsaya contents */}
-          {financeCommitteeMembers ? <View style={styles.MembersView}>
-            {dummydataCommitteMember.map((member, _) => {
-              if (member.Post === 'अध्यक्ष') {
-                return (
-                  <View style={styles.TopMemberView}>
-                    <MemberCard
+          {financeCommitteeMembers ? (
+            <View style={styles.MembersView}>
+              {dummydataCommitteMember.map((member, _) => {
+                if (member.Post === 'अध्यक्ष') {
+                  return (
+                    <View
                       key={member.Id + member.Name}
-                      memberData={member}
-                    />
-                  </View>
-                );
-              } else {
-                return (
-                  <View style={styles.OtherMemberView}>
-                    <MemberCard
+                      style={styles.TopMemberView}>
+                      <MemberCard memberData={member} />
+                    </View>
+                  );
+                } else {
+                  return (
+                    <View
                       key={member.Id + member.Name}
-                      memberData={member}
-                    />
-                  </View>
-                );
-              }
-            })}
-          </View> : loading ? <Loader /> : <EmptyFlatList message='No memebers available now' />}
+                      style={styles.OtherMemberView}>
+                      <MemberCard memberData={member} />
+                    </View>
+                  );
+                }
+              })}
+            </View>
+          ) : loading ? (
+            <Loader />
+          ) : (
+            <EmptyFlatList message="No memebers available now" />
+          )}
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -102,8 +109,8 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  ScrollView: { marginBottom: 10, paddingBottom: 30 },
-  ScrollContent: { paddingBottom: 100 },
+  ScrollView: {marginBottom: 10, paddingBottom: 40},
+  ScrollContent: {paddingBottom: 140},
   MembersView: {
     // borderWidth: 1,
     display: 'flex',

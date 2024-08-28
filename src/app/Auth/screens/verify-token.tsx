@@ -35,12 +35,12 @@ const VerifyOTPScreen: React.FC<VerifyOTPScreenProps> = ({
 
   const {loading, error, handleVerifyOTP} = useVerifyOTP();
   // verifyOTPZType has phone,otp and the data coming here is otp only
-  const onSubmit = async (data: Pick<VerifyOTPZType, "otp">) => {
+  const onSubmit = async (data: Pick<VerifyOTPZType, 'otp'>) => {
     const {phone} = route.params as {phone: string};
     const otpData: VerifyOTPZType = {
       otp: data.otp,
       phone: phone,
-    }
+    };
 
     await handleVerifyOTP(otpData).then((Response) => {
       if (Response) {
@@ -99,8 +99,8 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  ScrollView: {marginBottom: 10, paddingBottom: 30},
-  ScrollContent: {paddingBottom: 100},
+  ScrollView: {marginBottom: 10, paddingBottom: 40},
+  ScrollContent: {paddingBottom: 140},
   FlexText: {
     textAlign: 'center',
   },

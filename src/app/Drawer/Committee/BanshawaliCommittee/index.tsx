@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {
   AppScreenNavigationType,
   AppScreenRouteType,
 } from '../../../../core/navigation-type';
 import ScreenTopTitle from '../../../../components/ScreenTopTitle';
-import { Colors } from '../../../../constants/Color';
-import { dummydataCommitteMember } from '../../../../schema/drawer/committee';
+import {Colors} from '../../../../constants/Color';
+import {dummydataCommitteMember} from '../../../../schema/drawer/committee';
 import MemberCard from './components/MemberCard';
-import { useGetCommitteMembers } from '../../../../hooks/drawer/committee/committee';
+import {useGetCommitteMembers} from '../../../../hooks/drawer/committee/committee';
 import EmptyResponse from '../../../../components/EmptyResponse';
 import ScreenDropDownSelector from '../../../../components/ScreenDropdownSelector';
 import Loader from '../../../../components/Loader';
@@ -22,13 +22,13 @@ const BanshawaliCommitteeScreen: React.FC<BanshawaliCommitteeScreenProps> = ({
   navigation,
   route,
 }) => {
-  const { endpointType } = route.params as { endpointType: string };
+  const {endpointType} = route.params as {endpointType: string};
 
   const [banshawaliCommMembers, setBanshawaliCommMembers] = useState([]);
 
-  const [DDSelectedYear, setDDSelectedYear] = useState<string>("2080");
+  const [DDSelectedYear, setDDSelectedYear] = useState<string>('2080');
 
-  const { loading, error, handleGetMembers } = useGetCommitteMembers();
+  const {loading, error, handleGetMembers} = useGetCommitteMembers();
 
   //the district of the user nai as the district parameter pass hunu parchha
   const getCommitteeMembers = async (year: number = 2080) => {
@@ -44,7 +44,7 @@ const BanshawaliCommitteeScreen: React.FC<BanshawaliCommitteeScreenProps> = ({
   };
 
   useEffect(() => {
-    const year = parseInt(DDSelectedYear as string)
+    const year = parseInt(DDSelectedYear as string);
     getCommitteeMembers(year);
   }, [DDSelectedYear]);
 
@@ -57,13 +57,13 @@ const BanshawaliCommitteeScreen: React.FC<BanshawaliCommitteeScreenProps> = ({
           screenTitle="Banshawali Committee"
         />
         <ScreenDropDownSelector
-          defaultValue='2080'
+          defaultValue="2080"
           callBackSetSelectedValue={setDDSelectedYear}
           ddViewWidth={160}
           options={[
-            { label: '2070-2073', value: '2070' },
-            { label: '2076-2079', value: '2076' },
-            { label: '2080-2083', value: '2080' },
+            {label: '2070-2073', value: '2070'},
+            {label: '2076-2079', value: '2076'},
+            {label: '2080-2083', value: '2080'},
           ]}
         />
         {/* Body */}
@@ -96,8 +96,10 @@ const BanshawaliCommitteeScreen: React.FC<BanshawaliCommitteeScreenProps> = ({
                 }
               })}
             </View>
+          ) : loading ? (
+            <Loader />
           ) : (
-            loading ? <Loader /> : <EmptyResponse message="No members available now" />
+            <EmptyResponse message="No members available now" />
           )}
         </ScrollView>
       </SafeAreaView>
@@ -114,8 +116,8 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  ScrollView: { marginBottom: 10, paddingBottom: 30 },
-  ScrollContent: { paddingBottom: 100 },
+  ScrollView: {marginBottom: 10, paddingBottom: 30},
+  ScrollContent: {paddingBottom: 180},
   MembersView: {
     // borderWidth: 1,
     display: 'flex',

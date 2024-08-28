@@ -3,12 +3,6 @@ import {LoginZType, SignupZType, VerifyOTPZType} from '../../schema/auth';
 import AUTH_SERVICE from '../../services/auth';
 import {asyncStoreData} from '../../core/AsyncStorage';
 
-// 9865914722
-// Mahesh999@
-
-// 0987654321
-// MilanPraz@1
-
 export const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();
@@ -19,6 +13,7 @@ export const useLogin = () => {
     try {
       await AUTH_SERVICE.login(loginData).then(async (Response) => {
         // storing to AsyncStorage
+        console.log('login successs res: ', Response);
         await asyncStoreData('USER', JSON.stringify(Response.data));
         await asyncStoreData('TOKEN', Response.data.accessToken);
       });
