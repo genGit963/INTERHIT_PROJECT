@@ -11,13 +11,11 @@ export const useGetStatistics = () => {
     try {
       const getStatsData = await DASHBOARD_SERVICES.getStatistics();
       if (getStatsData) {
-        return getStatsData.data;
-      } else {
-        setError('Fetch Stats failed.');
+        return getStatsData?.data;
       }
     } catch (err) {
       setError('Get Stats Failed !');
-      console.log('Failed error: ', err);
+      console.log('Failed error statistics: ', err);
       return null;
     } finally {
       setLoading(false);

@@ -43,7 +43,7 @@ const AUTH_SERVICE = {
     refTok: string | undefined,
     accessToken: string | undefined,
   ) => {
-    console.log('ep refreshToken.....', refTok);
+    console.log('ep refreshToken: ', refTok, '\n\n', accessToken);
     const res = await API_PUBLIC_SERVICE.request({
       url: '/auth/refreshtoken',
       method: 'POST',
@@ -55,7 +55,7 @@ const AUTH_SERVICE = {
       },
     });
     if (res) {
-      // console.log('\n\nep refreshToken res: ', res.data);
+      console.log('\n\nep refreshToken res: ', res.data);
       return res;
     } else {
       return null;

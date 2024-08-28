@@ -9,13 +9,14 @@ const API_BASE_URL = 'https://api.thadaraiadhikari.com';
 // Fetch user token asynchronously
 export async function getUserToken() {
   const token = await asyncGetData('TOKEN');
-  console.log('\n\nstoredToken: ', token);
+  // console.log('\n\nstoredAccessToken: ', token);
   return token as string | undefined;
 }
 
 // Fetch user token asynchronously
 export async function getUserRefreshToken() {
-  const appUser: StoredUserType = await asyncGetData('USER');
+  const data = await asyncGetData('USER');
+  const appUser = await JSON.parse(data as string);
   const refreshToken = appUser?.user.refreshToken;
   // console.log('\n\n stored Refresh Token: ', refreshToken);
   return refreshToken;
@@ -44,6 +45,7 @@ export const API_PRIVATE_SERVICE = axios.create({
 API_PRIVATE_SERVICE.interceptors.request.use(
   async (config) => {
     const token = await getUserToken();
+    // console.log('interceptor accessToken: ', token);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -56,13 +58,12 @@ API_PRIVATE_SERVICE.interceptors.request.use(
 
 // Add a response interceptor to handle token refresh logic
 API_PRIVATE_SERVICE.interceptors.response.use(
-  function (response) {
-    return response;
-  },
+  (response) => response,
   function (error) {
     console.log('\n\n\n\ninterceptor error: ', error?.response.data);
     const errorRes = error?.response.data;
     const refreshAPI = async () => {
+      // console.log('Refreshing Token.........');
       if (errorRes.message === 'Unauthorized' && errorRes.statusCode === 401) {
         const expiredRT = await getUserRefreshToken();
         const accessToken = await getUserToken();
@@ -79,11 +80,16 @@ API_PRIVATE_SERVICE.interceptors.response.use(
               'TOKEN',
               JSON.stringify(refreshTokenRes?.data.accessToken),
             );
+            console.log('Refreshing Token Done.........');
+          } else {
+            console.log('Failed Refreshment ...');
           }
         }
       }
     };
-    refreshAPI();
+    refreshAPI().then(() => {
+      console.log('Refreshing Done.........');
+    });
     return Promise.reject(error);
   },
 );

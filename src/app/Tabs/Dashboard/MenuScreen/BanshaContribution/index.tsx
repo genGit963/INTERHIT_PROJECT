@@ -35,15 +35,6 @@ const BanshaContribution: React.FC<BanshaContributionProps> = ({
   //yogdan data
   const [yogdanData, setYogdanData] = useState<BanshaYogdanInterface[]>([]);
 
-  // filter by searchText
-  // const filterDataBySearch: BanshaYogdanInterface[] =
-  //   searchText === ''
-  //     ? []
-  //     : banshaYogdanDummyList.filter((item) =>
-  //         item.ContributerName.toLowerCase().includes(searchText.toLowerCase()),
-  //       );
-  // console.log('searchText bansha contribution: ', searchText);
-
   // DD selected value
   const [DDSelectedValue, setDDSelectedValue] = useState<string>('All');
 

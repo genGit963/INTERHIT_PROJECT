@@ -1,34 +1,60 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {ThemedText} from '../../../../components/ThemedText';
-import {CommunityColor} from '../../../../constants/Color';
+import {Colors, CommunityColor} from '../../../../constants/Color';
 import NotificationSvg from '../../../../assets/svg/bell.svg';
 import NepaliFlagSvg from '../../../../assets/svg/nepali_flag.svg';
+import {useUserDataProvider} from '../../../../hooks/tabs/dashboard';
+import {StoredUserType} from '../../../../schema/auth';
+import {SOCIETY_DATA} from '../../../../core/SocietyData';
 
 type HeaderProps = {
   callBackDrawerVisible: (value: boolean) => void;
 };
 
 const Header: React.FC<HeaderProps> = ({callBackDrawerVisible}) => {
+  // app user
+  const {handleUserDataProvider} = useUserDataProvider();
+  const [APPUSER, setAPPUSER] = useState<StoredUserType | null | undefined>();
+  useEffect(() => {
+    const handleFetchUser = async () => {
+      const appUser = await handleUserDataProvider();
+      // console.log('APPUSER : ', appUser);
+      if (appUser) {
+        setAPPUSER(appUser);
+      }
+    };
+    handleFetchUser();
+  }, []);
+
   return (
     <View style={styles.Container}>
       {/* to the profile */}
       <TouchableOpacity
         style={styles.Profile}
         onPress={() => callBackDrawerVisible(true)}>
-        <Image
-          height={60}
-          width={60}
-          source={{
-            uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCUJr0DxQCv1qjcqhOLDl0C6MR3Rk762KQ-w&s',
-          }}
-          style={styles.Image}
-        />
+        {APPUSER?.user.imgurl ? (
+          <Image
+            height={60}
+            width={60}
+            source={{
+              uri: APPUSER?.user.imgurl as string | undefined,
+            }}
+            style={styles.Image}
+          />
+        ) : (
+          <View style={styles.NoImageView}>
+            <ThemedText style={styles.NoImageText} type="title">
+              MB
+            </ThemedText>
+          </View>
+        )}
+
         <View>
           <ThemedText style={styles.CommunitySlog} type="semiBold">
-            Jay Thapa !
+            {SOCIETY_DATA.sologan} !
           </ThemedText>
-          <ThemedText>Bhakta Bahadur Thapa</ThemedText>
+          <ThemedText>{APPUSER?.user.name}</ThemedText>
         </View>
       </TouchableOpacity>
 
@@ -61,8 +87,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   Image: {
-    borderRadius: 30,
+    borderRadius: 38,
     resizeMode: 'cover',
+    height: 64,
+    width: 64,
+  },
+  NoImageView: {
+    // borderWidth: 1,
+    borderRadius: 38,
+    height: 64,
+    width: 64,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 13,
+    backgroundColor: Colors.primary,
+  },
+  NoImageText: {
+    textAlign: 'center',
+    color: Colors.whiteTunedBG,
+    fontSize: 28,
+    // backgroundColor: 'green',
   },
   CommunitySlog: {
     color: CommunityColor.slogan,

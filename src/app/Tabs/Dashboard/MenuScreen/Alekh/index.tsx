@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -12,13 +12,13 @@ import AlekhViewModal from './components/AlekhViewModal';
 import AlekhCard from './components/AlekhCard';
 import BottomSpace from '../../../../../components/BottomSpace';
 import EmptyFlatList from '../../../../../components/EmptyFlatList';
-import { Colors } from '../../../../../constants/Color';
+import {Colors} from '../../../../../constants/Color';
 import supplyShadowEffect from '../../../../../utils/Shadow';
 import AlekhAddModal from './components/AlekhAddModel';
-import { AppScreenNavigationType } from '../../../../../core/navigation-type';
+import {AppScreenNavigationType} from '../../../../../core/navigation-type';
 import AddAlekhSvg from '../../../../../assets/svg/solid-plus-circle.svg';
-import SearchInput, { SearchType } from '../../../../../components/SearchInput';
-import { useGenQuery } from '../../../../../hooks/gen-hooks/gen-query';
+import SearchInput, {SearchType} from '../../../../../components/SearchInput';
+import {useGenQuery} from '../../../../../hooks/gen-hooks/gen-query';
 import DASHBOARD_SERVICES from '../../../../../services/tabs/dashboard';
 import ApiError from '../../../../../components/api/ApiError';
 import Loader from '../../../../../components/Loader';
@@ -43,9 +43,11 @@ export interface AlekhInterface {
 }
 
 // ----------------- Alekh Screen ---------------------
-const AlekhScreen: React.FC<AlekhScreenProps> = ({ navigation }) => {
+const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
   // View Modal States
-  const [selectedAlekh, setSelectedAlekh] = useState<AlekhInterface | undefined>(undefined);
+  const [selectedAlekh, setSelectedAlekh] = useState<
+    AlekhInterface | undefined
+  >(undefined);
   const [isAlekhViewVisible, setAlekhViewVisible] = useState<boolean>(false);
   const handleAlekhView = (alekh: AlekhInterface) => {
     setSelectedAlekh(alekh);
@@ -64,16 +66,17 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({ navigation }) => {
   const [searchText, setSearchText] = useState<SearchType['searchText']>('');
 
   // Get Alekhs hook
-  const { data, loading, error } = useGenQuery({
+  const {data, loading, error} = useGenQuery({
     queryFn: async () => await DASHBOARD_SERVICES.getAlekhs(),
     cacheTime: 6, // 6 minute cache
   });
 
   // Filtered data based on search text
-  const searchedData: AlekhInterface[] = data?.filter((item: AlekhInterface) =>
-    item.body.toLowerCase().includes(searchText.toLowerCase()) ||
-    item.title.toLowerCase().includes(searchText.toLowerCase()) ||
-    item.desc.toLowerCase().includes(searchText.toLowerCase())
+  const searchedData: AlekhInterface[] = data?.filter(
+    (item: AlekhInterface) =>
+      item.body.toLowerCase().includes(searchText.toLowerCase()) ||
+      item.title.toLowerCase().includes(searchText.toLowerCase()) ||
+      item.desc.toLowerCase().includes(searchText.toLowerCase()),
   );
 
   if (loading) {
@@ -106,11 +109,8 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({ navigation }) => {
           data={searchText ? searchedData : data || []}
           contentContainerStyle={styles.Flatlist}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <AlekhCard
-              callbackHandlePress={handleAlekhView}
-              alekh={item}
-            />
+          renderItem={({item}) => (
+            <AlekhCard callbackHandlePress={handleAlekhView} alekh={item} />
           )}
           ListEmptyComponent={<EmptyFlatList message="No Alekhs" />}
           keyExtractor={(item) => item._id}
@@ -157,13 +157,13 @@ export const styles = StyleSheet.create({
   Page: {
     backgroundColor: Colors.screenBackground,
     flex: 1,
+    paddingHorizontal: 24,
   },
   Screen: {
     backgroundColor: Colors.screenBackground,
-    paddingHorizontal: 24,
   },
-  Flatlist: { marginBottom: '8%' },
-  FlatlistFooter: { marginBottom: '6%' },
+  Flatlist: {marginBottom: '8%'},
+  FlatlistFooter: {marginBottom: '6%'},
   AddAlekhButton: {
     position: 'absolute',
     bottom: '16%',

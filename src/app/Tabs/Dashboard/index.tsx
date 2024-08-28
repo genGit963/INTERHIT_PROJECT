@@ -43,7 +43,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({navigation}) => {
   useEffect(() => {
     getContributionEventData();
   }, []);
-  // console.log("hh", societyContributionData)
+
   return (
     <View style={styles.Page}>
       <Image

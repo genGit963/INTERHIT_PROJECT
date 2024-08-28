@@ -8,15 +8,15 @@ import {
   NativeScrollEvent,
   TouchableOpacity,
 } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import { ThemedText } from '../../../../components/ThemedText';
-import { Colors } from '../../../../constants/Color';
-import { generateUUID } from '../../../../utils/uuid-generator';
-import { SocietyContributionRespInterface } from '../../../../schema/tabs/contribution/contributions.schema';
-import { AppScreenNavigationType } from '../../../../core/navigation-type';
-import { SCREEN_NAME } from '../../../../core/AppScreen';
+import React, {useEffect, useRef, useState} from 'react';
+import {ThemedText} from '../../../../components/ThemedText';
+import {Colors} from '../../../../constants/Color';
+import {generateUUID} from '../../../../utils/uuid-generator';
+import {SocietyContributionRespInterface} from '../../../../schema/tabs/contribution/contributions.schema';
+import {AppScreenNavigationType} from '../../../../core/navigation-type';
+import {SCREEN_NAME} from '../../../../core/AppScreen';
 
-const { width } = Dimensions.get('screen');
+const {width} = Dimensions.get('screen');
 
 interface CarouselInterface {
   data: SocietyContributionRespInterface[];
@@ -24,16 +24,19 @@ interface CarouselInterface {
 
 type RenderItemProps = {
   item: SocietyContributionRespInterface;
-  navigation: AppScreenNavigationType['navigation']
-}
-const RenderItem: React.FC<RenderItemProps> = ({ item, navigation }) => {
+  navigation: AppScreenNavigationType['navigation'];
+};
+const RenderItem: React.FC<RenderItemProps> = ({item, navigation}) => {
   return (
-    <TouchableOpacity style={styles.imageContainer} key={item._id} onPress={() => navigation.navigate(SCREEN_NAME.TABS.CONTRIBUTION.MAIN)} activeOpacity={1}>
+    <TouchableOpacity
+      style={styles.imageContainer}
+      key={item._id}
+      onPress={() => navigation.navigate(SCREEN_NAME.TABS.CONTRIBUTION.MAIN)}
+      activeOpacity={1}>
       <ImageBackground
-        source={{ uri: item.image.secure_url }}
+        source={{uri: item.image.secure_url}}
         style={styles.ImageBackground}
-        imageStyle={{ borderRadius: 10 }}
-      >
+        imageStyle={{borderRadius: 10}}>
         <View style={styles.TextView}>
           <ThemedText type="semiBold" style={styles.Title}>
             {item.title}
@@ -47,7 +50,10 @@ const RenderItem: React.FC<RenderItemProps> = ({ item, navigation }) => {
   );
 };
 
-const Carousel: React.FC<CarouselInterface & AppScreenNavigationType> = ({ data, navigation }) => {
+const Carousel: React.FC<CarouselInterface & AppScreenNavigationType> = ({
+  data,
+  navigation,
+}) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const flatListRef = useRef<FlatList<any | null>>(null);
 
@@ -68,43 +74,47 @@ const Carousel: React.FC<CarouselInterface & AppScreenNavigationType> = ({ data,
         });
         setActiveIndex(nextIndex);
       }
-    }, 2800);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [activeIndex, data.length]);
 
   return (
     <View style={styles.carouselContainer}>
-      {data.length > 0 ? <View>
+      {data.length > 0 ? (
         <View>
-          <FlatList
-            ref={flatListRef}
-            data={data}
-            renderItem={({ item }) => <RenderItem item={item} navigation={navigation} />}
-            keyExtractor={(item) => item._id}
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            onScroll={handleScroll}
-          />
-        </View>
-
-        {/* Indicator */}
-        <View style={styles.IndicatorContainer}>
-          {data.map((_, index) => (
-            <View
-              key={generateUUID()}
-              style={[
-                styles.IndicatorCircle,
-                {
-                  backgroundColor:
-                    activeIndex === index ? Colors.primary : Colors.muteGray,
-                },
-              ]}
+          <View>
+            <FlatList
+              ref={flatListRef}
+              data={data}
+              renderItem={({item}) => (
+                <RenderItem item={item} navigation={navigation} />
+              )}
+              keyExtractor={(item) => item._id}
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              onScroll={handleScroll}
             />
-          ))}
+          </View>
+
+          {/* Indicator */}
+          <View style={styles.IndicatorContainer}>
+            {data.map((_, index) => (
+              <View
+                key={generateUUID()}
+                style={[
+                  styles.IndicatorCircle,
+                  {
+                    backgroundColor:
+                      activeIndex === index ? Colors.primary : Colors.muteGray,
+                  },
+                ]}
+              />
+            ))}
+          </View>
         </View>
-      </View> : null}
+      ) : null}
     </View>
   );
 };
@@ -116,7 +126,7 @@ const styles = StyleSheet.create({
     width: width - 48, // Subtracting the padding of the original container
     justifyContent: 'center',
     marginBottom: 20,
-    borderRadius: 10
+    borderRadius: 10,
   },
   imageContainer: {
     flex: 1,
@@ -124,7 +134,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 200,
     padding: 4,
-
   },
   ImageBackground: {
     flex: 1,
@@ -132,7 +141,6 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   TextView: {
     height: '100%',

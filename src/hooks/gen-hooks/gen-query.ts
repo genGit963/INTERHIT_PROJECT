@@ -45,8 +45,6 @@ export const useGenQuery = ({
         data: response.data,
         expiry: Date.now() + cacheTime * 60 * 1000,
       };
-
-      console.log('cache data: ', cache);
     } catch (err) {
       setError('Query Failed!');
       console.log('useGenQuery Failed error: ', err);
