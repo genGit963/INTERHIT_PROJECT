@@ -31,7 +31,7 @@ const SadhashyaMemberScreen: React.FC<SadhashyaMemberScreenProps> = ({
             {dummydataCommitteMember.map((sadhsaya, _) => {
               if (sadhsaya.Post === 'अध्यक्ष') {
                 return (
-                  <View style={styles.TopMemberView}>
+                  <View key={sadhsaya.Id} style={styles.TopMemberView}>
                     <SadsayaCard
                       key={sadhsaya.Id + sadhsaya.Name}
                       sadhsaya={sadhsaya}
@@ -40,7 +40,7 @@ const SadhashyaMemberScreen: React.FC<SadhashyaMemberScreenProps> = ({
                 );
               } else {
                 return (
-                  <View style={styles.OtherMemberView}>
+                  <View key={sadhsaya.Id} style={styles.OtherMemberView}>
                     <SadsayaCard key={sadhsaya.Id} sadhsaya={sadhsaya} />
                   </View>
                 );
@@ -62,8 +62,8 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  ScrollView: {marginBottom: 10, paddingBottom: 30},
-  ScrollContent: {paddingBottom: 100},
+  ScrollView: {marginBottom: 10, paddingBottom: 40},
+  ScrollContent: {paddingBottom: 140},
   SadhsayaMembersView: {
     // borderWidth: 1,
     display: 'flex',

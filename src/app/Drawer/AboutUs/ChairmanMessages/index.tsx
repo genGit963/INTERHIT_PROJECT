@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Image, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { AppScreenNavigationType } from '../../../../core/navigation-type';
+import React, {useEffect, useState} from 'react';
+import {Image, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {AppScreenNavigationType} from '../../../../core/navigation-type';
 import ScreenTopTitle from '../../../../components/ScreenTopTitle';
-import { ThemedText } from '../../../../components/ThemedText';
+import {ThemedText} from '../../../../components/ThemedText';
 import BottomSpace from '../../../../components/BottomSpace';
-import { Colors } from '../../../../constants/Color';
-import { useGetMessages } from '../../../../hooks/drawer/about/aboutUs';
+import {Colors} from '../../../../constants/Color';
+import {useGetMessages} from '../../../../hooks/drawer/about/aboutUs';
 import EmptyResponse from '../../../../components/EmptyResponse';
 import Loader from '../../../../components/Loader';
 
@@ -17,7 +17,7 @@ const ChairmanMessageScreen: React.FC<ChairmanMessageScreenProps> = ({
   navigation,
 }) => {
   const [chairmanMessage, setChairmanMessage] = useState();
-  const { loading, error, handleGetMessage } = useGetMessages();
+  const {loading, error, handleGetMessage} = useGetMessages();
 
   const getMessageData = async () => {
     const messageData = await handleGetMessage('chairman');
@@ -90,8 +90,10 @@ const ChairmanMessageScreen: React.FC<ChairmanMessageScreenProps> = ({
               सहभागिता, र सामूहिक अभिवृद्धि साधन गर्दछ।
             </ThemedText>
           </ScrollView>
+        ) : loading ? (
+          <Loader />
         ) : (
-          loading ? <Loader /> : <EmptyResponse message='No message from chairman' />
+          <EmptyResponse message="No message from chairman" />
         )}
         <BottomSpace spaceHeight={'5%'} />
       </SafeAreaView>
@@ -108,8 +110,8 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  ScrollView: { marginBottom: 10, paddingBottom: 30 },
-  ScrollContent: { paddingBottom: 100 },
+  ScrollView: {marginBottom: 10, paddingBottom: 30},
+  ScrollContent: {paddingBottom: 180},
   PersonView: {
     // borderWidth: 1,
     display: 'flex',
@@ -120,7 +122,7 @@ export const styles = StyleSheet.create({
   PersonName: {
     fontSize: 18,
   },
-  PersonPost: { fontSize: 16 },
+  PersonPost: {fontSize: 16},
   PersonImg: {
     height: 160,
     width: 150,

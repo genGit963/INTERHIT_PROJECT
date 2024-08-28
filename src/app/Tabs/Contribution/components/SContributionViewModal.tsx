@@ -126,8 +126,10 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   flexDisplay: {
+    display: 'flex',
     flexDirection: 'row',
     gap: 5,
+    alignItems: 'center',
   },
   eventDetails: {
     flexDirection: 'row',

@@ -26,6 +26,24 @@ const RemainingWork = () => {
       <ThemedText>14. Android Share Accesss</ThemedText>
       <ThemedText>15. Android Share Accesss</ThemedText>
       <ThemedText>16. Modal Border for Visibility</ThemedText>
+      <ThemedText>17. Sadhsaya member which members to fetch</ThemedText>
+      <ThemedText>17. Sadhsaya member which members to fetch</ThemedText>
+      <ThemedText>18. Committee History </ThemedText>
+      <ThemedText>19. All Committee Screen API lookup Test</ThemedText>
+      <ThemedText>20. About Org Data: Update in Core/Society_Data</ThemedText>
+      <ThemedText>21. Well Wishes: Update in Core/Society_Data</ThemedText>
+      <ThemedText>22. Setting/Update Profile must alike Edit Form</ThemedText>
+      <ThemedText>23. Setting/Manage Pswd </ThemedText>
+      <ThemedText>
+        24. App update, Feedback, PP, Help, T&C Where to redirect in app or
+        website
+      </ThemedText>
+      <ThemedText>25. Checkout the logout properly</ThemedText>
+      <ThemedText>
+        26. Attach Fb, insta and website link of banshawali, NOTE: keep data in
+        Core/society_data
+      </ThemedText>
+      <ThemedText>27. ios Tab Bar Padding bug</ThemedText>
     </View>
   );
 };

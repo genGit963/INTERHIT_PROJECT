@@ -3,12 +3,6 @@ import {LoginZType, SignupZType, VerifyOTPZType} from '../../schema/auth';
 import AUTH_SERVICE from '../../services/auth';
 import {asyncStoreData} from '../../core/AsyncStorage';
 
-// 9865914722
-// Mahesh999@
-
-// 0987654321
-// MilanPraz@1
-
 export const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();
