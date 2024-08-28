@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Image,
   Platform,
@@ -17,6 +17,7 @@ import DrawerModal from '../../../components/Drawer';
 import {DIMENSION} from '../../../constants/dimension';
 import {useGetAllContributionEvents} from '../../../hooks/tabs/contribution/contribution';
 import {SocietyContributionRespInterface} from '../../../schema/tabs/contribution/contributions.schema';
+import {LanguageContext, useLanguage} from '../../../context/language';
 
 type DashboardScreenProps = {
   navigation: NativeStackNavigationProp<ParamListBase>;
@@ -39,6 +40,8 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({navigation}) => {
       setSocietyContributionData(getContributionEventResp);
     }
   };
+
+  const {language} = useLanguage();
 
   useEffect(() => {
     getContributionEventData();
@@ -66,7 +69,7 @@ const DashboardScreen: React.FC<DashboardScreenProps> = ({navigation}) => {
           <TodayUpdate />
 
           {/*Banshawali*/}
-          <DashboardMenuCompoent navigation={navigation} />
+          <DashboardMenuCompoent navigation={navigation} language={language} />
         </ScrollView>
       </SafeAreaView>
 

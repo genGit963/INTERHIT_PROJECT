@@ -7,10 +7,10 @@ import {
   Platform,
   Alert,
 } from 'react-native';
-import { ThemedText } from '../../../../../../components/ThemedText';
-import { Colors } from '../../../../../../constants/Color';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import {ThemedText} from '../../../../../../components/ThemedText';
+import {Colors} from '../../../../../../constants/Color';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 import {
   AlekhZType,
   AlekhZSchema,
@@ -18,9 +18,10 @@ import {
 import CustomTextInput from '../../../../../../components/CustomInput';
 import HeroButton from '../../../../../../components/HeroButton';
 import CustomImagePickerComponent from '../../../../../../components/CustomImagePicker';
-import { usePostAlekhs } from '../../../../../../hooks/tabs/dashboard/alekh';
+import {usePostAlekhs} from '../../../../../../hooks/tabs/dashboard/alekh';
 import ApiError from '../../../../../../components/api/ApiError';
-import { Asset } from 'react-native-image-picker';
+import {Asset} from 'react-native-image-picker';
+import {Language, useLanguage} from '../../../../../../context/language';
 
 const AlekhAddModal = ({
   isVisible,
@@ -32,12 +33,12 @@ const AlekhAddModal = ({
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm<AlekhZType>({
     resolver: zodResolver(AlekhZSchema),
   });
 
-  const { loading, error, handlePostAlekhs } = usePostAlekhs();
+  const {loading, error, handlePostAlekhs} = usePostAlekhs();
 
   const onSubmit = async (data: AlekhZType) => {
     console.log('handlePostAlekhs data: ', data);
@@ -62,11 +63,26 @@ const AlekhAddModal = ({
     if (response) {
       console.log('postAlekhRes: ', response);
       Alert.alert('Post Alekh', 'Alekh is posted successfully');
-      modalVisibile(false)
+      modalVisibile(false);
     }
     // if (!error) {
     //   modalVisibile(false);
     // }
+  };
+
+  const {language} = useLanguage();
+
+  const t = (en: string, np: string) => (language === Language.EN ? en : np);
+
+  const addAlekhLabels = {
+    modalTitle: t('Add Alekh', 'आलेख थप्नुहोस्'),
+    image: t('Upload Image', 'फोटो अपलोड गर्नुहोस्'),
+    title: t('Alekh Title', 'आलेख शीर्षक'),
+    details: t('Details', 'विवरणहरू'),
+    author: t('Author Name', 'लेखकको नाम'),
+    write_alekh: t('Write Alekh', 'आलेख लेख्नुहोस्'),
+    submit: t('Submit', 'बुझाउनुहोस्'),
+    loading: t('Loading...', 'पेस गर्दै...'),
   };
 
   return (
@@ -80,18 +96,19 @@ const AlekhAddModal = ({
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
           <HeroButton
-            btnText="Cancel"
+            btnText={language === Language.EN ? 'Cancel' : 'रद्द गर्नुहोस्'}
             varient="cancel"
             onPress={() => modalVisibile(false)}
           />
 
           <ScrollView
             style={styles.ScrollContainer}
-            showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='handled'>
-            <ThemedText type="subtitle">Add Alekh</ThemedText>
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled">
+            <ThemedText type="subtitle">{addAlekhLabels.modalTitle}</ThemedText>
 
             <CustomImagePickerComponent
-              label="Upload Image"
+              label={addAlekhLabels.image}
               isRequired
               errors={errors}
               controllerName="image"
@@ -102,7 +119,7 @@ const AlekhAddModal = ({
               name="title"
               control={control}
               placeholder="Title"
-              label="Alekh Title"
+              label={addAlekhLabels.title}
               isRequired={true}
               error={errors.title}
             />
@@ -111,7 +128,7 @@ const AlekhAddModal = ({
               name="desc"
               control={control}
               placeholder="Alekh Details"
-              label="Alekh Details"
+              label={addAlekhLabels.details}
               isRequired={true}
               error={errors.desc}
             />
@@ -120,7 +137,7 @@ const AlekhAddModal = ({
               name="author"
               control={control}
               placeholder="Author Name"
-              label="Author Name"
+              label={addAlekhLabels.author}
               isRequired={true}
               error={errors.author}
             />
@@ -129,7 +146,7 @@ const AlekhAddModal = ({
               name="body"
               control={control}
               placeholder="Write Alekh"
-              label="Write Alekh"
+              label={addAlekhLabels.author}
               isRequired={true}
               multiline
               style={styles.writeAlekh}
@@ -139,7 +156,7 @@ const AlekhAddModal = ({
             {error && <ApiError message={error} />}
             <HeroButton
               disabled={loading}
-              btnText={loading ? "Loading..." : 'Submit'}
+              btnText={loading ? 'Loading...' : addAlekhLabels.submit}
               onPress={handleSubmit(onSubmit)}
               style={styles.SubmitBtn}
             />

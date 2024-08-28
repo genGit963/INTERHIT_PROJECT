@@ -1,20 +1,25 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import { ThemedText } from '../../../../components/ThemedText';
-import { menuScreenData } from '../menu-data';
-import { Colors } from '../../../../constants/Color';
-import { AppScreenNavigationType } from '../../../../core/navigation-type';
+import {ThemedText} from '../../../../components/ThemedText';
+import {menuScreenData} from '../menu-data';
+import {Colors} from '../../../../constants/Color';
+import {AppScreenNavigationType} from '../../../../core/navigation-type';
+import {Language} from '../../../../context/language';
 
-type DashboardMenuComponentProps = {} & AppScreenNavigationType;
+type DashboardMenuComponentProps = {
+  language: string;
+} & AppScreenNavigationType;
 
 const DashboardMenuComponent: React.FC<DashboardMenuComponentProps> = ({
   navigation,
+  language,
 }) => {
+  console.log(language);
   return (
     <View style={styles.Container}>
       <View>
         <ThemedText style={styles.Title} type="mediumBold">
-          Banshawali
+          {language === Language.NP ? 'वंशवली' : 'Banshawali'}
         </ThemedText>
       </View>
 
@@ -26,9 +31,15 @@ const DashboardMenuComponent: React.FC<DashboardMenuComponentProps> = ({
             style={styles.MenuCard}
             onPress={() => navigation.navigate(item.route)}>
             <item.Icon />
-            <ThemedText style={styles.MenuLabel} type="mediumBold">
-              {item.label}
-            </ThemedText>
+            {language === Language.NP ? (
+              <ThemedText style={styles.MenuLabel} type="mediumBold">
+                {item.labelNP}
+              </ThemedText>
+            ) : (
+              <ThemedText style={styles.MenuLabel} type="mediumBold">
+                {item.labelEN}
+              </ThemedText>
+            )}
           </TouchableOpacity>
         ))}
       </View>
@@ -45,7 +56,7 @@ const styles = StyleSheet.create({
   },
   Title: {
     fontSize: 18,
-    marginBottom: 8
+    marginBottom: 8,
   },
   MenuContainer: {
     marginVertical: 6,

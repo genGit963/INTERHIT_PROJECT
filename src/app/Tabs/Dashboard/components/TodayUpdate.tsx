@@ -1,57 +1,61 @@
-import { View, StyleSheet } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { ThemedText } from '../../../../components/ThemedText';
-import { Colors } from '../../../../constants/Color';
+import {View, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ThemedText} from '../../../../components/ThemedText';
+import {Colors} from '../../../../constants/Color';
 import BirthdaySvg from '../../../../assets/svg/gift_parcel.svg';
 import AnniversarySvg from '../../../../assets/svg/circled_heart.svg';
 import DeathSvg from '../../../../assets/svg/sad_emoji.svg';
 import NepaliDate from 'nepali-datetime';
-import { useGetStatistics } from '../../../../hooks/tabs/dashboard/statistics';
-
+import {useGetStatistics} from '../../../../hooks/tabs/dashboard/statistics';
+import {Language, useLanguage} from '../../../../context/language';
 
 interface todayUpdate {
-  total_created: number,
-  created_today: number,
-  birthday_today: number,
-  anniversary_today: number,
-  death_anniversary_today: number,
+  total_created: number;
+  created_today: number;
+  birthday_today: number;
+  anniversary_today: number;
+  death_anniversary_today: number;
 }
 
 const TodayUpdate = () => {
-
   const [todayStats, setTodayStats] = useState<todayUpdate>({
     created_today: 0,
     total_created: 0,
     birthday_today: 0,
     anniversary_today: 0,
-    death_anniversary_today: 0
-  })
+    death_anniversary_today: 0,
+  });
 
-  const todayDate_Nepali = new NepaliDate().formatNepali("dddd MMMM DD YYYY")
+  const todayDate_Nepali = new NepaliDate().formatNepali('dddd MMMM DD YYYY');
 
-  const { loading, error, handleGetStatistics } = useGetStatistics()
+  const {loading, error, handleGetStatistics} = useGetStatistics();
 
   const getStatsData = async () => {
-    const statsData = await handleGetStatistics()
+    const statsData = await handleGetStatistics();
     // console.log("resp", Resp)
     if (statsData) {
-      setTodayStats(statsData)
+      setTodayStats(statsData);
     }
+  };
 
-  }
+  const {language} = useLanguage();
 
   useEffect(() => {
-    getStatsData()
-  }, [])
-
+    getStatsData();
+  }, []);
 
   return (
     <View style={styles.Container}>
       <View>
-
-        <ThemedText type="mediumBold" style={styles.Today}>
-          आज, {todayDate_Nepali}
-        </ThemedText>
+        {language === Language.NP ? (
+          <ThemedText type="mediumBold" style={styles.Today}>
+            आज, {todayDate_Nepali}
+          </ThemedText>
+        ) : (
+          <ThemedText type="mediumBold" style={styles.Today}>
+            Today, {new Date().toDateString()}
+          </ThemedText>
+        )}
       </View>
 
       {/* Today Report */}
@@ -63,7 +67,11 @@ const TodayUpdate = () => {
             <ThemedText style={styles.ReportNumber} type="semiBold">
               {todayStats.birthday_today}
             </ThemedText>
-            <ThemedText style={styles.ReportNumber}>Birthday</ThemedText>
+            {language === Language.NP ? (
+              <ThemedText style={styles.ReportNumber}>जन्मदिन</ThemedText>
+            ) : (
+              <ThemedText style={styles.ReportNumber}>Birthday</ThemedText>
+            )}
           </View>
         </View>
 
@@ -74,7 +82,11 @@ const TodayUpdate = () => {
             <ThemedText style={styles.ReportNumber} type="semiBold">
               {todayStats.anniversary_today}
             </ThemedText>
-            <ThemedText style={styles.ReportNumber}>Anniversary</ThemedText>
+            {language === Language.NP ? (
+              <ThemedText style={styles.ReportNumber}>वार्षिकोत्सव</ThemedText>
+            ) : (
+              <ThemedText style={styles.ReportNumber}>Anniversary</ThemedText>
+            )}
           </View>
         </View>
 
@@ -85,7 +97,11 @@ const TodayUpdate = () => {
             <ThemedText style={styles.ReportNumber} type="semiBold">
               {todayStats.death_anniversary_today}
             </ThemedText>
-            <ThemedText style={styles.ReportNumber}>Death</ThemedText>
+            {language === Language.NP ? (
+              <ThemedText style={styles.ReportNumber}>मृत्यु</ThemedText>
+            ) : (
+              <ThemedText style={styles.ReportNumber}>Death</ThemedText>
+            )}
           </View>
         </View>
       </View>
@@ -103,7 +119,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'gray',
     marginBottom: 10,
-    paddingVertical: 2
+    paddingVertical: 2,
   },
   TodayReport: {
     display: 'flex',
@@ -135,5 +151,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignItems: 'center',
   },
-  ReportDetail: { marginLeft: 4, paddingHorizontal: 6, alignItems: 'center' },
+  ReportDetail: {marginLeft: 4, paddingHorizontal: 6, alignItems: 'center'},
 });

@@ -1,12 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {ThemedText} from '../../../../components/ThemedText';
 import {Colors, CommunityColor} from '../../../../constants/Color';
 import NotificationSvg from '../../../../assets/svg/bell.svg';
 import NepaliFlagSvg from '../../../../assets/svg/nepali_flag.svg';
+// import EnglishFlagSvg from "../../../../assets/"
 import {useUserDataProvider} from '../../../../hooks/tabs/dashboard';
 import {StoredUserType} from '../../../../schema/auth';
 import {SOCIETY_DATA} from '../../../../core/SocietyData';
+import {Language, useLanguage} from '../../../../context/language';
 
 type HeaderProps = {
   callBackDrawerVisible: (value: boolean) => void;
@@ -16,6 +18,13 @@ const Header: React.FC<HeaderProps> = ({callBackDrawerVisible}) => {
   // app user
   const {handleUserDataProvider} = useUserDataProvider();
   const [APPUSER, setAPPUSER] = useState<StoredUserType | null | undefined>();
+
+  const {language, setLanguage} = useLanguage();
+
+  const toogleLanguage = () => {
+    setLanguage(language === Language.EN ? Language.NP : Language.EN);
+  };
+
   useEffect(() => {
     const handleFetchUser = async () => {
       const appUser = await handleUserDataProvider();
@@ -61,7 +70,13 @@ const Header: React.FC<HeaderProps> = ({callBackDrawerVisible}) => {
       {/* other  */}
       <View style={styles.NotifyLang}>
         <NotificationSvg height={32} width={32} />
-        <NepaliFlagSvg height={32} width={32} />
+        <TouchableOpacity onPress={toogleLanguage}>
+          {language === Language.NP ? (
+            <NepaliFlagSvg height={32} width={32} />
+          ) : (
+            <ThemedText>English</ThemedText>
+          )}
+        </TouchableOpacity>
       </View>
     </View>
   );

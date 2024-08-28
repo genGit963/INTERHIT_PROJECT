@@ -7,13 +7,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Controller, useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ThemedText } from './ThemedText';
+import {Controller, useForm} from 'react-hook-form';
+import {z} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {ThemedText} from './ThemedText';
 import SearchIconSvg from '../assets/svg/search.svg';
 import supplyShadowEffect from '../utils/Shadow';
-import { Colors } from '../constants/Color';
+import {Colors} from '../constants/Color';
+import {Language, useLanguage} from '../context/language';
 
 const SearchSchema = z.object({
   searchText: z.string(),
@@ -35,7 +36,7 @@ const SearchInput: React.FC<SearchProps> = ({
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm<SearchType>({
     resolver: zodResolver(SearchSchema),
   });
@@ -44,20 +45,27 @@ const SearchInput: React.FC<SearchProps> = ({
     // console.log('search text: ', data);
     callBackSetSearchValue(data.searchText);
   };
+
+  const {language} = useLanguage();
+
   return (
     <View style={styles.SearchContainer}>
       <Controller
         control={control}
         name={'searchText'}
-        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+        render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
           <>
             <TextInput
               style={[styles.input, style]}
-              placeholder={`Search ${placeHolder}`}
+              placeholder={
+                language === Language.EN
+                  ? `Search ${placeHolder}`
+                  : `${placeHolder} खोज्नुहोस्`
+              }
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              returnKeyType='search'
+              returnKeyType="search"
               onSubmitEditing={handleSubmit(onSubmit)}
               {...rest}
             />

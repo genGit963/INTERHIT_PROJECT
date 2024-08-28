@@ -8,47 +8,56 @@ import GallerySvg from '../../../assets/svg/image.svg';
 import KulmandirSvg from '../../../assets/svg/temple.svg';
 import LiteratureSvg from '../../../assets/svg/book.svg';
 import TopContributerSvg from '../../../assets/svg/top-contribution.svg';
+import {Language, useLanguage} from '../../../context/language';
 
 export interface MenuScreenDataInterface {
   Icon: React.FunctionComponent;
-  label: string;
+  labelEN: string;
+  labelNP: string;
   route: string;
 }
 
 export const menuScreenData: MenuScreenDataInterface[] = [
   {
     Icon: AlekhSvg,
-    label: 'Alekh',
+    labelEN: 'Alekh',
+    labelNP: 'आलेख',
     route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.ALEKH,
   },
   {
     Icon: LiteratureSvg,
-    label: 'Literature',
+    labelEN: 'Literature',
+    labelNP: 'साहित्य',
     route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.LITERATURE,
   },
   {
     Icon: GallerySvg,
-    label: 'Gallery',
+    labelEN: 'Gallery',
+    labelNP: 'ग्यालेरी',
     route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.GALLERY,
   },
   {
     Icon: KulmandirSvg,
-    label: 'Kul Mandir',
+    labelEN: 'Kul Mandir',
+    labelNP: 'कुल मन्दिर',
     route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.KULMANDIR,
   },
   {
     Icon: BanshaContributionSvg,
-    label: 'Bansha Yogdan',
+    labelEN: 'Bansha Yogdan',
+    labelNP: 'बंश योगदान',
     route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.BANSHACONTRIBUTION,
   },
   {
     Icon: TopContributerSvg,
-    label: 'Top Contributer',
+    labelEN: 'Top Contributer',
+    labelNP: 'शीर्ष योगदानकर्ता',
     route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.TOPCONTRIBUTION,
   },
   {
     Icon: DownloadSvg,
-    label: 'Download',
+    labelEN: 'Download',
+    labelNP: 'डाउनलोड',
     route: SCREEN_NAME.TABS.DASHBOARD.MENUSCREEN.DOWNLOAD,
   },
 ];
