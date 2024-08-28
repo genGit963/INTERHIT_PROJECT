@@ -145,10 +145,23 @@ export interface LoginResponeInterface {
   };
 }
 
-// "name": "John Doe",
-// "phone": "1234567890",
-// "email": "john.doe@example.com",
-// "province": "गण्डकी प्रदेश",
-// "district": "District",
-// "password": "Password1!",
-// "referral": "referral_code"
+export type StoredUserType = {
+  accessToken: string;
+  user: {
+    ascendants: string | null;
+    district: string;
+    email: string;
+    fulltree: string | null;
+    id: number;
+    imgurl: string | null;
+    merged: false;
+    mynode: null;
+    name: string;
+    phone: string;
+    province: string;
+    refreshToken: string;
+    role: string;
+    topnode: string | null;
+    verified: boolean;
+  };
+};

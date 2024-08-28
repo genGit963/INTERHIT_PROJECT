@@ -89,16 +89,3 @@ export const useVerifyOTP = () => {
 
   return {loading, error, handleVerifyOTP};
 };
-
-export const handleRefreshToken = async (refreshToken: string) => {
-  try {
-    const response = await AUTH_SERVICE.refreshToken(refreshToken);
-    if (response) {
-      console.log('API response:', response);
-      return response; // Return the response for further use
-    }
-  } catch (error) {
-    console.log('Failed error in refreshing token: ', error);
-    return null;
-  }
-};

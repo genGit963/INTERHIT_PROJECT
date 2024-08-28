@@ -1,5 +1,5 @@
 import {LoginZType, SignupZType, VerifyOTPZType} from '../../schema/auth';
-import {API_PRIVATE_SERVICE, API_PUBLIC_SERVICE} from '../config';
+import {API_PUBLIC_SERVICE} from '../config';
 
 const AUTH_SERVICE = {
   // login
@@ -39,13 +39,27 @@ const AUTH_SERVICE = {
   },
 
   //refreshToken
-  refreshToken: async (refreshToken: string) => {
-    return await API_PRIVATE_SERVICE.request({
+  refreshToken: async (
+    refTok: string | undefined,
+    accessToken: string | undefined,
+  ) => {
+    console.log('ep refreshToken.....', refTok);
+    const res = await API_PUBLIC_SERVICE.request({
       url: '/auth/refreshtoken',
       method: 'POST',
-      headers: {'Content-Type': 'aplication/json'},
-      data: {refreshToken},
+      data: {
+        refreshToken: refTok,
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
+    if (res) {
+      // console.log('\n\nep refreshToken res: ', res.data);
+      return res;
+    } else {
+      return null;
+    }
   },
 };
 

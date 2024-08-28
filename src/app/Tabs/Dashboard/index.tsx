@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Platform,
@@ -11,37 +11,39 @@ import Header from './components/Header';
 import Caursol from './components/Caursol';
 import TodayUpdate from './components/TodayUpdate';
 import DashboardMenuCompoent from './components/DashboardMenu';
-import { ParamListBase } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {ParamListBase} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import DrawerModal from '../../../components/Drawer';
-import { DIMENSION } from '../../../constants/dimension';
-import { useGetAllContributionEvents } from '../../../hooks/tabs/contribution/contribution';
-import { SocietyContributionRespInterface } from '../../../schema/tabs/contribution/contributions.schema';
+import {DIMENSION} from '../../../constants/dimension';
+import {useGetAllContributionEvents} from '../../../hooks/tabs/contribution/contribution';
+import {SocietyContributionRespInterface} from '../../../schema/tabs/contribution/contributions.schema';
 
 type DashboardScreenProps = {
   navigation: NativeStackNavigationProp<ParamListBase>;
 };
 
-const DashboardScreen: React.FC<DashboardScreenProps> = ({ navigation }) => {
+const DashboardScreen: React.FC<DashboardScreenProps> = ({navigation}) => {
   // handle DrawerModal
   const [isDrawerModalVisible, setDrawerModalVisible] =
     useState<boolean>(false);
-  const [societyContributionData, setSocietyContributionData] = useState<SocietyContributionRespInterface[]>([])
+  const [societyContributionData, setSocietyContributionData] = useState<
+    SocietyContributionRespInterface[]
+  >([]);
 
-  const { handleGetContributionEvents } = useGetAllContributionEvents()
+  const {handleGetContributionEvents} = useGetAllContributionEvents();
 
   const getContributionEventData = async () => {
-    const getContributionEventResp = await handleGetContributionEvents()
+    const getContributionEventResp = await handleGetContributionEvents();
     if (getContributionEventResp) {
       // console.log("Contribution events: ", getContributionEventResp)
-      setSocietyContributionData(getContributionEventResp)
+      setSocietyContributionData(getContributionEventResp);
     }
-  }
+  };
 
   useEffect(() => {
-    getContributionEventData()
-  }, [])
-  console.log("hh", societyContributionData)
+    getContributionEventData();
+  }, []);
+  // console.log("hh", societyContributionData)
   return (
     <View style={styles.Page}>
       <Image
@@ -106,7 +108,7 @@ const styles = StyleSheet.create({
     right: '5%',
     left: '50%',
     zIndex: -1,
-    transform: [{ rotate: '70deg' }],
+    transform: [{rotate: '70deg'}],
 
     // backgroundColor: 'red',
     height: 300,
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
     bottom: '1%',
     left: 150,
     zIndex: -5,
-    transform: [{ rotate: '70deg' }],
+    transform: [{rotate: '70deg'}],
     height: 300,
     width: 350,
   },
@@ -127,7 +129,7 @@ const styles = StyleSheet.create({
     bottom: -80,
     right: -60,
     zIndex: -1,
-    transform: [{ rotate: '120deg' }],
+    transform: [{rotate: '120deg'}],
     height: 300,
     width: 350,
   },
@@ -136,7 +138,7 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     zIndex: 1,
   },
-  ScrollContent: { paddingBottom: 100 },
+  ScrollContent: {paddingBottom: 100},
   FlexText: {
     textAlign: 'center',
   },
