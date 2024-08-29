@@ -3,4 +3,6 @@ export const SOCIETY_DATA = {
   solaganNp: 'जय अधिकारी',
   name: 'Thadarai Adhikari',
   nameNp: 'Thadarai Adhikari',
+  address: 'Urlabari, Morang',
+  addressNp: 'Urlabari, Morang',
 };

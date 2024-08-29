@@ -1,8 +1,6 @@
-import {SafeAreaView, StyleProp, StyleSheet, ViewProps} from 'react-native';
+import {StyleSheet, ViewProps} from 'react-native';
 import React from 'react';
 import LottieView from 'lottie-react-native';
-import {DIMENSION} from '../constants/dimension';
-import {Colors} from '../constants/Color';
 
 type LoaderProps = {} & ViewProps;
 
@@ -21,11 +19,11 @@ export default Loader;
 
 const styles = StyleSheet.create({
   loader: {
-    backgroundColor: Colors.background,
+    // backgroundColor: Colors.background,
+    margin: 'auto',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
-    width: DIMENSION.SCREEN.width,
+    width: '100%',
     height: 250,
     // borderWidth: 1,
   },
