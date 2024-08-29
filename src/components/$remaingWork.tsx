@@ -60,7 +60,7 @@ const RemainingWork = () => {
       <ThemedText>
         <TopPriority /> 6. Search Implementation on All
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={doneRW()}>
         <TopPriority /> 7. Loding Lotte
       </ThemedText>
       <ThemedText>
