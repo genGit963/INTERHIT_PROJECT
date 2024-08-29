@@ -34,7 +34,10 @@ const OverviewTabScreen: React.FC<OverviewTabScreenProps> = ({navigation}) => {
         <ChartToggler callBackSetChartToggle={setChartToggle} />
 
         {/*  Screen Body */}
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={styles.ScrollView}
+          contentContainerStyle={styles.ScrollContent}
+          showsVerticalScrollIndicator={false}>
           {/* Pie Chart */}
           {chartToggle === 'pie-chart-province' && <PieChartProvince />}
 
@@ -44,8 +47,6 @@ const OverviewTabScreen: React.FC<OverviewTabScreenProps> = ({navigation}) => {
           {/* Bi-Bar Chart  */}
           {chartToggle === 'bi-bar-chart-gender' && <BiBarChartGender />}
         </ScrollView>
-
-        <BottomSpace spaceHeight={'5%'} />
       </SafeAreaView>
     </View>
   );
@@ -60,6 +61,8 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
+  ScrollView: {marginBottom: 10},
+  ScrollContent: {paddingBottom: 180},
 });
 
 export default OverviewTabScreen;
