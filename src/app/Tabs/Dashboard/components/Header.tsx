@@ -23,9 +23,11 @@ const Header: React.FC<HeaderProps> = ({callBackDrawerVisible}) => {
   const {handleUserDataProvider} = useUserDataProvider();
   const [APPUSER, setAPPUSER] = useState<StoredUserType | null | undefined>();
 
+  // use toggled language
   const {language} = useSelector((state: RootState) => state.language);
-  const dispatch: AppDispatch = useDispatch();
 
+  // handle language changes
+  const dispatch: AppDispatch = useDispatch();
   const toogleLanguage = () => {
     dispatch(setLanguage(language === 'english' ? 'nepali' : 'english'));
   };
@@ -77,7 +79,7 @@ const Header: React.FC<HeaderProps> = ({callBackDrawerVisible}) => {
       <View style={styles.NotifyLang}>
         <NotificationSvg height={32} width={32} />
         <TouchableOpacity onPress={toogleLanguage}>
-          {language === 'nepali' ? (
+          {language !== 'nepali' ? (
             <NepaliFlagSvg height={32} width={32} />
           ) : (
             <EnglishFlagSvg height={32} width={32} />

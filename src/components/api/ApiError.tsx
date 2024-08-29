@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   ErrorView: {
     width: '100%',
     alignItems: 'center',
+    marginVertical: '2%',
   },
   ErrorText: {
     color: Colors.redMain,
