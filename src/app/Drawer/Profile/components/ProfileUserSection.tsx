@@ -6,6 +6,7 @@ import {Colors} from '../../../../constants/Color';
 import {useUserDataProvider} from '../../../../hooks/tabs/dashboard';
 import {StoredUserType} from '../../../../schema/auth';
 import {getShortHandOfName} from '../../../../utils/nameParser';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types
 type ProfileUserSectionProps = {
@@ -18,6 +19,9 @@ const ProfileUserSection: React.FC<ProfileUserSectionProps> = ({
   // app user
   const {handleUserDataProvider} = useUserDataProvider();
   const [APPUSER, setAPPUSER] = useState<StoredUserType | null | undefined>();
+
+  const {translateLanguage} = useTranslate();
+
   useEffect(() => {
     const handleFetchUser = async () => {
       const appUser = await handleUserDataProvider();
@@ -53,7 +57,7 @@ const ProfileUserSection: React.FC<ProfileUserSectionProps> = ({
         </ThemedText>
         <ThemedText>{APPUSER?.user.email}</ThemedText>
         <HeroButton
-          btnText="Show My QR"
+          btnText={translateLanguage('Show My QR', 'मेरो QR देखाउनुहोस्')}
           onPress={() => callBackSetQRModalVisible(true)}
           varient="done"
           style={styles.QRButton}
@@ -101,7 +105,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   QRButton: {
-    width: 130,
+    width: 150,
     alignItems: 'flex-start',
   },
 });

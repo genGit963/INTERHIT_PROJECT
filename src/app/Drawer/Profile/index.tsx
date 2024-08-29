@@ -8,6 +8,7 @@ import ProfileMenuComponent from './components/ProfileMenu';
 import ProfileUserSection from './components/ProfileUserSection';
 import HeroButton from '../../../components/HeroButton';
 import ShowMyQRModal from './components/showMyQR';
+import useTranslate from '../../../hooks/language/translate';
 
 // types and interface
 type ProfileScreenProps = {} & AppScreenNavigationType;
@@ -16,11 +17,16 @@ type ProfileScreenProps = {} & AppScreenNavigationType;
 const ProfileScreen: React.FC<ProfileScreenProps> = ({navigation}) => {
   const [isQRModalVisible, setQRModalVisible] = useState<boolean>(false);
 
+  const {translateLanguage} = useTranslate();
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
-        <ScreenTopTitle navigation={navigation} screenTitle="Profile" />
+        <ScreenTopTitle
+          navigation={navigation}
+          screenTitle={translateLanguage('Profile', 'प्रोफाइल')}
+        />
 
         {/* User View */}
         <ProfileUserSection callBackSetQRModalVisible={setQRModalVisible} />

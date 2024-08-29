@@ -1,23 +1,24 @@
 // ContributionFormModal.tsx
 import React from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Modal, ScrollView, StyleSheet, View, Alert } from 'react-native';
-import { useForm } from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {Modal, ScrollView, StyleSheet, View, Alert} from 'react-native';
+import {useForm} from 'react-hook-form';
 import CustomTextInput from '../../../../../components/CustomInput';
 import HeroButton from '../../../../../components/HeroButton';
 import supplyShadowEffect from '../../../../../utils/Shadow';
-import { Colors } from '../../../../../constants/Color';
+import {Colors} from '../../../../../constants/Color';
 import CustomDropdownSelector from '../../../../../components/CustomDropdownSelector';
 import BottomSpace from '../../../../../components/BottomSpace';
-import { ThemedText } from '../../../../../components/ThemedText';
+import {ThemedText} from '../../../../../components/ThemedText';
 import {
   ContributionClaimType,
   ContributionClaimZSchema,
 } from '../../../../../schema/drawer/profile/contribution-claim.schema';
 import CustomImagePickerComponent from '../../../../../components/CustomImagePicker';
-import { useClaimContribution } from '../../../../../hooks/drawer/profile/contribution';
-import { Asset } from 'react-native-image-picker';
+import {useClaimContribution} from '../../../../../hooks/drawer/profile/contribution';
+import {Asset} from 'react-native-image-picker';
 import ApiError from '../../../../../components/api/ApiError';
+import useTranslate from '../../../../../hooks/language/translate';
 
 type ContributionFormModalProps = {
   isVisible: boolean;
@@ -31,12 +32,12 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm<ContributionClaimType>({
     resolver: zodResolver(ContributionClaimZSchema),
   });
 
-  const { loading, error, handleClaimContribution } = useClaimContribution();
+  const {loading, error, handleClaimContribution} = useClaimContribution();
 
   const onSubmit = async (data: ContributionClaimType) => {
     console.log('contribution data: ', data);
@@ -77,34 +78,67 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
     }
   };
 
+  const {translateLanguage} = useTranslate();
+
+  const claimContributionLabels = {
+    formName: translateLanguage('Contribution Claim Form', 'योगदान दावी फारम'),
+    modalTitle: translateLanguage(
+      'Claim your Contribution',
+      'आफ्नो योगदान दावी गर्नुहोस्',
+    ),
+    cancelQuestion: translateLanguage(
+      'Are you sure want to cancel?',
+      'के तपाईँ निश्चित रूपमा रद्द गर्न चाहनुहुन्छ?',
+    ),
+    yes: translateLanguage('YES', 'हो'),
+    no: translateLanguage('NO', 'होइन'),
+    full_name: translateLanguage('Full Name', 'पूरा नाम'),
+    phone: translateLanguage('Phone', ' फोन नम्बर'),
+    amount: translateLanguage('Amount', 'रकम'),
+    eventId: translateLanguage('Event Id', 'कार्यक्रम ID'),
+    receiptImage: translateLanguage('Receipt Image', 'रसिद फोटो'),
+    contributorImage: translateLanguage(
+      'Contributor Image',
+      'योगदानकर्ताको फोटो',
+    ),
+    purpose: translateLanguage('Purpose', 'उद्देश्य'),
+    submit: translateLanguage('Submit', 'बुझाउनुहोस्'),
+    loading: translateLanguage('Loading...', 'पेस गर्दै...'),
+    cancel: translateLanguage('Cancel', 'रद्द गर्नुहोस्'),
+  };
+
   return (
     <Modal
       animationType="slide"
       transparent={true}
       visible={isVisible}
       onRequestClose={() => {
-        Alert.alert('Contribution Claim Form', 'Are you sure want to cancel?', [
-          {
-            text: 'Yes',
-            onPress: () => modalVisibile(false),
-          },
-          {
-            text: 'No',
-            onPress: () => { },
-          },
-        ]);
+        Alert.alert(
+          claimContributionLabels.formName,
+          claimContributionLabels.cancelQuestion,
+          [
+            {
+              text: claimContributionLabels.yes,
+              onPress: () => modalVisibile(false),
+            },
+            {
+              text: claimContributionLabels.no,
+              onPress: () => {},
+            },
+          ],
+        );
       }}>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
           {/* Cancel btn */}
           <HeroButton
-            btnText="Cancel"
+            btnText={claimContributionLabels.cancel}
             varient="cancel"
             onPress={() => modalVisibile(false)}
           />
           {/* form title */}
           <ThemedText type="subtitle" style={styles.FormTitle}>
-            Claim Your Contribution
+            {claimContributionLabels.modalTitle}
           </ThemedText>
           <ScrollView
             style={styles.ScrollContainer}
@@ -113,7 +147,7 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
               name="full_name"
               placeholder="Eg: Ram Bogati"
               control={control}
-              label="Full Name"
+              label={claimContributionLabels.full_name}
               isRequired
               error={errors.full_name}
             />
@@ -124,7 +158,7 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
               keyboardType="numeric"
               inputMode="numeric"
               control={control}
-              label="Phone"
+              label={claimContributionLabels.phone}
               isRequired
               error={errors.phone}
             />
@@ -147,7 +181,7 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
               keyboardType="numeric"
               inputMode="numeric"
               control={control}
-              label="Amount"
+              label={claimContributionLabels.amount}
               isRequired
               error={errors.amount}
             />
@@ -158,7 +192,7 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
               keyboardType="numeric"
               inputMode="numeric"
               control={control}
-              label="Event Id"
+              label={claimContributionLabels.eventId}
               isRequired={false}
               error={errors.eventId}
             />
@@ -167,7 +201,7 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
               name="purpose"
               placeholder="Eg: KulMandir Construction"
               control={control}
-              label="Purpose"
+              label={claimContributionLabels.purpose}
               isRequired
               error={errors.purpose}
             />
@@ -175,7 +209,7 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
             {/* receipt photo and contributor_image left */}
             <CustomImagePickerComponent
               isRequired
-              label="Receipt Image"
+              label={claimContributionLabels.receiptImage}
               control={control}
               errors={errors}
               controllerName="receipt_photo"
@@ -183,7 +217,7 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
 
             <CustomImagePickerComponent
               isRequired
-              label="Contributor Image"
+              label={claimContributionLabels.contributorImage}
               control={control}
               errors={errors}
               controllerName="contributor_image"
@@ -192,7 +226,11 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
             {/* Submit Button */}
             <HeroButton
               disabled={loading}
-              btnText={loading ? 'Loading...' : 'Submit'}
+              btnText={
+                loading
+                  ? claimContributionLabels.loading
+                  : claimContributionLabels.submit
+              }
               onPress={handleSubmit(onSubmit)}
             />
             {error && <ApiError message={error} />}
@@ -231,7 +269,7 @@ const styles = StyleSheet.create({
       Elevation: 10,
     }),
   },
-  FormTitle: { textAlign: 'left', width: '100%', fontSize: 18, marginBottom: 12 },
+  FormTitle: {textAlign: 'left', width: '100%', fontSize: 18, marginBottom: 12},
   ScrollContainer: {
     width: '100%',
     marginBottom: 50,

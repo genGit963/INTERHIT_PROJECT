@@ -10,7 +10,8 @@ import OtherSvg from '../../../assets/svg/three-horizontal-dot.svg';
 
 export interface ProfileMenuDataInterface {
   Icon: React.FC;
-  label: string;
+  labelEN: string;
+  labelNP: string;
   route: string;
 }
 
@@ -69,33 +70,39 @@ const OtherIcon: React.FC = () => {
 export const profileMenuData: ProfileMenuDataInterface[] = [
   {
     Icon: TransactionHistoryIcon,
-    label: 'Transaction History',
+    labelNP: 'लेनदेन इतिहास',
+    labelEN: 'Transaction History',
     route: SCREEN_NAME.DRAWER.PROFILE.PROFILE_MENU.TRANSACTION_HISTORY,
   },
   {
     Icon: SubscriptionIcon,
-    label: 'Subscription',
+    labelNP: 'सदस्यता',
+    labelEN: 'Subscription',
     route: SCREEN_NAME.DRAWER.PROFILE.PROFILE_MENU.SUBSCRIPTION,
   },
   {
     Icon: IdCardIcon,
-    label: 'ID Card',
+    labelNP: 'ID कार्ड',
+    labelEN: 'ID Card',
     route: SCREEN_NAME.DRAWER.PROFILE.PROFILE_MENU.IDCARD,
   },
 
   {
     Icon: MergeRequestIcon,
-    label: 'Merge Request',
+    labelNP: 'मर्ज अनुरोध',
+    labelEN: 'Merge Request',
     route: SCREEN_NAME.DRAWER.PROFILE.PROFILE_MENU.MERGE_REQUEST,
   },
   {
     Icon: ContributionIcon,
-    label: 'Contribution',
+    labelNP: 'योगदान',
+    labelEN: 'Contribution',
     route: SCREEN_NAME.DRAWER.PROFILE.PROFILE_MENU.CONTRIBUTION,
   },
   {
     Icon: OtherIcon,
-    label: 'Other',
+    labelNP: 'अन्य',
+    labelEN: 'Other',
     route: SCREEN_NAME.DRAWER.PROFILE.PROFILE_MENU.OTHER,
   },
 ];

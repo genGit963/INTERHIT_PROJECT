@@ -1,15 +1,17 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import { ThemedText } from '../../../../components/ThemedText';
-import { AppScreenNavigationType } from '../../../../core/navigation-type';
-import { profileMenuData } from '../menu-data';
+import {ThemedText} from '../../../../components/ThemedText';
+import {AppScreenNavigationType} from '../../../../core/navigation-type';
+import {profileMenuData} from '../menu-data';
 import supplyShadowEffect from '../../../../utils/Shadow';
+import useTranslate from '../../../../hooks/language/translate';
 
 type ProfileMenuComponentProps = {} & AppScreenNavigationType;
 
 const ProfileMenuComponent: React.FC<ProfileMenuComponentProps> = ({
   navigation,
 }) => {
+  const {translateLanguage} = useTranslate();
   return (
     <View style={styles.MenuContainer}>
       {profileMenuData.map((menu, _) => {
@@ -21,7 +23,7 @@ const ProfileMenuComponent: React.FC<ProfileMenuComponentProps> = ({
             onPress={() => navigation.navigate(menu.route)}>
             <menu.Icon />
             <ThemedText style={styles.MenuLabel} type="mediumBold">
-              {menu.label}
+              {translateLanguage(menu.labelEN, menu.labelNP)}
             </ThemedText>
           </TouchableOpacity>
         );
@@ -33,7 +35,7 @@ const ProfileMenuComponent: React.FC<ProfileMenuComponentProps> = ({
 export default ProfileMenuComponent;
 
 const styles = StyleSheet.create({
-  MenuContainer: { gap: 12, width: '100%', marginVertical: 6 },
+  MenuContainer: {gap: 12, width: '100%', marginVertical: 6},
   MenuCard: {
     margin: 4,
     // borderWidth: 0.5,
