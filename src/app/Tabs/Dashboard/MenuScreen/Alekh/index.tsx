@@ -22,7 +22,7 @@ import {useGenQuery} from '../../../../../hooks/gen-hooks/gen-query';
 import DASHBOARD_SERVICES from '../../../../../services/tabs/dashboard';
 import ApiError from '../../../../../components/api/ApiError';
 import Loader from '../../../../../components/Loader';
-import {Language, useLanguage} from '../../../../../context/language';
+import useTranslate from '../../../../../hooks/language/translate';
 
 // types and interface
 type AlekhScreenProps = {} & AppScreenNavigationType;
@@ -66,6 +66,8 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
   // Search text
   const [searchText, setSearchText] = useState<SearchType['searchText']>('');
 
+  const {translateLanguage} = useTranslate();
+
   // Get Alekhs hook
   const {data, loading, error} = useGenQuery({
     queryFn: async () => await DASHBOARD_SERVICES.getAlekhs(),
@@ -79,8 +81,6 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
       item.title.toLowerCase().includes(searchText.toLowerCase()) ||
       item.desc.toLowerCase().includes(searchText.toLowerCase()),
   );
-
-  const {language} = useLanguage();
 
   if (loading) {
     return <Loader />;
@@ -100,12 +100,12 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
         {/* Title */}
         <ScreenTopTitle
           navigation={navigation}
-          screenTitle={language === Language.EN ? 'Alekh' : 'आलेख'}
+          screenTitle={translateLanguage('Alekh', 'आलेख')}
         />
 
         {/* Search and filter */}
         <SearchInput
-          placeHolder={language === Language.EN ? 'Alekh' : 'आलेख'}
+          placeHolder={translateLanguage('Alekh', 'आलेख')}
           callBackSetSearchValue={setSearchText}
         />
 

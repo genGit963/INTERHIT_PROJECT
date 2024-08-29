@@ -1,9 +1,6 @@
 import React, {useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
-
-import {ThemedText} from '../../../../../components/ThemedText';
 import ScreenTopTitle from '../../../../../components/ScreenTopTitle';
-import SearchSvg from '../../../../../assets/svg/search.svg';
 import MandirViewModal from './components/KulMandirViewModal';
 import KulMandirCard from './components/KulMandirCard';
 import BottomSpace from '../../../../../components/BottomSpace';
@@ -11,6 +8,8 @@ import EmptyFlatList from '../../../../../components/EmptyFlatList';
 import {Colors} from '../../../../../constants/Color';
 import supplyShadowEffect from '../../../../../utils/Shadow';
 import {AppScreenNavigationType} from '../../../../../core/navigation-type';
+import useTranslate from '../../../../../hooks/language/translate';
+import SearchInput, {SearchType} from '../../../../../components/SearchInput';
 
 // types and interface
 type MandirScreenProps = {} & AppScreenNavigationType;
@@ -78,7 +77,11 @@ const MandirScreen: React.FC<MandirScreenProps> = ({navigation}) => {
   const [selectedMandir, setSelectedMandir] = useState<
     MandirInterface | undefined
   >(undefined);
+  const [searchText, setSearchText] = useState<SearchType['searchText']>('');
   const [isMandirViewVisible, setMandirViewVisible] = useState<boolean>(false);
+
+  const {translateLanguage} = useTranslate();
+
   const handleMandirView = (Mandir: MandirInterface) => {
     setSelectedMandir(Mandir);
     setMandirViewVisible(true);
@@ -92,13 +95,16 @@ const MandirScreen: React.FC<MandirScreenProps> = ({navigation}) => {
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
-        <ScreenTopTitle navigation={navigation} screenTitle="Kul Mandir" />
+        <ScreenTopTitle
+          navigation={navigation}
+          screenTitle={translateLanguage('Kul Mandir', 'कुल मन्दिर')}
+        />
 
         {/* Search and filter */}
-        <View style={styles.SearchConatiner}>
-          <ThemedText style={styles.SearchText}>Search Mandir</ThemedText>
-          <SearchSvg />
-        </View>
+        <SearchInput
+          placeHolder={translateLanguage('Mandir', 'मन्दिर')}
+          callBackSetSearchValue={setSearchText}
+        />
 
         {/* Mandir Card Contents */}
         <FlatList

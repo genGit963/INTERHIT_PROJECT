@@ -7,7 +7,7 @@ import AnniversarySvg from '../../../../assets/svg/circled_heart.svg';
 import DeathSvg from '../../../../assets/svg/sad_emoji.svg';
 import NepaliDate from 'nepali-datetime';
 import {useGetStatistics} from '../../../../hooks/tabs/dashboard/statistics';
-import {Language, useLanguage} from '../../../../context/language';
+import useTranslate from '../../../../hooks/language/translate';
 
 interface todayUpdate {
   total_created: number;
@@ -30,6 +30,8 @@ const TodayUpdate = () => {
 
   const {loading, error, handleGetStatistics} = useGetStatistics();
 
+  const {translateLanguage} = useTranslate();
+
   const getStatsData = async () => {
     const statsData = await handleGetStatistics();
     // console.log("resp", Resp)
@@ -38,8 +40,6 @@ const TodayUpdate = () => {
     }
   };
 
-  const {language} = useLanguage();
-
   useEffect(() => {
     getStatsData();
   }, []);
@@ -47,15 +47,12 @@ const TodayUpdate = () => {
   return (
     <View style={styles.Container}>
       <View>
-        {language === Language.NP ? (
-          <ThemedText type="mediumBold" style={styles.Today}>
-            आज, {todayDate_Nepali}
-          </ThemedText>
-        ) : (
-          <ThemedText type="mediumBold" style={styles.Today}>
-            Today, {new Date().toDateString()}
-          </ThemedText>
-        )}
+        <ThemedText type="mediumBold" style={styles.Today}>
+          {translateLanguage(
+            `Today, ${new Date().toDateString()}`,
+            `आज, ${todayDate_Nepali}`,
+          )}
+        </ThemedText>
       </View>
 
       {/* Today Report */}
@@ -67,11 +64,9 @@ const TodayUpdate = () => {
             <ThemedText style={styles.ReportNumber} type="semiBold">
               {todayStats.birthday_today}
             </ThemedText>
-            {language === Language.NP ? (
-              <ThemedText style={styles.ReportNumber}>जन्मदिन</ThemedText>
-            ) : (
-              <ThemedText style={styles.ReportNumber}>Birthday</ThemedText>
-            )}
+            <ThemedText type="mediumBold" style={styles.ReportNumber}>
+              {translateLanguage('Birthday', 'जन्मदिन')}
+            </ThemedText>
           </View>
         </View>
 
@@ -82,11 +77,9 @@ const TodayUpdate = () => {
             <ThemedText style={styles.ReportNumber} type="semiBold">
               {todayStats.anniversary_today}
             </ThemedText>
-            {language === Language.NP ? (
-              <ThemedText style={styles.ReportNumber}>वार्षिकोत्सव</ThemedText>
-            ) : (
-              <ThemedText style={styles.ReportNumber}>Anniversary</ThemedText>
-            )}
+            <ThemedText type="mediumBold" style={styles.ReportNumber}>
+              {translateLanguage('Anniversary', 'वार्षिकोत्सव')}
+            </ThemedText>
           </View>
         </View>
 
@@ -97,11 +90,9 @@ const TodayUpdate = () => {
             <ThemedText style={styles.ReportNumber} type="semiBold">
               {todayStats.death_anniversary_today}
             </ThemedText>
-            {language === Language.NP ? (
-              <ThemedText style={styles.ReportNumber}>मृत्यु</ThemedText>
-            ) : (
-              <ThemedText style={styles.ReportNumber}>Death</ThemedText>
-            )}
+            <ThemedText type="mediumBold" style={styles.ReportNumber}>
+              {translateLanguage('Death', 'मृत्यु')}
+            </ThemedText>
           </View>
         </View>
       </View>

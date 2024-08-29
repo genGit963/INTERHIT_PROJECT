@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { ThemedText } from '../../../../components/ThemedText';
-import { Colors } from '../../../../constants/Color';
+import React, {useState} from 'react';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {ThemedText} from '../../../../components/ThemedText';
+import {Colors} from '../../../../constants/Color';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types
 type ChartTogglerProps = {
@@ -19,6 +20,8 @@ const ChartToggler: React.FC<ChartTogglerProps> = ({
     callBackSetChartToggle(value);
   };
 
+  const {translateLanguage} = useTranslate();
+
   return (
     <View style={styles.TogglerContainer}>
       <TouchableOpacity
@@ -35,7 +38,7 @@ const ChartToggler: React.FC<ChartTogglerProps> = ({
               ? styles.activeText
               : styles.inactiveText
           }>
-          Province
+          {translateLanguage('Province', 'प्रदेश')}
         </ThemedText>
       </TouchableOpacity>
       <TouchableOpacity
@@ -52,7 +55,7 @@ const ChartToggler: React.FC<ChartTogglerProps> = ({
               ? styles.activeText
               : styles.inactiveText
           }>
-          Population
+          {translateLanguage('District', 'जिल्ला')}
         </ThemedText>
       </TouchableOpacity>
       <TouchableOpacity
@@ -69,7 +72,7 @@ const ChartToggler: React.FC<ChartTogglerProps> = ({
               ? styles.activeText
               : styles.inactiveText
           }>
-          Gender
+          {translateLanguage('Age', 'उमेर')}
         </ThemedText>
       </TouchableOpacity>
     </View>

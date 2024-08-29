@@ -1,22 +1,30 @@
 // AddYogdanModal.tsx
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { Modal, StyleSheet, View, ScrollView, Platform, Alert } from 'react-native';
+import {useForm} from 'react-hook-form';
+import {
+  Modal,
+  StyleSheet,
+  View,
+  ScrollView,
+  Platform,
+  Alert,
+} from 'react-native';
 import {
   BanshaYogdanZSchema,
   BanshaYogdanZType,
 } from '../../../../../../schema/tabs/dashboard/bansha-yogdan.schema';
-import { zodResolver } from '@hookform/resolvers/zod';
+import {zodResolver} from '@hookform/resolvers/zod';
 import HeroButton from '../../../../../../components/HeroButton';
-import { ThemedText } from '../../../../../../components/ThemedText';
+import {ThemedText} from '../../../../../../components/ThemedText';
 import CustomTextInput from '../../../../../../components/CustomInput';
 import BottomSpace from '../../../../../../components/BottomSpace';
-import { Colors } from '../../../../../../constants/Color';
+import {Colors} from '../../../../../../constants/Color';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
 import CustomDropdownSelector from '../../../../../../components/CustomDropdownSelector';
 import CustomImagePickerComponent from '../../../../../../components/CustomImagePicker';
-import { usePostYogdan } from '../../../../../../hooks/tabs/dashboard/yogdan';
-import { Asset } from 'react-native-image-picker';
+import {usePostYogdan} from '../../../../../../hooks/tabs/dashboard/yogdan';
+import {Asset} from 'react-native-image-picker';
+import useTranslate from '../../../../../../hooks/language/translate';
 
 // types
 type AddYogdanModalProps = {
@@ -31,12 +39,12 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm<BanshaYogdanZType>({
     resolver: zodResolver(BanshaYogdanZSchema),
   });
 
-  const { loading, error, handlePostYogdan } = usePostYogdan()
+  const {loading, error, handlePostYogdan} = usePostYogdan();
 
   const onSubmit = async (data: BanshaYogdanZType) => {
     // console.log('formdata: ', data);
@@ -57,14 +65,26 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
     formData.append('desc', data.desc);
     formData.append('type', data.type);
 
-    const Resp = await handlePostYogdan(formData)
+    const Resp = await handlePostYogdan(formData);
     if (Resp) {
       // console.log("BANSHA yogdan successful", Resp);
-      Alert.alert("successfully added yogdan")
+      Alert.alert('successfully added yogdan');
       modalVisibile(false);
     }
+  };
 
+  const {translateLanguage} = useTranslate();
 
+  const addYogdanLabels = {
+    modalTitle: translateLanguage('Add Bansha Yogdan', 'बंश योगदान थप्नुहोस्'),
+    name: translateLanguage('Name of the person', 'लेखकको नाम'),
+    birth_place: translateLanguage('Birth Place', 'विवरणहरू'),
+    type: translateLanguage('Yogdan Type', 'बंश योगदान'),
+    image: translateLanguage('Upload Image', 'फोटो अपलोड गर्नुहोस्'),
+    description: translateLanguage('Description', 'विवरणहरू'),
+    submit: translateLanguage('Submit', 'बुझाउनुहोस्'),
+    loading: translateLanguage('Loading...', 'पेस गर्दै...'),
+    cancel: translateLanguage('Cancel', 'रद्द गर्नुहोस्'),
   };
 
   return (
@@ -79,7 +99,7 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
         <View style={styles.modalView}>
           {/* Cancel btn */}
           <HeroButton
-            btnText="Cancel"
+            btnText={addYogdanLabels.cancel}
             varient="cancel"
             onPress={() => modalVisibile(false)}
           />
@@ -89,14 +109,16 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
             style={styles.ScrollContainer}
             contentContainerStyle={{}}
             showsVerticalScrollIndicator={false}
-            keyboardShouldPersistTaps='handled'>
-            <ThemedText type="subtitle">Add Bansaj Yogdan</ThemedText>
+            keyboardShouldPersistTaps="handled">
+            <ThemedText type="subtitle">
+              {addYogdanLabels.modalTitle}
+            </ThemedText>
 
             <CustomTextInput
               name="name"
               control={control}
               placeholder="Eg: Ram Bahadur Gaurgain"
-              label="Name of the person"
+              label={addYogdanLabels.name}
               isRequired={true}
               error={errors.name}
             />
@@ -105,7 +127,7 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
               name="birthPlace"
               control={control}
               placeholder="Eg: Namche, Solukhumbu"
-              label="Birth Place"
+              label={addYogdanLabels.birth_place}
               isRequired={true}
               error={errors.birthPlace}
             />
@@ -114,22 +136,28 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
             <CustomDropdownSelector
               name="type"
               control={control}
-              label="Yogan Type"
+              label={addYogdanLabels.type}
               options={[
-                { label: 'POLITICAL', value: 'POLITICAL' },
-                { label: 'SOCIAL', value: 'SOCIAL' },
-                { label: 'OTHERS', value: 'OTHERS' },
+                {label: 'POLITICAL', value: 'POLITICAL'},
+                {label: 'SOCIAL', value: 'SOCIAL'},
+                {label: 'OTHERS', value: 'OTHERS'},
               ]}
               isRequired
             />
 
-            <CustomImagePickerComponent isRequired label='Upload Image' control={control} errors={errors} controllerName='image' />
+            <CustomImagePickerComponent
+              isRequired
+              label="Upload Image"
+              control={control}
+              errors={errors}
+              controllerName="image"
+            />
 
             <CustomTextInput
               name="desc"
               control={control}
               placeholder="Eg: अनुराधा कोइराला नेपालमा मानव बेचबिखन विरुद्ध र महिला संरक्षणको वकालत गर्ने गैर-लाभकारी संस्था माइती नेपालकी संस्थापक र निर्देशक हुन्...।"
-              label="Description"
+              label={addYogdanLabels.description}
               isRequired={true}
               multiline
               style={styles.Description}
@@ -139,7 +167,9 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
             {/* Submit Button */}
             <HeroButton
               disabled={loading}
-              btnText={loading ? "Loading..." : 'Submit'}
+              btnText={
+                loading ? addYogdanLabels.loading : addYogdanLabels.submit
+              }
               onPress={handleSubmit(onSubmit)}
               style={styles.SubmitBtn}
             />
@@ -184,12 +214,12 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     // borderWidth: 2,
   },
-  CancelButton: { width: '100%', alignItems: 'flex-end' },
+  CancelButton: {width: '100%', alignItems: 'flex-end'},
   SubmitBtn: {
     borderRadius: 10,
     marginVertical: 30,
   },
-  Description: { height: Platform.OS === 'ios' ? 100 : 'auto' },
+  Description: {height: Platform.OS === 'ios' ? 100 : 'auto'},
 });
 
 export default AddYogdanModal;

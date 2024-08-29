@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { PieChart } from 'react-native-gifted-charts';
-import { ThemedText } from '../../../../components/ThemedText';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { useGetPopByProvince } from '../../../../hooks/tabs/overview/province';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {PieChart} from 'react-native-gifted-charts';
+import {ThemedText} from '../../../../components/ThemedText';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {useGetPopByProvince} from '../../../../hooks/tabs/overview/province';
 import Loader from '../../../../components/Loader';
+import useTranslate from '../../../../hooks/language/translate';
 
 interface IProvincePopulation {
   name: string;
@@ -31,7 +32,7 @@ const createProvinceData = (
 const PieChartProvince: React.FC = () => {
   const [provinceData, setProvinceData] = useState<IProvincePopulation[]>([]);
 
-  const { loading, error, handleGetPopByProvince } = useGetPopByProvince();
+  const {loading, error, handleGetPopByProvince} = useGetPopByProvince();
 
   useEffect(() => {
     getPopByProvinceData();
@@ -40,11 +41,12 @@ const PieChartProvince: React.FC = () => {
   //asign proper colors later
   const colors = ['red', 'green', 'blue', 'yellow', 'pink', 'black', 'white'];
 
+  const {translateLanguage} = useTranslate();
+
   const getPopByProvinceData = async () => {
     await handleGetPopByProvince().then((provinceResponse) => {
-
       const mappedData = provinceResponse.map(
-        (item: { name: string; value: number }, index: any) => {
+        (item: {name: string; value: number}, index: any) => {
           return createProvinceData(
             item.name,
             item.value,
@@ -60,21 +62,24 @@ const PieChartProvince: React.FC = () => {
   return (
     <View style={styles.PieContainer}>
       <ThemedText type="semiBold" style={styles.PieTitle}>
-        विभिन्न प्रदेशमा बन्धु संख्या
+        {translateLanguage(
+          'Density as per the provinces',
+          'विभिन्न प्रदेशमा बन्धु संख्या',
+        )}
       </ThemedText>
       <PieChart data={provinceData} focusOnPress />
 
       <View style={styles.legendContainer}>
         {provinceData.length > 0
           ? provinceData.map((item, index) => (
-            <View key={index} style={styles.legendItem}>
-              <View
-                style={[styles.legendColor, { backgroundColor: item.color }]}
-              />
-              <ThemedText style={styles.legendText}>{item.name}</ThemedText>
-              <ThemedText type="mediumBold"> {item.value}</ThemedText>
-            </View>
-          ))
+              <View key={index} style={styles.legendItem}>
+                <View
+                  style={[styles.legendColor, {backgroundColor: item.color}]}
+                />
+                <ThemedText style={styles.legendText}>{item.name}</ThemedText>
+                <ThemedText type="mediumBold"> {item.value}</ThemedText>
+              </View>
+            ))
           : loading && <Loader />}
       </View>
     </View>

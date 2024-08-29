@@ -1,27 +1,34 @@
-import React, { useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 
-import { AppScreenNavigationType } from '../../../core/navigation-type';
+import {AppScreenNavigationType} from '../../../core/navigation-type';
 import ScreenTopTitle from '../../../components/ScreenTopTitle';
 import BottomSpace from '../../../components/BottomSpace';
-import { Colors } from '../../../constants/Color';
+import {Colors} from '../../../constants/Color';
 import ChartToggler from './components/ChartToggler';
 import PieChartProvince from './components/PieChartProvince';
 import BarChartDistricts from './components/BarChartDistricts';
 import BiBarChartGender from './components/BiBarChartGender';
+import useTranslate from '../../../hooks/language/translate';
 
 // types and interface
 type OverviewTabScreenProps = {} & AppScreenNavigationType;
 
 // ----------------- Overivew Tab Screen ---------------------
-const OverviewTabScreen: React.FC<OverviewTabScreenProps> = ({ navigation }) => {
+const OverviewTabScreen: React.FC<OverviewTabScreenProps> = ({navigation}) => {
   // Chart value toggle
   const [chartToggle, setChartToggle] = useState<string>('pie-chart-province');
+
+  const {translateLanguage} = useTranslate();
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
-        <ScreenTopTitle navigation={navigation} screenTitle="Overview" />
+        <ScreenTopTitle
+          navigation={navigation}
+          screenTitle={translateLanguage('Overview', 'अवलोकन')}
+        />
 
         {/* Chart Toggler Hrz Bar */}
         <ChartToggler callBackSetChartToggle={setChartToggle} />

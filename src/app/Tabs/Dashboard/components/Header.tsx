@@ -4,12 +4,15 @@ import {ThemedText} from '../../../../components/ThemedText';
 import {Colors, CommunityColor} from '../../../../constants/Color';
 import NotificationSvg from '../../../../assets/svg/bell.svg';
 import NepaliFlagSvg from '../../../../assets/svg/nepali_flag.svg';
-// import EnglishFlagSvg from "../../../../assets/"
+import EnglishFlagSvg from '../../../../assets/svg/english-flag.svg';
 import {useUserDataProvider} from '../../../../hooks/tabs/dashboard';
 import {StoredUserType} from '../../../../schema/auth';
 import {SOCIETY_DATA} from '../../../../core/SocietyData';
-import {Language, useLanguage} from '../../../../context/language';
 import {getShortHandOfName} from '../../../../utils/nameParser';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppDispatch, RootState} from '../../../../redux/store';
+import {setLanguage} from '../../../../redux/features/language/languageSlice';
+import useTranslate from '../../../../hooks/language/translate';
 
 type HeaderProps = {
   callBackDrawerVisible: (value: boolean) => void;
@@ -20,16 +23,18 @@ const Header: React.FC<HeaderProps> = ({callBackDrawerVisible}) => {
   const {handleUserDataProvider} = useUserDataProvider();
   const [APPUSER, setAPPUSER] = useState<StoredUserType | null | undefined>();
 
-  const {language, setLanguage} = useLanguage();
+  const {language} = useSelector((state: RootState) => state.language);
+  const dispatch: AppDispatch = useDispatch();
 
   const toogleLanguage = () => {
-    setLanguage(language === Language.EN ? Language.NP : Language.EN);
+    dispatch(setLanguage(language === 'english' ? 'nepali' : 'english'));
   };
+
+  const {translateLanguage} = useTranslate();
 
   useEffect(() => {
     const handleFetchUser = async () => {
       const appUser = await handleUserDataProvider();
-      // console.log('APPUSER : ', appUser);
       if (appUser) {
         setAPPUSER(appUser);
       }
@@ -62,7 +67,7 @@ const Header: React.FC<HeaderProps> = ({callBackDrawerVisible}) => {
 
         <View>
           <ThemedText style={styles.CommunitySlog} type="semiBold">
-            {SOCIETY_DATA.sologan} !
+            {translateLanguage(SOCIETY_DATA.sologan, SOCIETY_DATA.solaganNp)} !
           </ThemedText>
           <ThemedText>{APPUSER?.user.name}</ThemedText>
         </View>
@@ -72,10 +77,10 @@ const Header: React.FC<HeaderProps> = ({callBackDrawerVisible}) => {
       <View style={styles.NotifyLang}>
         <NotificationSvg height={32} width={32} />
         <TouchableOpacity onPress={toogleLanguage}>
-          {language === Language.NP ? (
+          {language === 'nepali' ? (
             <NepaliFlagSvg height={32} width={32} />
           ) : (
-            <ThemedText>English</ThemedText>
+            <EnglishFlagSvg height={32} width={32} />
           )}
         </TouchableOpacity>
       </View>

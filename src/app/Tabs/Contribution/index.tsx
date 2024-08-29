@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -6,20 +6,21 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { AppScreenNavigationType } from '../../../core/navigation-type';
+import {AppScreenNavigationType} from '../../../core/navigation-type';
 import ScreenTopTitle from '../../../components/ScreenTopTitle';
 import BottomSpace from '../../../components/BottomSpace';
-import { SocietyContributionRespInterface } from '../../../schema/tabs/contribution/contributions.schema';
+import {SocietyContributionRespInterface} from '../../../schema/tabs/contribution/contributions.schema';
 import EmptyFlatList from '../../../components/EmptyFlatList';
 import ContributionCard from './components/SContributionCard';
-import { Colors } from '../../../constants/Color';
-import SearchInput, { SearchType } from '../../../components/SearchInput';
+import {Colors} from '../../../constants/Color';
+import SearchInput, {SearchType} from '../../../components/SearchInput';
 import AddContributionSvg from '../../../assets/svg/organization-contribution.svg';
 import supplyShadowEffect from '../../../utils/Shadow';
 import SoceityContributionQRModal from './components/SContributionQRModal';
-import { useGetAllContributionEvents } from '../../../hooks/tabs/contribution/contribution';
+import {useGetAllContributionEvents} from '../../../hooks/tabs/contribution/contribution';
 import SContributionViewModal from './components/SContributionViewModal';
 import Loader from '../../../components/Loader';
+import useTranslate from '../../../hooks/language/translate';
 // types and interface
 type ContributionTabScreenProps = {} & AppScreenNavigationType;
 
@@ -32,52 +33,63 @@ const ContributionTabScreen: React.FC<ContributionTabScreenProps> = ({
   console.log('searchText contribution: ', searchText);
 
   //contributionEventData
-  const [societyContributionData, setSocietyContributionData] = useState<SocietyContributionRespInterface[]>([])
+  const [societyContributionData, setSocietyContributionData] = useState<
+    SocietyContributionRespInterface[]
+  >([]);
 
   //modalVisible
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   //selected contribution_event for detail data
-  const [selectedContributionEvent, setSelectedContributionEvent] = useState<SocietyContributionRespInterface>();
+  const [selectedContributionEvent, setSelectedContributionEvent] =
+    useState<SocietyContributionRespInterface>();
 
   // contribution QR modal
   const [isContributionAddQRVisible, setContributionAddQRVisible] =
     useState<boolean>(false);
 
-  const { loading, error, handleGetContributionEvents } = useGetAllContributionEvents()
+  const {loading, error, handleGetContributionEvents} =
+    useGetAllContributionEvents();
 
   //get all event data
   const getContributionEventData = async () => {
-    const getContributionEventResp = await handleGetContributionEvents()
+    const getContributionEventResp = await handleGetContributionEvents();
     if (getContributionEventResp) {
       // console.log("Contribution events: ", getContributionEventResp)
-      setSocietyContributionData(getContributionEventResp)
+      setSocietyContributionData(getContributionEventResp);
     }
-  }
+  };
+
+  const {translateLanguage} = useTranslate();
 
   useEffect(() => {
-    getContributionEventData()
-  }, [])
+    getContributionEventData();
+  }, []);
 
-  const handleContributionEventView = (contributionEvent: SocietyContributionRespInterface) => {
-    setSelectedContributionEvent(contributionEvent)
-    setIsModalVisible(true)
-  }
+  const handleContributionEventView = (
+    contributionEvent: SocietyContributionRespInterface,
+  ) => {
+    setSelectedContributionEvent(contributionEvent);
+    setIsModalVisible(true);
+  };
 
   const handleCloseModal = () => {
-    setSelectedContributionEvent(undefined)
-    setIsModalVisible(false)
-  }
+    setSelectedContributionEvent(undefined);
+    setIsModalVisible(false);
+  };
 
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
-        <ScreenTopTitle navigation={navigation} screenTitle="Contribution" />
+        <ScreenTopTitle
+          navigation={navigation}
+          screenTitle={translateLanguage('Contribution', 'योगदान')}
+        />
 
         {/* Search Title */}
         <SearchInput
-          placeHolder={'Contribution'}
+          placeHolder={translateLanguage('Contribution', 'योगदान')}
           callBackSetSearchValue={setSearchText}
         />
 
@@ -89,15 +101,26 @@ const ContributionTabScreen: React.FC<ContributionTabScreenProps> = ({
           contentContainerStyle={styles.FlatlistContents}
           showsVerticalScrollIndicator={false}
           renderItem={(item) => (
-            <ContributionCard contributionData={item.item} callbackHandlePress={handleContributionEventView} />
+            <ContributionCard
+              contributionData={item.item}
+              callbackHandlePress={handleContributionEventView}
+            />
           )}
-          ListEmptyComponent={loading ? <Loader /> : <EmptyFlatList message="No Contributions" />}
+          ListEmptyComponent={
+            loading ? <Loader /> : <EmptyFlatList message="No Contributions" />
+          }
           keyExtractor={(item) => item._id}
           ListFooterComponent={<BottomSpace spaceHeight={100} />}
           ListFooterComponentStyle={styles.FlatlistFooter}
         />
 
-        {isModalVisible && <SContributionViewModal isVisible={isModalVisible} modalVisible={handleCloseModal} data={selectedContributionEvent} />}
+        {isModalVisible && (
+          <SContributionViewModal
+            isVisible={isModalVisible}
+            modalVisible={handleCloseModal}
+            data={selectedContributionEvent}
+          />
+        )}
 
         {/* Alekh Add Button Opener */}
         <TouchableOpacity
@@ -133,9 +156,9 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  FlatListContainer: { marginVertical: 10 },
-  FlatlistContents: { marginBottom: '8%' },
-  FlatlistFooter: { marginBottom: '6%' },
+  FlatListContainer: {marginVertical: 10},
+  FlatlistContents: {marginBottom: '8%'},
+  FlatlistFooter: {marginBottom: '6%'},
   AddContribtionBtn: {
     position: 'absolute',
     bottom: '16%',
@@ -143,7 +166,7 @@ export const styles = StyleSheet.create({
     zIndex: 10,
     backgroundColor: Colors.primary,
     padding: 20,
-    borderRadius: 50
+    borderRadius: 50,
   },
   AddContribtionIcon: {
     ...supplyShadowEffect({

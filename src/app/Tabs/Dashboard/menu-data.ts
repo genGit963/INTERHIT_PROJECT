@@ -8,7 +8,6 @@ import GallerySvg from '../../../assets/svg/image.svg';
 import KulmandirSvg from '../../../assets/svg/temple.svg';
 import LiteratureSvg from '../../../assets/svg/book.svg';
 import TopContributerSvg from '../../../assets/svg/top-contribution.svg';
-import {Language, useLanguage} from '../../../context/language';
 
 export interface MenuScreenDataInterface {
   Icon: React.FunctionComponent;

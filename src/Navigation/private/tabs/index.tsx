@@ -12,7 +12,6 @@ import HomeFocusedIcon from '../../../assets/svg/home-focused.svg';
 import NoticeIcon from '../../../assets/svg/pepicons-pop_bulletin-notice.svg';
 import NoticeFocusedIcon from '../../../assets/svg/notice-focused.svg';
 import GenealogyIcon from '../../../assets/svg/ph_tree-structure.svg';
-import GenealogyFocusedIcon from '../../../assets/svg/genealogy-focused.svg';
 import ContributionIcon from '../../../assets/svg/support-contribution-ruppe.svg';
 import ContributionFocusedIcon from '../../../assets/svg/contribution-focused.svg';
 import OverviewIcon from '../../../assets/svg/solar_pie-chart-bold.svg';

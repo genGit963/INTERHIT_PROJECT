@@ -14,6 +14,7 @@ import {Colors} from '../../../../../constants/Color';
 import supplyShadowEffect from '../../../../../utils/Shadow';
 import {ThemedText} from '../../../../../components/ThemedText';
 import RemainingWork from '../../../../../components/$remaingWork';
+import useTranslate from '../../../../../hooks/language/translate';
 
 // types
 type DownloadScreenProps = {} & AppScreenNavigationType;
@@ -23,14 +24,20 @@ const DownloadScreen: React.FC<DownloadScreenProps> = ({navigation}) => {
   const [searchText, setSearchText] = useState<SearchType['searchText'] | null>(
     null,
   );
+
+  const {translateLanguage} = useTranslate();
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Screen Title */}
-        <ScreenTopTitle navigation={navigation} screenTitle={'Download'} />
+        <ScreenTopTitle
+          navigation={navigation}
+          screenTitle={translateLanguage('Download', 'डाउनलोड')}
+        />
 
         <SearchInput
-          placeHolder={'Download File'}
+          placeHolder={translateLanguage('Download', 'डाउनलोड')}
           callBackSetSearchValue={setSearchText}
         />
 

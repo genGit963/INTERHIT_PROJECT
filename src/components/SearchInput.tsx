@@ -14,7 +14,7 @@ import {ThemedText} from './ThemedText';
 import SearchIconSvg from '../assets/svg/search.svg';
 import supplyShadowEffect from '../utils/Shadow';
 import {Colors} from '../constants/Color';
-import {Language, useLanguage} from '../context/language';
+import useTranslate from '../hooks/language/translate';
 
 const SearchSchema = z.object({
   searchText: z.string(),
@@ -41,12 +41,12 @@ const SearchInput: React.FC<SearchProps> = ({
     resolver: zodResolver(SearchSchema),
   });
 
+  const {translateLanguage} = useTranslate();
+
   const onSubmit = (data: SearchType) => {
     // console.log('search text: ', data);
     callBackSetSearchValue(data.searchText);
   };
-
-  const {language} = useLanguage();
 
   return (
     <View style={styles.SearchContainer}>
@@ -57,11 +57,10 @@ const SearchInput: React.FC<SearchProps> = ({
           <>
             <TextInput
               style={[styles.input, style]}
-              placeholder={
-                language === Language.EN
-                  ? `Search ${placeHolder}`
-                  : `${placeHolder} खोज्नुहोस्`
-              }
+              placeholder={translateLanguage(
+                `Search ${placeHolder}`,
+                `${placeHolder} खोज्नुहोस्`,
+              )}
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}

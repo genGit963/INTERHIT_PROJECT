@@ -21,6 +21,7 @@ import SearchInput, {SearchType} from '../../../../../components/SearchInput';
 import {useGetYogdan} from '../../../../../hooks/tabs/dashboard/yogdan';
 import Loader from '../../../../../components/Loader';
 import ApiError from '../../../../../components/api/ApiError';
+import useTranslate from '../../../../../hooks/language/translate';
 
 // types
 type BanshaContributionProps = {} & AppScreenNavigationType;
@@ -43,6 +44,8 @@ const BanshaContribution: React.FC<BanshaContributionProps> = ({
 
   //get yogdans
   const {loading, error, handleGetYogdan} = useGetYogdan();
+
+  const {translateLanguage} = useTranslate();
 
   useEffect(() => {
     const getYogdanData = async () => {
@@ -87,11 +90,14 @@ const BanshaContribution: React.FC<BanshaContributionProps> = ({
     <View style={styles.Page}>
       <SafeAreaView>
         {/* Screen Title */}
-        <ScreenTopTitle navigation={navigation} screenTitle={'Bansha Yogdan'} />
+        <ScreenTopTitle
+          navigation={navigation}
+          screenTitle={translateLanguage('Bansha Yogdan', 'बंश योगदान')}
+        />
 
         {/* Screen Body */}
         <SearchInput
-          placeHolder={'Bansaj Yogdan'}
+          placeHolder={translateLanguage('Bansha Yougdan', 'बंश योगदान')}
           callBackSetSearchValue={setSearchText}
         />
 

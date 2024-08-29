@@ -5,6 +5,7 @@ import ScreenTopTitle from '../../../components/ScreenTopTitle';
 import BottomSpace from '../../../components/BottomSpace';
 import SearchInput, {SearchType} from '../../../components/SearchInput';
 import {Colors} from '../../../constants/Color';
+import useTranslate from '../../../hooks/language/translate';
 
 // types and interface
 type NoticeTabScreenProps = {} & AppScreenNavigationType;
@@ -13,15 +14,21 @@ type NoticeTabScreenProps = {} & AppScreenNavigationType;
 const NoticeTabScreen: React.FC<NoticeTabScreenProps> = ({navigation}) => {
   const [searchText, setSearchText] = useState<SearchType['searchText']>('');
   console.log('searchText notice: ', searchText);
+
+  const {translateLanguage} = useTranslate();
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
-        <ScreenTopTitle navigation={navigation} screenTitle="Notice" />
+        <ScreenTopTitle
+          navigation={navigation}
+          screenTitle={translateLanguage('Notice', 'सूचना')}
+        />
 
         {/* Search Bar */}
         <SearchInput
-          placeHolder={'Notices'}
+          placeHolder={translateLanguage('Notice', 'सूचना')}
           callBackSetSearchValue={setSearchText}
         />
 

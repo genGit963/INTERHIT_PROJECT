@@ -1,12 +1,12 @@
 // LiteratureAddModal.tsx
 import React from 'react';
-import { Modal, StyleSheet, View, ScrollView, Alert } from 'react-native';
+import {Modal, StyleSheet, View, ScrollView, Alert} from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
-import { ThemedText } from '../../../../../../components/ThemedText';
-import { Colors } from '../../../../../../constants/Color';
+import {ThemedText} from '../../../../../../components/ThemedText';
+import {Colors} from '../../../../../../constants/Color';
 import BottomSpace from '../../../../../../components/BottomSpace';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 import CustomTextInput from '../../../../../../components/CustomInput';
 import HeroButton from '../../../../../../components/HeroButton';
 import {
@@ -14,8 +14,9 @@ import {
   LiteratureZType,
 } from '../../../../../../schema/tabs/dashboard/literature.schema';
 import CustomImagePickerComponent from '../../../../../../components/CustomImagePicker';
-import { Asset } from 'react-native-image-picker';
-import { usePostLiterature } from '../../../../../../hooks/tabs/dashboard/literature';
+import {Asset} from 'react-native-image-picker';
+import {usePostLiterature} from '../../../../../../hooks/tabs/dashboard/literature';
+import useTranslate from '../../../../../../hooks/language/translate';
 
 const LiteratureAddModal = ({
   isVisible,
@@ -27,13 +28,14 @@ const LiteratureAddModal = ({
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm<LiteratureZType>({
     resolver: zodResolver(literatureZSchema),
   });
 
+  const {translateLanguage} = useTranslate();
 
-  const { loading, error, handlePostLiterature } = usePostLiterature()
+  const {loading, error, handlePostLiterature} = usePostLiterature();
 
   const onSubmit = async (data: LiteratureZType) => {
     // console.log('literature onsubmit formdata: ', data);
@@ -41,7 +43,7 @@ const LiteratureAddModal = ({
     const formData = new FormData();
     if (data.image) {
       const image = data.image as unknown as Asset;
-      console.log("image from litt: ", image)
+      console.log('image from litt: ', image);
       formData.append('image', {
         uri: image.uri,
         name: image.fileName,
@@ -56,9 +58,23 @@ const LiteratureAddModal = ({
     const response = await handlePostLiterature(formData);
     if (response) {
       // console.log("Literature post successful");
-      Alert.alert("Literature is posted succesfully. The admin will review and verify the literature.")
+      Alert.alert(
+        'Literature is posted succesfully. The admin will review and verify the literature.',
+      );
       modalVisibile(false);
     }
+  };
+
+  const addLiteratureLabels = {
+    modalTitle: translateLanguage('Add Literature', 'साहित्य थप्नुहोस्'),
+    image: translateLanguage('Upload Image', 'फोटो अपलोड गर्नुहोस्'),
+    title: translateLanguage('Literature Title', 'साहित्य शीर्षक'),
+    birth_place: translateLanguage('Birth Place', 'विवरणहरू'),
+    author: translateLanguage('Author Name', 'लेखकको नाम'),
+    write_literature: translateLanguage('Write Alekh', 'साहित्य लेख्नुहोस्'),
+    submit: translateLanguage('Submit', 'बुझाउनुहोस्'),
+    loading: translateLanguage('Loading...', 'पेस गर्दै...'),
+    cancel: translateLanguage('Cancel', 'रद्द गर्नुहोस्'),
   };
 
   return (
@@ -73,7 +89,7 @@ const LiteratureAddModal = ({
         <View style={styles.modalView}>
           {/* cancel btn */}
           <HeroButton
-            btnText="Cancel"
+            btnText={addLiteratureLabels.cancel}
             varient="cancel"
             onPress={() => modalVisibile(false)}
           />
@@ -84,7 +100,9 @@ const LiteratureAddModal = ({
             contentContainerStyle={{}}
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled">
-            <ThemedText type="subtitle">Add Literature</ThemedText>
+            <ThemedText type="subtitle">
+              {addLiteratureLabels.modalTitle}
+            </ThemedText>
 
             {/* author_image baaki chha */}
 
@@ -92,7 +110,7 @@ const LiteratureAddModal = ({
               name="title"
               control={control}
               placeholder="Eg: Literature title"
-              label="Title"
+              label={addLiteratureLabels.title}
               isRequired={true}
               error={errors.title}
             />
@@ -101,7 +119,7 @@ const LiteratureAddModal = ({
               name="author"
               control={control}
               placeholder="Eg: Ram Bahadur Shrestha"
-              label="Author"
+              label={addLiteratureLabels.author}
               isRequired={true}
               error={errors.author}
             />
@@ -110,18 +128,24 @@ const LiteratureAddModal = ({
               name="birth_place"
               control={control}
               placeholder="Eg: Dharan, Sunsari"
-              label="Birth Place"
+              label={addLiteratureLabels.birth_place}
               isRequired={true}
               error={errors.birth_place}
             />
 
-            <CustomImagePickerComponent isRequired controllerName='image' label='Upload Image' control={control} errors={errors} />
+            <CustomImagePickerComponent
+              isRequired
+              controllerName="image"
+              label={addLiteratureLabels.image}
+              control={control}
+              errors={errors}
+            />
 
             <CustomTextInput
               name="content"
               control={control}
               placeholder="Eg: सामाजिक न्याय र एकता नेपालको मनमा, धरतीमा, इतिहासका कथाहरू....  "
-              label="Write Description"
+              label={addLiteratureLabels.write_literature}
               isRequired={true}
               multiline
               style={styles.writeLiterature}
@@ -131,7 +155,11 @@ const LiteratureAddModal = ({
             {/* Submit Button */}
             <HeroButton
               disabled={loading}
-              btnText={loading ? "Loading..." : "Submit"}
+              btnText={
+                loading
+                  ? addLiteratureLabels.loading
+                  : addLiteratureLabels.submit
+              }
               style={styles.SubmitBtn}
               onPress={handleSubmit(onSubmit)}
             />
@@ -176,7 +204,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     // borderWidth: 2,
   },
-  SubmitBtn: { marginVertical: 30 },
+  SubmitBtn: {marginVertical: 30},
   writeLiterature: {
     height: 100,
   },

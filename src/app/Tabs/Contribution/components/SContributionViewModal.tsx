@@ -9,7 +9,7 @@ import CalendarIcon from '../../../../assets/svg/calendar.svg';
 import ClockIcon from '../../../../assets/svg/clock.svg';
 import LocationIcon from '../../../../assets/svg/location.svg';
 import SEventContribution from './SEventContribution';
-import ContributionCard from './SContributionCard';
+import useTranslate from '../../../../hooks/language/translate';
 const SContributionViewModal = ({
   isVisible,
   modalVisible,
@@ -25,6 +25,15 @@ const SContributionViewModal = ({
     setQRshow(!QRshow);
   };
 
+  const {translateLanguage} = useTranslate();
+
+  const viewContributionLabels = {
+    // modalTitle: translateLanguage('Add Literature', 'साहित्य थप्नुहोस्'),
+    contribute: translateLanguage('Contribute', 'योगदान गर्नुहोस्'),
+    close: translateLanguage('Close', 'बन्द गर्नुहोस्'),
+    qr: translateLanguage('Close QR', 'QR बन्द गर्नुहोस्'),
+  };
+
   return (
     <Modal
       transparent={true}
@@ -33,7 +42,7 @@ const SContributionViewModal = ({
       visible={isVisible}>
       <View style={styles.ModelContainer}>
         <HeroButton
-          btnText="Close"
+          btnText={viewContributionLabels.close}
           varient="cancel"
           onPress={() => modalVisible(false)}
         />
@@ -64,7 +73,11 @@ const SContributionViewModal = ({
             </View>
           </View>
           <HeroButton
-            btnText={QRshow ? 'Close QR' : '+ Contribute'}
+            btnText={
+              QRshow
+                ? viewContributionLabels.qr
+                : `+ ${viewContributionLabels.contribute}`
+            }
             style={styles.ContributionBtn}
             varient={QRshow ? 'warning' : 'solid'}
             onPress={handleOpenQR}

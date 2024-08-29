@@ -21,7 +21,7 @@ import CustomImagePickerComponent from '../../../../../../components/CustomImage
 import {usePostAlekhs} from '../../../../../../hooks/tabs/dashboard/alekh';
 import ApiError from '../../../../../../components/api/ApiError';
 import {Asset} from 'react-native-image-picker';
-import {Language, useLanguage} from '../../../../../../context/language';
+import useTranslate from '../../../../../../hooks/language/translate';
 
 const AlekhAddModal = ({
   isVisible,
@@ -37,6 +37,8 @@ const AlekhAddModal = ({
   } = useForm<AlekhZType>({
     resolver: zodResolver(AlekhZSchema),
   });
+
+  const {translateLanguage} = useTranslate();
 
   const {loading, error, handlePostAlekhs} = usePostAlekhs();
 
@@ -70,19 +72,16 @@ const AlekhAddModal = ({
     // }
   };
 
-  const {language} = useLanguage();
-
-  const t = (en: string, np: string) => (language === Language.EN ? en : np);
-
   const addAlekhLabels = {
-    modalTitle: t('Add Alekh', 'आलेख थप्नुहोस्'),
-    image: t('Upload Image', 'फोटो अपलोड गर्नुहोस्'),
-    title: t('Alekh Title', 'आलेख शीर्षक'),
-    details: t('Details', 'विवरणहरू'),
-    author: t('Author Name', 'लेखकको नाम'),
-    write_alekh: t('Write Alekh', 'आलेख लेख्नुहोस्'),
-    submit: t('Submit', 'बुझाउनुहोस्'),
-    loading: t('Loading...', 'पेस गर्दै...'),
+    modalTitle: translateLanguage('Add Alekh', 'आलेख थप्नुहोस्'),
+    image: translateLanguage('Upload Image', 'फोटो अपलोड गर्नुहोस्'),
+    title: translateLanguage('Alekh Title', 'आलेख शीर्षक'),
+    details: translateLanguage('Details', 'विवरणहरू'),
+    author: translateLanguage('Author Name', 'लेखकको नाम'),
+    write_alekh: translateLanguage('Write Alekh', 'आलेख लेख्नुहोस्'),
+    submit: translateLanguage('Submit', 'बुझाउनुहोस्'),
+    loading: translateLanguage('Loading...', 'पेस गर्दै...'),
+    cancel: translateLanguage('Cancel', 'रद्द गर्नुहोस्'),
   };
 
   return (
@@ -96,7 +95,7 @@ const AlekhAddModal = ({
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
           <HeroButton
-            btnText={language === Language.EN ? 'Cancel' : 'रद्द गर्नुहोस्'}
+            btnText={addAlekhLabels.cancel}
             varient="cancel"
             onPress={() => modalVisibile(false)}
           />
@@ -145,12 +144,13 @@ const AlekhAddModal = ({
             <CustomTextInput
               name="body"
               control={control}
-              placeholder="Write Alekh"
+              placeholder="Write Alekh..."
               label={addAlekhLabels.author}
               isRequired={true}
               multiline
               style={styles.writeAlekh}
               error={errors.body}
+              textAlignVertical="top"
             />
 
             {error && <ApiError message={error} />}

@@ -24,6 +24,7 @@ import {LiteratureResInterface} from '../../../../../schema/tabs/dashboard/liter
 import ApiError from '../../../../../components/api/ApiError';
 import Loader from '../../../../../components/Loader';
 import SearchInput, {SearchType} from '../../../../../components/SearchInput';
+import useTranslate from '../../../../../hooks/language/translate';
 
 // types and interface
 type LiteratureScreenProps = {} & AppScreenNavigationType;
@@ -56,6 +57,8 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({navigation}) => {
   // Add Modal States
   const [isLiteratureAddVisible, setLiteratureAddVisible] =
     useState<boolean>(false);
+
+  const {translateLanguage} = useTranslate();
 
   const {loading, error, handleGetLiterature} = useGetLiterature();
   const getLiteratureData = async () => {
@@ -93,11 +96,14 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({navigation}) => {
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
-        <ScreenTopTitle navigation={navigation} screenTitle="Literature" />
+        <ScreenTopTitle
+          navigation={navigation}
+          screenTitle={translateLanguage('Literature', 'साहित्य')}
+        />
 
         {/* Search and filter */}
         <SearchInput
-          placeHolder={'Literature'}
+          placeHolder={translateLanguage('Literature', 'साहित्य')}
           callBackSetSearchValue={setSearchText}
         />
 

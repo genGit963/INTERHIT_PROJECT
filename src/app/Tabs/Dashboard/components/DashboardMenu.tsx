@@ -4,22 +4,20 @@ import {ThemedText} from '../../../../components/ThemedText';
 import {menuScreenData} from '../menu-data';
 import {Colors} from '../../../../constants/Color';
 import {AppScreenNavigationType} from '../../../../core/navigation-type';
-import {Language} from '../../../../context/language';
+import useTranslate from '../../../../hooks/language/translate';
 
-type DashboardMenuComponentProps = {
-  language: string;
-} & AppScreenNavigationType;
+type DashboardMenuComponentProps = {} & AppScreenNavigationType;
 
 const DashboardMenuComponent: React.FC<DashboardMenuComponentProps> = ({
   navigation,
-  language,
 }) => {
-  console.log(language);
+  const {translateLanguage} = useTranslate();
+
   return (
     <View style={styles.Container}>
       <View>
         <ThemedText style={styles.Title} type="mediumBold">
-          {language === Language.NP ? 'वंशवली' : 'Banshawali'}
+          {translateLanguage('Banshawali', 'वंशवली')}
         </ThemedText>
       </View>
 
@@ -31,15 +29,9 @@ const DashboardMenuComponent: React.FC<DashboardMenuComponentProps> = ({
             style={styles.MenuCard}
             onPress={() => navigation.navigate(item.route)}>
             <item.Icon />
-            {language === Language.NP ? (
-              <ThemedText style={styles.MenuLabel} type="mediumBold">
-                {item.labelNP}
-              </ThemedText>
-            ) : (
-              <ThemedText style={styles.MenuLabel} type="mediumBold">
-                {item.labelEN}
-              </ThemedText>
-            )}
+            <ThemedText style={styles.MenuLabel} type="mediumBold">
+              {translateLanguage(item.labelEN, item.labelNP)}
+            </ThemedText>
           </TouchableOpacity>
         ))}
       </View>
