@@ -42,7 +42,7 @@ const IDCardScreen: React.FC<IDCardScreenProps> = ({navigation}) => {
         <ScreenTopTitle navigation={navigation} screenTitle="ID Card" />
 
         {/*  Screen Body */}
-        {isIDCard ? (
+        {!isIDCard ? (
           <ProfileIcon idCardData={idCardDummyData} />
         ) : (
           <ScrollView showsVerticalScrollIndicator={false}>

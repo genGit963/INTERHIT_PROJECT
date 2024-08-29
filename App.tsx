@@ -20,9 +20,4 @@ export function App() {
     </Provider>
   );
 }
-
-// const styles = StyleSheet.create({
-//   GestureScreenHandler: {flex: 1},
-// });
-
 export default App;

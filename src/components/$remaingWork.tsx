@@ -60,7 +60,7 @@ const RemainingWork = () => {
       <ThemedText>
         <TopPriority /> 6. Search Implementation on All
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={doneRW()}>
         <TopPriority /> 7. Loding Lotte
       </ThemedText>
       <ThemedText>
@@ -120,7 +120,7 @@ const RemainingWork = () => {
         <LowPriority /> 26. Attach Fb, insta and website link of banshawali,
         NOTE: keep data in Core/society_data
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={doneRW()}>
         <TopPriority /> 27. ios Tab Bar Padding bug
       </ThemedText>
       <ThemedText>

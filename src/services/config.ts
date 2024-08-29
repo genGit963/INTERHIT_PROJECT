@@ -1,7 +1,6 @@
 import axios from 'axios';
-import {asyncGetData, asyncStoreData} from '../core/AsyncStorage';
-import AUTH_SERVICE from './auth';
-import {StoredUserType} from '../schema/auth';
+import {asyncGetData, asyncRemoveData} from '../core/AsyncStorage';
+import RNRestart from 'react-native-restart';
 
 // API base URL
 const API_BASE_URL = 'https://api.thadaraiadhikari.com';
@@ -60,34 +59,43 @@ API_PRIVATE_SERVICE.interceptors.request.use(
 // Add a response interceptor to handle token refresh logic
 API_PRIVATE_SERVICE.interceptors.response.use(
   (response) => response,
-  function (error) {
-    console.log('\n\n\n\ninterceptor error: ', error?.response.data);
+  async function (error) {
     const errorRes = error?.response.data;
-    const refreshAPI = async () => {
-      // console.log('Refreshing Token.........');
-      if (errorRes.message === 'Unauthorized' && errorRes.statusCode === 401) {
-        const expiredRT = await getUserRefreshToken();
-        const expiredAT = await getUserToken();
+    if (errorRes.message === 'Unauthorized' && errorRes.statusCode === 401) {
+      // removing user data and restarting
+      await asyncRemoveData('USER').then(async () => {
+        await asyncRemoveData('TOKEN').then(() => {
+          RNRestart.Restart();
+        });
+      });
+    }
 
-        if (expiredRT && expiredAT) {
-          const refreshTokenRes = await AUTH_SERVICE.refreshToken(
-            expiredRT,
-            expiredAT,
-          );
-          console.log('\n\nrefreshing tokn: ', refreshTokenRes?.data);
-          if (refreshTokenRes) {
-            await asyncStoreData('USER', JSON.stringify(refreshTokenRes?.data));
-            await asyncStoreData('TOKEN', refreshTokenRes?.data.accessToken);
-            console.log('Refreshing Token Done.........');
-          } else {
-            console.log('Failed Refreshment ...');
-          }
-        }
-      }
-    };
-    refreshAPI().then(() => {
-      console.log('Refreshing Done.........');
-    });
+    // -------------------- Requesting refresh Token ------------------------
+    // const refreshAPI = async () => {
+    //   // console.log('Refreshing Token.........');
+    //   if (errorRes.message === 'Unauthorized' && errorRes.statusCode === 401) {
+    //     const expiredRT = await getUserRefreshToken();
+    //     const expiredAT = await getUserToken();
+
+    //     if (expiredRT && expiredAT) {
+    //       const refreshTokenRes = await AUTH_SERVICE.refreshToken(
+    //         expiredRT,
+    //         expiredAT,
+    //       );
+    //       console.log('\n\nrefreshing tokn: ', refreshTokenRes?.data);
+    //       if (refreshTokenRes) {
+    //         await asyncStoreData('USER', JSON.stringify(refreshTokenRes?.data));
+    //         await asyncStoreData('TOKEN', refreshTokenRes?.data.accessToken);
+    //         console.log('Refreshing Token Done.........');
+    //       } else {
+    //         console.log('Failed Refreshment ...');
+    //       }
+    //     }
+    //   }
+    // };
+    // refreshAPI().then(() => {
+    //   console.log('Refreshing Done.........');
+    // });
     return Promise.reject(error);
   },
 );

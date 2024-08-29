@@ -13,7 +13,6 @@ export const useLogin = () => {
     try {
       await AUTH_SERVICE.login(loginData).then(async (Response) => {
         // storing to AsyncStorage
-        console.log('login successs res: ', Response);
         await asyncStoreData('USER', JSON.stringify(Response.data));
         await asyncStoreData('TOKEN', Response.data.accessToken);
       });

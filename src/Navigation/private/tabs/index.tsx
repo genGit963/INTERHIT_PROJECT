@@ -34,6 +34,7 @@ function TabNavigationStackScreen() {
           height: 75,
         },
         tabBarShowLabel: false,
+        tabBarItemStyle: {},
       })}>
       <Tab.Screen
         name="Home"
