@@ -19,7 +19,7 @@ const IDCardScreen: React.FC<IDCardScreenProps> = ({navigation}) => {
   const [isIDCardRequestModalVisible, setIDCardRequestModalVisible] =
     useState<boolean>(false);
 
-  const [isIDCard, setIDCard] = useState<boolean>(true);
+  const [isIDCard, setIDCard] = useState<boolean>(false);
 
   const idCardDummyData: IdCardZType = {
     full_name: 'Mahesh Bogati',
@@ -42,26 +42,29 @@ const IDCardScreen: React.FC<IDCardScreenProps> = ({navigation}) => {
         <ScreenTopTitle navigation={navigation} screenTitle="ID Card" />
 
         {/*  Screen Body */}
-        {!isIDCard ? (
-          <ProfileIcon idCardData={idCardDummyData} />
-        ) : (
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {/* No ID card view */}
-            <NoIDCard
-              callBackIDCardReqModalVisible={setIDCardRequestModalVisible}
-            />
-
-            {/* Request Id Modal */}
-            {isIDCardRequestModalVisible && (
-              <IDCardRequestModal
-                isVisible={isIDCardRequestModalVisible}
-                modalVisibile={setIDCardRequestModalVisible}
+        <ScrollView
+          style={styles.ScrollView}
+          contentContainerStyle={styles.ScrollContent}
+          showsVerticalScrollIndicator={false}>
+          {!isIDCard ? (
+            <ProfileIcon idCardData={idCardDummyData} />
+          ) : (
+            <View>
+              {/* No ID card view */}
+              <NoIDCard
+                callBackIDCardReqModalVisible={setIDCardRequestModalVisible}
               />
-            )}
-          </ScrollView>
-        )}
 
-        <BottomSpace spaceHeight={'5%'} />
+              {/* Request Id Modal */}
+              {isIDCardRequestModalVisible && (
+                <IDCardRequestModal
+                  isVisible={isIDCardRequestModalVisible}
+                  modalVisibile={setIDCardRequestModalVisible}
+                />
+              )}
+            </View>
+          )}
+        </ScrollView>
       </SafeAreaView>
     </View>
   );
@@ -76,6 +79,8 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
+  ScrollView: {marginBottom: 10, paddingBottom: 30},
+  ScrollContent: {paddingBottom: 180},
 });
 
 export default IDCardScreen;

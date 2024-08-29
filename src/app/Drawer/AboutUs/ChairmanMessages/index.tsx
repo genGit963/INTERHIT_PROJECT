@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Image, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+
 import {AppScreenNavigationType} from '../../../../core/navigation-type';
 import ScreenTopTitle from '../../../../components/ScreenTopTitle';
 import {ThemedText} from '../../../../components/ThemedText';
