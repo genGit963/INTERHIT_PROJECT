@@ -3,7 +3,6 @@ import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 
 import {AppScreenNavigationType} from '../../../core/navigation-type';
 import ScreenTopTitle from '../../../components/ScreenTopTitle';
-import BottomSpace from '../../../components/BottomSpace';
 import {Colors} from '../../../constants/Color';
 import ChartToggler from './components/ChartToggler';
 import PieChartProvince from './components/PieChartProvince';
