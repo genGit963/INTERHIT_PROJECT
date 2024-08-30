@@ -94,7 +94,7 @@ const RemainingWork = () => {
         <LowPriority /> 17. Sadhsaya member which members to fetch
       </ThemedText>
       <ThemedText>
-        <MediumPriority /> 18. Committee History{' '}
+        <MediumPriority /> 18. Committee History
       </ThemedText>
       <ThemedText>
         <MediumPriority /> 19. All Committee Screen API lookup Test
@@ -109,7 +109,7 @@ const RemainingWork = () => {
         <MediumPriority /> 22. Setting/Update Profile must alike Edit Form
       </ThemedText>
       <ThemedText>
-        <MediumPriority /> 23. Setting/Manage Pswd{' '}
+        <MediumPriority /> 23. Setting/Manage Pswd
       </ThemedText>
       <ThemedText>
         <MediumPriority /> 24. App update, Feedback, PP, Help, T&C Where to
