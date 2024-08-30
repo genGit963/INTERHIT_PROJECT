@@ -12,6 +12,7 @@ import {useGetCommitteMembers} from '../../../../hooks/drawer/committee/committe
 import EmptyResponse from '../../../../components/EmptyResponse';
 import ScreenDropDownSelector from '../../../../components/ScreenDropdownSelector';
 import Loader from '../../../../components/Loader';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types and interface
 type CentralCommitteeScreenProps = {} & AppScreenNavigationType &
@@ -38,6 +39,8 @@ const CentralCommitteeScreen: React.FC<CentralCommitteeScreenProps> = ({
     }
   };
 
+  const {translateLanguage} = useTranslate();
+
   useEffect(() => {
     getCommitteeMembers(parseInt(DDSelectedYear));
   }, [DDSelectedYear]);
@@ -48,7 +51,10 @@ const CentralCommitteeScreen: React.FC<CentralCommitteeScreenProps> = ({
         {/* Title */}
         <ScreenTopTitle
           navigation={navigation}
-          screenTitle="Central committee"
+          screenTitle={translateLanguage(
+            'Central committee',
+            'केन्द्रीय समिति',
+          )}
         />
 
         <ScreenDropDownSelector

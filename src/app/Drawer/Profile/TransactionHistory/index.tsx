@@ -7,6 +7,7 @@ import {TransactionHistoryInterface} from '../../../../schema/drawer/profile/tra
 import TransactionHistoryCard from './components/TransactionHistoryCard';
 import EmptyFlatList from '../../../../components/EmptyFlatList';
 import {Colors} from '../../../../constants/Color';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types and interface
 type TransactionHistoryScreenProps = {} & AppScreenNavigationType;
@@ -15,13 +16,18 @@ type TransactionHistoryScreenProps = {} & AppScreenNavigationType;
 const TransactionHistoryScreen: React.FC<TransactionHistoryScreenProps> = ({
   navigation,
 }) => {
+  const {translateLanguage} = useTranslate();
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
         <ScreenTopTitle
           navigation={navigation}
-          screenTitle="Transaction History"
+          screenTitle={translateLanguage(
+            'Transaction History',
+            'लेनदेन इतिहास',
+          )}
         />
 
         {/* Flatlist of Transactions History */}

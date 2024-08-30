@@ -8,6 +8,7 @@ import {Colors} from '../../../../constants/Color';
 import {useGetMessages} from '../../../../hooks/drawer/about/aboutUs';
 import EmptyResponse from '../../../../components/EmptyResponse';
 import Loader from '../../../../components/Loader';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types and interface
 type EditorMessageScreenProps = {} & AppScreenNavigationType;
@@ -27,6 +28,8 @@ const EditorMessageScreen: React.FC<EditorMessageScreenProps> = ({
     }
   };
 
+  const {translateLanguage} = useTranslate();
+
   useEffect(() => {
     getMessageData();
   }, []);
@@ -37,7 +40,10 @@ const EditorMessageScreen: React.FC<EditorMessageScreenProps> = ({
         {/* Title */}
         <ScreenTopTitle
           navigation={navigation}
-          screenTitle="Editor's Message"
+          screenTitle={translateLanguage(
+            "Editor's Message",
+            'सम्पादकको सन्देश',
+          )}
         />
 
         {/* Body */}

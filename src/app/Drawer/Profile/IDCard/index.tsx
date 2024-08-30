@@ -9,6 +9,7 @@ import IDCardRequestModal from './components/IdCardRequestModal';
 import {ThemedText} from '../../../../components/ThemedText';
 import ProfileIcon from './components/IdCardComp';
 import {IdCardZType} from '../../../../schema/drawer/profile/id-card.schema';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types and interface
 type IDCardScreenProps = {} & AppScreenNavigationType;
@@ -35,11 +36,16 @@ const IDCardScreen: React.FC<IDCardScreenProps> = ({navigation}) => {
     org_position: 'Banshawali',
   };
 
+  const {translateLanguage} = useTranslate();
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
-        <ScreenTopTitle navigation={navigation} screenTitle="ID Card" />
+        <ScreenTopTitle
+          navigation={navigation}
+          screenTitle={translateLanguage('ID Card', 'ID कार्ड')}
+        />
 
         {/*  Screen Body */}
         <ScrollView

@@ -12,6 +12,7 @@ import {useGetCommitteMembers} from '../../../../hooks/drawer/committee/committe
 import EmptyResponse from '../../../../components/EmptyResponse';
 import ScreenDropDownSelector from '../../../../components/ScreenDropdownSelector';
 import Loader from '../../../../components/Loader';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types and interface
 type BanshawaliCommitteeScreenProps = {} & AppScreenNavigationType &
@@ -43,6 +44,8 @@ const BanshawaliCommitteeScreen: React.FC<BanshawaliCommitteeScreenProps> = ({
     }
   };
 
+  const {translateLanguage} = useTranslate();
+
   useEffect(() => {
     const year = parseInt(DDSelectedYear as string);
     getCommitteeMembers(year);
@@ -54,7 +57,10 @@ const BanshawaliCommitteeScreen: React.FC<BanshawaliCommitteeScreenProps> = ({
         {/* Title */}
         <ScreenTopTitle
           navigation={navigation}
-          screenTitle="Banshawali Committee"
+          screenTitle={translateLanguage(
+            'Banshawali Committee',
+            'वंशवली समिति',
+          )}
         />
         <ScreenDropDownSelector
           defaultValue="2080"

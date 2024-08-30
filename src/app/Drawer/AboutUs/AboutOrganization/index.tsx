@@ -5,6 +5,7 @@ import ScreenTopTitle from '../../../../components/ScreenTopTitle';
 import {ThemedText} from '../../../../components/ThemedText';
 import BottomSpace from '../../../../components/BottomSpace';
 import {Colors} from '../../../../constants/Color';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types and interface
 type AboutOrganizationScreenProps = {} & AppScreenNavigationType;
@@ -13,13 +14,17 @@ type AboutOrganizationScreenProps = {} & AppScreenNavigationType;
 const AboutOrganizationScreen: React.FC<AboutOrganizationScreenProps> = ({
   navigation,
 }) => {
+  const {translateLanguage} = useTranslate();
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
         <ScreenTopTitle
           navigation={navigation}
-          screenTitle="About Organization"
+          screenTitle={translateLanguage(
+            'About Organization',
+            'सङ्गठनको बारेमा',
+          )}
         />
 
         {/* Body */}

@@ -9,6 +9,7 @@ import {Colors} from '../../../../constants/Color';
 import {useGetMessages} from '../../../../hooks/drawer/about/aboutUs';
 import EmptyResponse from '../../../../components/EmptyResponse';
 import Loader from '../../../../components/Loader';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types and interface
 type ChairmanMessageScreenProps = {} & AppScreenNavigationType;
@@ -28,6 +29,8 @@ const ChairmanMessageScreen: React.FC<ChairmanMessageScreenProps> = ({
     }
   };
 
+  const {translateLanguage} = useTranslate();
+
   useEffect(() => {
     getMessageData();
   }, []);
@@ -42,7 +45,10 @@ const ChairmanMessageScreen: React.FC<ChairmanMessageScreenProps> = ({
         {/* Title */}
         <ScreenTopTitle
           navigation={navigation}
-          screenTitle="Chairman's Messages"
+          screenTitle={translateLanguage(
+            "Chairman's Messages",
+            'सभापतिको सन्देश',
+          )}
         />
 
         {/* Body */}

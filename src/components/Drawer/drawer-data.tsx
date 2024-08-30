@@ -5,82 +5,90 @@ import BuildingSvg from '../../assets/svg/octicon_organization-16.svg';
 import EnvelopeSvg from '../../assets/svg/wpf_message-outline.svg';
 
 // committee screens data
-import { SvgProps } from 'react-native-svg';
-import { SCREEN_NAME } from '../../core/AppScreen';
+import {SvgProps} from 'react-native-svg';
+import {SCREEN_NAME} from '../../core/AppScreen';
 
 interface drawerOptionsInterface {
   Icon: React.FC<SvgProps>;
-  Title: string;
+  TitleEN: string;
+  TitleNP: string;
   route: string;
-  endpointType?: string
+  endpointType?: string;
 }
 
 export const committeeOptionsData: drawerOptionsInterface[] = [
   {
     Icon: CommitteeSvg,
-    Title: 'Sadhashya Member',
+    TitleEN: 'Sadhashya Member',
+    TitleNP: 'साधारण सदस्य',
     route: SCREEN_NAME.DRAWER.COMMITTEE.SADHASHYA_MEMBER,
-
   },
   {
     Icon: CommitteeSvg,
-    Title: 'Central Commitee',
+    TitleEN: 'Central Commitee',
+    TitleNP: 'केन्द्रीय समिति',
     route: SCREEN_NAME.DRAWER.COMMITTEE.CENTRAL_COMMITTEE,
-    endpointType: "CENTRAL"
+    endpointType: 'CENTRAL',
   },
   {
     Icon: HistorySvg,
-    Title: 'Commitee History',
+    TitleEN: 'Commitee History',
+    TitleNP: 'समिति इतिहास',
     route: SCREEN_NAME.DRAWER.COMMITTEE.COMMITTEE_HISTORY,
-
   },
   {
     Icon: CommitteeSvg,
-    Title: 'Province Commitee',
+    TitleEN: 'Province Commitee',
+    TitleNP: 'प्रदेश समिति',
     route: SCREEN_NAME.DRAWER.COMMITTEE.PROVINCE_COMMITTEE,
-    endpointType: "PROVINCE"
-
+    endpointType: 'PROVINCE',
   },
   {
     Icon: CommitteeSvg,
-    Title: 'District Committee',
+    TitleEN: 'District Committee',
+    TitleNP: 'जिल्ला समिति',
     route: SCREEN_NAME.DRAWER.COMMITTEE.DISTRICT_COMMITTEE,
-    endpointType: "DISTRICT"
-
+    endpointType: 'DISTRICT',
   },
   {
     Icon: CommitteeSvg,
-    Title: 'Banshawali Committee',
+    TitleEN: 'Banshawali Committee',
+    TitleNP: 'वंशवली समिति',
     route: SCREEN_NAME.DRAWER.COMMITTEE.BANSHAWALI_COMMITTEE,
-    endpointType: "FAMTREE"
+    endpointType: 'FAMTREE',
   },
   {
     Icon: CommitteeSvg,
-    Title: 'Finance Committee',
+    TitleEN: 'Finance Committee',
+    TitleNP: 'वित्त समिति',
     route: SCREEN_NAME.DRAWER.COMMITTEE.FINANCE_COMMITTEE,
-    endpointType: "ACCOUNT"
+    endpointType: 'ACCOUNT',
   },
 ];
 
 export const aboutUsOptionsData: drawerOptionsInterface[] = [
   {
     Icon: BuildingSvg,
-    Title: 'About Organization',
+    TitleEN: 'About Organization',
+    TitleNP: 'सङ्गठनको बारे',
     route: SCREEN_NAME.DRAWER.ABOUT_US.ABOUT_ORGANIZATION,
   },
   {
     Icon: EnvelopeSvg,
-    Title: 'Well Wishes',
+    TitleEN: 'Well Wishes',
+    TitleNP: 'शुभकामनाहरू',
     route: SCREEN_NAME.DRAWER.ABOUT_US.WELL_WISHES,
   },
   {
     Icon: EnvelopeSvg,
-    Title: "Chairman's Message",
+    TitleEN: "Chairman's Message",
+    TitleNP: 'सभापतिको सन्देश',
     route: SCREEN_NAME.DRAWER.ABOUT_US.CHAIRMAN_MESSAGE,
   },
   {
     Icon: EnvelopeSvg,
-    Title: "Editor's Message",
+    TitleEN: "Editor's Message",
+    TitleNP: 'सम्पादकको सन्देश',
     route: SCREEN_NAME.DRAWER.ABOUT_US.EDITOR_MESSAGE,
   },
 ];

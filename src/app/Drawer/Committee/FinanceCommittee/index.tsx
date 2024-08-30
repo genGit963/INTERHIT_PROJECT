@@ -12,6 +12,7 @@ import {useGetCommitteMembers} from '../../../../hooks/drawer/committee/committe
 import EmptyFlatList from '../../../../components/EmptyFlatList';
 import ScreenDropDownSelector from '../../../../components/ScreenDropdownSelector';
 import Loader from '../../../../components/Loader';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types and interface
 type FinanceCommitteeScreenProps = {} & AppScreenNavigationType &
@@ -38,6 +39,8 @@ const FinanceCommitteeScreen: React.FC<FinanceCommitteeScreenProps> = ({
     }
   };
 
+  const {translateLanguage} = useTranslate();
+
   useEffect(() => {
     getCommitteeMembers(parseInt(DDSelectedYear));
   }, [DDSelectedYear]);
@@ -47,7 +50,7 @@ const FinanceCommitteeScreen: React.FC<FinanceCommitteeScreenProps> = ({
         {/* Title */}
         <ScreenTopTitle
           navigation={navigation}
-          screenTitle="Finance Committee"
+          screenTitle={translateLanguage('Finance Committee', 'वित्त समिति')}
         />
 
         <ScreenDropDownSelector

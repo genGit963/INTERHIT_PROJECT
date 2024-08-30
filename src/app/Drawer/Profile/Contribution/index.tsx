@@ -16,6 +16,7 @@ import HeroButton from '../../../../components/HeroButton';
 import RequestContriCertiSvg from '../../../../assets/svg/solid-plus-circle.svg';
 import ContributionFormModal from './components/ContributionForm';
 import supplyShadowEffect from '../../../../utils/Shadow';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types and interface
 type ProfileContributionScreenProps = {} & AppScreenNavigationType;
@@ -26,11 +27,17 @@ const ProfileContributionScreen: React.FC<ProfileContributionScreenProps> = ({
 }) => {
   const [isContributionFormModalVisible, setContributionFormModalVisible] =
     useState<boolean>(false);
+
+  const {translateLanguage} = useTranslate();
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
-        <ScreenTopTitle navigation={navigation} screenTitle="Contribution" />
+        <ScreenTopTitle
+          navigation={navigation}
+          screenTitle={translateLanguage('Contribution', 'योगदान')}
+        />
 
         {/*  Screen Body */}
         <View style={styles.ScreenBody}>

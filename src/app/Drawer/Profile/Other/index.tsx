@@ -4,6 +4,7 @@ import {AppScreenNavigationType} from '../../../../core/navigation-type';
 import ScreenTopTitle from '../../../../components/ScreenTopTitle';
 import BottomSpace from '../../../../components/BottomSpace';
 import {Colors} from '../../../../constants/Color';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types and interface
 type ProfileOtherScreenProps = {} & AppScreenNavigationType;
@@ -12,11 +13,16 @@ type ProfileOtherScreenProps = {} & AppScreenNavigationType;
 const ProfileOtherScreen: React.FC<ProfileOtherScreenProps> = ({
   navigation,
 }) => {
+  const {translateLanguage} = useTranslate();
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
-        <ScreenTopTitle navigation={navigation} screenTitle="Other" />
+        <ScreenTopTitle
+          navigation={navigation}
+          screenTitle={translateLanguage('Other', 'अन्य')}
+        />
 
         {/*  Screen Body */}
 

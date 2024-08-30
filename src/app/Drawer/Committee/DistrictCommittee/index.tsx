@@ -12,6 +12,7 @@ import {useGetCommitteMembers} from '../../../../hooks/drawer/committee/committe
 import EmptyResponse from '../../../../components/EmptyResponse';
 import ScreenDropDownSelector from '../../../../components/ScreenDropdownSelector';
 import Loader from '../../../../components/Loader';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types and interface
 type DistrictCommitteeScreenProps = {} & AppScreenNavigationType &
@@ -42,6 +43,8 @@ const DistrictCommitteeScreen: React.FC<DistrictCommitteeScreenProps> = ({
     }
   };
 
+  const {translateLanguage} = useTranslate();
+
   useEffect(() => {
     getCommitteeMembers(parseInt(DDSelectedYear));
   }, [DDSelectedYear]);
@@ -52,7 +55,7 @@ const DistrictCommitteeScreen: React.FC<DistrictCommitteeScreenProps> = ({
         {/* Title */}
         <ScreenTopTitle
           navigation={navigation}
-          screenTitle="District committee"
+          screenTitle={translateLanguage('District committee', 'जिल्ला समिति')}
         />
 
         <ScreenDropDownSelector

@@ -6,6 +6,7 @@ import BottomSpace from '../../../../components/BottomSpace';
 import {Colors} from '../../../../constants/Color';
 import {ThemedText} from '../../../../components/ThemedText';
 import NoSubscriptionView from './components/NoSubscriptionView';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types and interface
 type SubscriptionScreenProps = {} & AppScreenNavigationType;
@@ -14,11 +15,16 @@ type SubscriptionScreenProps = {} & AppScreenNavigationType;
 const SubscriptionScreen: React.FC<SubscriptionScreenProps> = ({
   navigation,
 }) => {
+  const {translateLanguage} = useTranslate();
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
-        <ScreenTopTitle navigation={navigation} screenTitle="Subscription" />
+        <ScreenTopTitle
+          navigation={navigation}
+          screenTitle={translateLanguage('Subscription', 'सदस्यता')}
+        />
 
         {/*  Screen Body */}
         <ScrollView showsHorizontalScrollIndicator={false}>

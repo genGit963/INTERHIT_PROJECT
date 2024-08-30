@@ -6,6 +6,7 @@ import GenerateQR from '../../../../utils/generateQR';
 import supplyShadowEffect from '../../../../utils/Shadow';
 import {Colors} from '../../../../constants/Color';
 import {shareQRCode} from '../../../../utils/shareQR';
+import useTranslate from '../../../../hooks/language/translate';
 
 const ShowMyQRModal = ({
   isVisible,
@@ -21,6 +22,8 @@ const ShowMyQRModal = ({
   const handleShare = () => {
     shareQRCode(qrRef, 'Sharing my QR!');
   };
+
+  const {translateLanguage} = useTranslate();
 
   return (
     <Modal

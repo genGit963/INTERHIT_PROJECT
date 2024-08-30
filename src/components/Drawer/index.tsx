@@ -32,6 +32,7 @@ import HelpFAQsSvg from '../../assets/svg/help-circle.svg';
 import TermsConditionsSvg from '../../assets/svg/file-text.svg';
 import UserDrawerView from './UserDrawerView';
 import {asyncRemoveData} from '../../core/AsyncStorage';
+import useTranslate from '../../hooks/language/translate';
 
 // type
 type DrawerModalProps = {
@@ -57,9 +58,25 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
     console.log('Do log out !');
     await asyncRemoveData('USER').then(() => RNRestart.restart());
   };
+
+  const {translateLanguage} = useTranslate();
+
+  const drawerOptionsTitle = {
+    profile: translateLanguage('Profile', 'प्रोफाइल'),
+    committee: translateLanguage('Committee', 'समिति'),
+    about_us: translateLanguage('About Us', 'हाम्रो बारे'),
+    settings: translateLanguage('Settings', 'सेटिङहरू'),
+    update: translateLanguage('App update', 'एप अपडेट'),
+    feedback: translateLanguage('Feedback', 'प्रतिक्रिया'),
+    privacy: translateLanguage('Privacy Policy', 'गोपनीयता नीति '),
+    faq: translateLanguage('Help & FAQs', 'सहायता र सोधिने प्रश्नहरू'),
+    terms: translateLanguage('Terms & Conditions', 'नियम र सर्तहरू'),
+    logout: translateLanguage('Log Out', 'लग आउट गर्नुहोस्'),
+  };
+
   return (
     <Modal
-      animationType="none"
+      animationType="slide"
       transparent={true}
       visible={isVisible}
       onRequestClose={() => modalVisibile(false)}>
@@ -78,7 +95,7 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
             {/* ---------------------- Profile bar Btn --------------------*/}
             <DrawerBarBtn
               Icon={ProfileSvg}
-              Title="Profile"
+              Title={drawerOptionsTitle.profile}
               route={SCREEN_NAME.DRAWER.PROFILE.MAIN}
               navigation={navigation}
               callbackModalVisible={modalVisibile}
@@ -93,7 +110,7 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
 
               {/* Title */}
               <ThemedText type="mediumBold" style={stylesDC.GrpTitle}>
-                Committee
+                {drawerOptionsTitle.committee}
               </ThemedText>
 
               {/* Dropdown */}
@@ -111,7 +128,10 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
                   <DrawerBarBtn
                     key={committee.route}
                     Icon={committee.Icon}
-                    Title={committee.Title}
+                    Title={translateLanguage(
+                      committee.TitleEN,
+                      committee.TitleNP,
+                    )}
                     route={committee.route}
                     navigation={navigation}
                     endpointType={committee.endpointType}
@@ -130,7 +150,7 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
 
               {/* Title */}
               <ThemedText type="mediumBold" style={stylesDC.GrpTitle}>
-                About Us
+                {drawerOptionsTitle.about_us}
               </ThemedText>
 
               {/* Dropdown */}
@@ -148,7 +168,7 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
                   <DrawerBarBtn
                     key={item.route}
                     Icon={item.Icon}
-                    Title={item.Title}
+                    Title={translateLanguage(item.TitleEN, item.TitleNP)}
                     route={item.route}
                     navigation={navigation}
                     callbackModalVisible={modalVisibile}
@@ -160,7 +180,7 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
             {/* ---------------------- Setting --------------------*/}
             <DrawerBarBtn
               Icon={SettingSvg}
-              Title="Setting"
+              Title={drawerOptionsTitle.settings}
               route={SCREEN_NAME.DRAWER.SETTING.MAIN}
               navigation={navigation}
               callbackModalVisible={modalVisibile}
@@ -173,7 +193,7 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
             {/* ---------------------- "App update" --------------------*/}
             <DrawerBarBtn
               Icon={AppUpdateSvg}
-              Title="App update"
+              Title={drawerOptionsTitle.update}
               route={SCREEN_NAME.DRAWER.PROFILE.MAIN}
               navigation={navigation}
               callbackModalVisible={modalVisibile}
@@ -182,7 +202,7 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
             {/* ---------------------- "Feedback" --------------------*/}
             <DrawerBarBtn
               Icon={FeedbackSvg}
-              Title="Feedback"
+              Title={drawerOptionsTitle.feedback}
               route={SCREEN_NAME.DRAWER.PROFILE.MAIN}
               navigation={navigation}
               callbackModalVisible={modalVisibile}
@@ -191,7 +211,7 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
             {/* ---------------------- "Privacy policy" --------------------*/}
             <DrawerBarBtn
               Icon={PrivacypolicySvg}
-              Title="Privacy Policy"
+              Title={drawerOptionsTitle.privacy}
               route={SCREEN_NAME.DRAWER.PROFILE.MAIN}
               navigation={navigation}
               callbackModalVisible={modalVisibile}
@@ -200,7 +220,7 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
             {/* ---------------------- "Help & FAQs" --------------------*/}
             <DrawerBarBtn
               Icon={HelpFAQsSvg}
-              Title="Help & FAQs"
+              Title={drawerOptionsTitle.faq}
               route={SCREEN_NAME.DRAWER.PROFILE.MAIN}
               navigation={navigation}
               callbackModalVisible={modalVisibile}
@@ -209,7 +229,7 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
             {/* ---------------------- "Terms & Conditions" --------------------*/}
             <DrawerBarBtn
               Icon={TermsConditionsSvg}
-              Title="Terms & Conditions"
+              Title={drawerOptionsTitle.terms}
               route={SCREEN_NAME.DRAWER.PROFILE.MAIN}
               navigation={navigation}
               callbackModalVisible={modalVisibile}
@@ -220,7 +240,7 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
             <TouchableOpacity style={stylesDC.LogOutBtn} onPress={handleLogout}>
               <LogOutSvg height={24} width={24} />
               <ThemedText type="mediumBold" style={stylesDC.LogOutText}>
-                Log Out
+                {drawerOptionsTitle.logout}
               </ThemedText>
             </TouchableOpacity>
 

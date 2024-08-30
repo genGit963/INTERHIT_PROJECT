@@ -5,6 +5,7 @@ import ScreenTopTitle from '../../../../components/ScreenTopTitle';
 import {ThemedText} from '../../../../components/ThemedText';
 import BottomSpace from '../../../../components/BottomSpace';
 import {Colors} from '../../../../constants/Color';
+import useTranslate from '../../../../hooks/language/translate';
 
 // types and interface
 type CommitteeHistoryScreenProps = {} & AppScreenNavigationType;
@@ -13,13 +14,15 @@ type CommitteeHistoryScreenProps = {} & AppScreenNavigationType;
 const CommitteeHistoryScreen: React.FC<CommitteeHistoryScreenProps> = ({
   navigation,
 }) => {
+  const {translateLanguage} = useTranslate();
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
         <ScreenTopTitle
           navigation={navigation}
-          screenTitle="Committee History"
+          screenTitle={translateLanguage('Committee History', 'समिति इतिहास')}
         />
 
         {/* Body */}
