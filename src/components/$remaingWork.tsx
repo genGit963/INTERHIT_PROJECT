@@ -43,11 +43,8 @@ const RemainingWork = () => {
         Remaining Work
       </ThemedText>
       <ThemedText style={doneRW()}>
-        <TopPriority /> 1. Language Translation
-      </ThemedText>
-      <ThemedText>
-        If some translation found incomplete, we can add as we progress, won't
-        take any time.
+        <TopPriority /> 1. Language Translation: If some translation found
+        incomplete, we can add as we progress, won't take any time.
       </ThemedText>
       <ThemedText>
         <TopPriority /> 2. ID Card and Contribtuion Certificate Svg Dynamic
@@ -58,7 +55,7 @@ const RemainingWork = () => {
       <ThemedText>
         <TopPriority /> 4. Geneology Work
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={doneRW()}>
         <TopPriority /> 5. OverView Finishing
       </ThemedText>
       <ThemedText>

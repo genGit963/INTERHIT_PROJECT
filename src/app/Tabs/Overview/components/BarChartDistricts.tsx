@@ -6,6 +6,7 @@ import {useGetPopByDistrict} from '../../../../hooks/tabs/overview/district';
 import {DIMENSION} from '../../../../constants/dimension';
 import Loader from '../../../../components/Loader';
 import ApiError from '../../../../components/api/ApiError';
+import {ThemedText} from '../../../../components/ThemedText';
 
 interface IDistrictPopulation {
   label: string;
@@ -64,19 +65,13 @@ const BarChartDistricts: React.FC = () => {
           data={districtPopulation}
           showScrollIndicator={false}
           horizontal={true}
-          barWidth={36} // Increase or adjust bar width as needed
+          barWidth={30} // Increase or adjust bar width as needed
           isAnimated
+          roundedTop
           // x-axis
-          xAxisLabelTextStyle={{
-            color: 'black',
-            fontSize: 16,
-            width: 130,
-            height: 30,
-            fontWeight: 700,
-            textAlign: 'right',
-          }}
+          xAxisLabelTextStyle={styles.xAxisLabelTextStyle}
           // y-axis
-          // yAxisAtTop={true}
+          yAxisAtTop={true}
           // yAxisLabelContainerStyle={{display: 'none'}}
           // yAxisColor={'green'}
           // rotateYAxisTexts={100}
@@ -97,6 +92,15 @@ const BarChartDistricts: React.FC = () => {
           // initialSpacing={0} // Add initial spacing from the Y-axis
           spacing={1} // Adjust spacing between bars
           maxValue={districtPopulation ? maxValue(districtPopulation) : 800}
+          renderTooltip={(item: {value: number}) => {
+            return (
+              <View style={styles.TooltipView}>
+                <ThemedText type="mediumBold" style={styles.TooltipText}>
+                  {item.value}
+                </ThemedText>
+              </View>
+            );
+          }}
         />
       )}
     </View>
@@ -110,9 +114,36 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.screenBackground,
     // flex: 1,
     // borderWidth: 1,
-    width: DIMENSION.SCREEN.width - 80,
-    height: DIMENSION.SCREEN.height - 80,
+    width: DIMENSION.SCREEN.width - 60,
+    height: DIMENSION.SCREEN.height - 60,
     // marginBottom: 250,
+  },
+  xAxisLabelTextStyle: {
+    color: 'black',
+    fontSize: 16,
+    width: 130,
+    // height: 30,
+    fontWeight: 700,
+    textAlign: 'right',
+  },
+  TooltipView: {
+    height: 30,
+    width: 'auto',
+    marginLeft: '-80%',
+    marginTop: 10,
+    backgroundColor: Colors.greenDark,
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: Colors.greenLightest,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 50,
+  },
+  TooltipText: {
+    textAlign: 'right',
+    height: 'auto',
+    color: Colors.greenLightest,
+    paddingVertical: -1,
   },
 });
 
