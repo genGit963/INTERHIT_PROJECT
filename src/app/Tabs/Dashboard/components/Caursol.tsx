@@ -14,7 +14,6 @@ import {Colors} from '../../../../constants/Color';
 import {generateUUID} from '../../../../utils/uuid-generator';
 import {SocietyContributionRespInterface} from '../../../../schema/tabs/contribution/contributions.schema';
 import {AppScreenNavigationType} from '../../../../core/navigation-type';
-import {SCREEN_NAME} from '../../../../core/AppScreen';
 
 const {width} = Dimensions.get('screen');
 
@@ -31,7 +30,7 @@ const RenderItem: React.FC<RenderItemProps> = ({item, navigation}) => {
     <TouchableOpacity
       style={styles.imageContainer}
       key={item._id}
-      onPress={() => navigation.navigate(SCREEN_NAME.TABS.CONTRIBUTION.MAIN)}
+      onPress={() => navigation.navigate('Contribution')}
       activeOpacity={1}>
       <ImageBackground
         source={{uri: item.image.secure_url}}
