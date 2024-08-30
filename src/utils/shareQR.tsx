@@ -20,6 +20,8 @@ export const shareQRCode = async (
       failOnCancel: false,
     };
 
+    // console.log('Sharing qr code', uri);
+
     await Share.open(options);
   } catch (error) {
     Alert.alert('QR', 'Sharing failed !', [{text: 'Ok', onPress: () => {}}]);

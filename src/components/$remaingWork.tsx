@@ -83,10 +83,10 @@ const RemainingWork = () => {
       <ThemedText>
         <TopPriority /> 13. iOS Permission Access
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={doneRW()}>
         <TopPriority /> 14. Android Share Accesss
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={doneRW()}>
         <TopPriority /> 15. Android Share Accesss
       </ThemedText>
       <ThemedText>

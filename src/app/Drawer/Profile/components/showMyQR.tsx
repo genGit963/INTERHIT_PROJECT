@@ -7,6 +7,7 @@ import supplyShadowEffect from '../../../../utils/Shadow';
 import {Colors} from '../../../../constants/Color';
 import {shareQRCode} from '../../../../utils/shareQR';
 import useTranslate from '../../../../hooks/language/translate';
+import ViewShot from 'react-native-view-shot';
 
 const ShowMyQRModal = ({
   isVisible,
@@ -47,9 +48,9 @@ const ShowMyQRModal = ({
             showsVerticalScrollIndicator={false}
             style={styles.ScorllContainer}>
             {/* QR */}
-            <View style={styles.QRView} ref={qrRef}>
+            <ViewShot style={styles.QRView} ref={qrRef}>
               <GenerateQR data={data} />
-            </View>
+            </ViewShot>
 
             {/* Share My QR */}
             <HeroButton
