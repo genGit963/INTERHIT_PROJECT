@@ -30,7 +30,7 @@ const ContributionTabScreen: React.FC<ContributionTabScreenProps> = ({
 }) => {
   // search
   const [searchText, setSearchText] = useState<SearchType['searchText']>('');
-  console.log('searchText contribution: ', searchText);
+  // console.log('searchText contribution: ', searchText);
 
   //contributionEventData
   const [societyContributionData, setSocietyContributionData] = useState<

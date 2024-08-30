@@ -58,8 +58,9 @@ const RemainingWork = () => {
       <ThemedText style={doneRW()}>
         <TopPriority /> 5. OverView Finishing
       </ThemedText>
-      <ThemedText>
-        <TopPriority /> 6. Search Implementation on All
+      <ThemedText style={doneRW()}>
+        <TopPriority /> 6. Search Implementation on All: implement GOVINDA as I
+        did in alekh search to all other
       </ThemedText>
       <ThemedText style={doneRW()}>
         <TopPriority /> 7. Loding Lotte
