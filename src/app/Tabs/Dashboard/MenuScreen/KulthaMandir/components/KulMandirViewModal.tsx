@@ -99,17 +99,18 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 12,
     height: '100%',
-
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
+    borderWidth: 3,
+    borderColor: Colors.muteGray,
 
     ...supplyShadowEffect({
       X_off: 0,
-      Y_off: 0,
-      Radius: 10,
+      Y_off: -4,
+      Radius: 15,
       Color: '#000',
-      Opacity: 0.3,
-      Elevation: 4,
+      Opacity: 0.4,
+      Elevation: 8,
     }),
   },
   ScorllContainer: {width: '100%', paddingHorizontal: 10},

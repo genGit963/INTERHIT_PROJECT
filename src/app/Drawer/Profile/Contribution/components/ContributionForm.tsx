@@ -19,6 +19,7 @@ import {useClaimContribution} from '../../../../../hooks/drawer/profile/contribu
 import {Asset} from 'react-native-image-picker';
 import ApiError from '../../../../../components/api/ApiError';
 import useTranslate from '../../../../../hooks/language/translate';
+import {confirmFormClose} from '../../../../../utils/closeModalConfirmation';
 
 type ContributionFormModalProps = {
   isVisible: boolean;
@@ -112,29 +113,30 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
       animationType="slide"
       transparent={true}
       visible={isVisible}
-      onRequestClose={() => {
-        Alert.alert(
-          claimContributionLabels.formName,
-          claimContributionLabels.cancelQuestion,
-          [
-            {
-              text: claimContributionLabels.yes,
-              onPress: () => modalVisibile(false),
-            },
-            {
-              text: claimContributionLabels.no,
-              onPress: () => {},
-            },
-          ],
-        );
-      }}>
+      onRequestClose={() =>
+        confirmFormClose({
+          formName: claimContributionLabels.formName,
+          cancelQuestion: claimContributionLabels.cancelQuestion,
+          yes: claimContributionLabels.yes,
+          no: claimContributionLabels.no,
+          callbackModalVisible: modalVisibile,
+        })
+      }>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
           {/* Cancel btn */}
           <HeroButton
             btnText={claimContributionLabels.cancel}
             varient="cancel"
-            onPress={() => modalVisibile(false)}
+            onPress={() =>
+              confirmFormClose({
+                formName: claimContributionLabels.formName,
+                cancelQuestion: claimContributionLabels.cancelQuestion,
+                yes: claimContributionLabels.yes,
+                no: claimContributionLabels.no,
+                callbackModalVisible: modalVisibile,
+              })
+            }
           />
           {/* form title */}
           <ThemedText type="subtitle" style={styles.FormTitle}>
@@ -256,17 +258,20 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.screenBackground,
     alignItems: 'center',
     paddingVertical: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     height: '100%',
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
+    borderWidth: 3,
+    borderColor: Colors.muteGray,
+
     ...supplyShadowEffect({
       X_off: 0,
-      Y_off: 0,
-      Radius: 10,
+      Y_off: -4,
+      Radius: 15,
       Color: '#000',
-      Opacity: 0.5,
-      Elevation: 10,
+      Opacity: 0.4,
+      Elevation: 8,
     }),
   },
   FormTitle: {textAlign: 'left', width: '100%', fontSize: 18, marginBottom: 12},

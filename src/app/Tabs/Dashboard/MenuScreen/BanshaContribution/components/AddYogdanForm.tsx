@@ -25,6 +25,7 @@ import CustomImagePickerComponent from '../../../../../../components/CustomImage
 import {usePostYogdan} from '../../../../../../hooks/tabs/dashboard/yogdan';
 import {Asset} from 'react-native-image-picker';
 import useTranslate from '../../../../../../hooks/language/translate';
+import {confirmFormClose} from '../../../../../../utils/closeModalConfirmation';
 
 // types
 type AddYogdanModalProps = {
@@ -99,25 +100,30 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
       animationType="slide"
       transparent={true}
       visible={isVisible}
-      onRequestClose={() => {
-        Alert.alert(addYogdanLabels.formName, addYogdanLabels.cancelQuestion, [
-          {
-            text: addYogdanLabels.yes,
-            onPress: () => modalVisibile(false),
-          },
-          {
-            text: addYogdanLabels.no,
-            onPress: () => {},
-          },
-        ]);
-      }}>
+      onRequestClose={() =>
+        confirmFormClose({
+          formName: addYogdanLabels.formName,
+          cancelQuestion: addYogdanLabels.cancelQuestion,
+          yes: addYogdanLabels.yes,
+          no: addYogdanLabels.no,
+          callbackModalVisible: modalVisibile,
+        })
+      }>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
           {/* Cancel btn */}
           <HeroButton
             btnText={addYogdanLabels.cancel}
             varient="cancel"
-            onPress={() => modalVisibile(false)}
+            onPress={() =>
+              confirmFormClose({
+                formName: addYogdanLabels.formName,
+                cancelQuestion: addYogdanLabels.cancelQuestion,
+                yes: addYogdanLabels.yes,
+                no: addYogdanLabels.no,
+                callbackModalVisible: modalVisibile,
+              })
+            }
           />
 
           {/* Content View */}
@@ -211,17 +217,20 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.screenBackground,
     alignItems: 'center',
     paddingVertical: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     height: '100%',
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
+    borderWidth: 3,
+    borderColor: Colors.muteGray,
+
     ...supplyShadowEffect({
       X_off: 0,
-      Y_off: 0,
-      Radius: 10,
+      Y_off: -4,
+      Radius: 15,
       Color: '#000',
-      Opacity: 0.5,
-      Elevation: 10,
+      Opacity: 0.4,
+      Elevation: 8,
     }),
   },
 

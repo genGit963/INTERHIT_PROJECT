@@ -89,7 +89,7 @@ const RemainingWork = () => {
       <ThemedText style={doneRW()}>
         <TopPriority /> 15. Android Share Accesss
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={doneRW()}>
         <TopPriority /> 16. Modal Border for Visibility
       </ThemedText>
       <ThemedText>

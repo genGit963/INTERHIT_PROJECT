@@ -185,11 +185,6 @@ export const styles = StyleSheet.create({
       Opacity: 0.6,
       Elevation: 5,
     }),
-    position: 'absolute',
-    bottom: '4%',
-    right: '1.5%',
-    zIndex: 10,
-    backgroundColor: 'rgba(0,0,0)',
   },
   Overlay: {
     position: 'absolute',

@@ -22,6 +22,8 @@ import {usePostAlekhs} from '../../../../../../hooks/tabs/dashboard/alekh';
 import ApiError from '../../../../../../components/api/ApiError';
 import {Asset} from 'react-native-image-picker';
 import useTranslate from '../../../../../../hooks/language/translate';
+import supplyShadowEffect from '../../../../../../utils/Shadow';
+import {confirmFormClose} from '../../../../../../utils/closeModalConfirmation';
 
 const AlekhAddModal = ({
   isVisible,
@@ -96,24 +98,29 @@ const AlekhAddModal = ({
       animationType="slide"
       transparent={true}
       visible={isVisible}
-      onRequestClose={() => {
-        Alert.alert(addAlekhLabels.formName, addAlekhLabels.cancelQuestion, [
-          {
-            text: addAlekhLabels.yes,
-            onPress: () => modalVisibile(false),
-          },
-          {
-            text: addAlekhLabels.no,
-            onPress: () => {},
-          },
-        ]);
-      }}>
+      onRequestClose={() =>
+        confirmFormClose({
+          formName: addAlekhLabels.formName,
+          cancelQuestion: addAlekhLabels.cancelQuestion,
+          yes: addAlekhLabels.yes,
+          no: addAlekhLabels.no,
+          callbackModalVisible: modalVisibile,
+        })
+      }>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
           <HeroButton
             btnText={addAlekhLabels.cancel}
             varient="cancel"
-            onPress={() => modalVisibile(false)}
+            onPress={() =>
+              confirmFormClose({
+                formName: addAlekhLabels.formName,
+                cancelQuestion: addAlekhLabels.cancelQuestion,
+                yes: addAlekhLabels.yes,
+                no: addAlekhLabels.no,
+                callbackModalVisible: modalVisibile,
+              })
+            }
           />
 
           <ScrollView
@@ -196,11 +203,21 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.screenBackground,
     alignItems: 'center',
     paddingVertical: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     height: '100%',
-    borderTopRightRadius: 30,
-    borderTopLeftRadius: 30,
-    position: 'relative',
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    borderWidth: 3,
+    borderColor: Colors.muteGray,
+
+    ...supplyShadowEffect({
+      X_off: 0,
+      Y_off: -4,
+      Radius: 15,
+      Color: '#000',
+      Opacity: 0.4,
+      Elevation: 8,
+    }),
   },
   ScrollContainer: {
     width: '100%',

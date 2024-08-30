@@ -84,34 +84,36 @@ const LiteratureAddModal = ({
     no: translateLanguage('NO', 'होइन'),
   };
 
+  const requestClose = () => {
+    Alert.alert(
+      addLiteratureLabels.formName,
+      addLiteratureLabels.cancelQuestion,
+      [
+        {
+          text: addLiteratureLabels.yes,
+          onPress: () => modalVisibile(false),
+        },
+        {
+          text: addLiteratureLabels.no,
+          onPress: () => {},
+        },
+      ],
+    );
+  };
+
   return (
     <Modal
       animationType="slide"
       transparent={true}
       visible={isVisible}
-      onRequestClose={() => {
-        Alert.alert(
-          addLiteratureLabels.formName,
-          addLiteratureLabels.cancelQuestion,
-          [
-            {
-              text: addLiteratureLabels.yes,
-              onPress: () => modalVisibile(false),
-            },
-            {
-              text: addLiteratureLabels.no,
-              onPress: () => {},
-            },
-          ],
-        );
-      }}>
+      onRequestClose={requestClose}>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
           {/* cancel btn */}
           <HeroButton
             btnText={addLiteratureLabels.cancel}
             varient="cancel"
-            onPress={() => modalVisibile(false)}
+            onPress={requestClose}
           />
 
           {/* Content View */}
@@ -205,17 +207,20 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.screenBackground,
     alignItems: 'center',
     paddingVertical: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     height: '100%',
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
+    borderWidth: 3,
+    borderColor: Colors.muteGray,
+
     ...supplyShadowEffect({
       X_off: 0,
-      Y_off: 0,
-      Radius: 10,
+      Y_off: -4,
+      Radius: 15,
       Color: '#000',
-      Opacity: 0.5,
-      Elevation: 10,
+      Opacity: 0.4,
+      Elevation: 8,
     }),
   },
 

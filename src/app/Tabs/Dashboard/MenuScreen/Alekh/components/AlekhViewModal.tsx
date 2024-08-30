@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
     margin: 'auto',
     position: 'absolute',
     bottom: -5,
-
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
   },
@@ -79,10 +78,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 12,
     height: '100%',
-
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-
     borderWidth: 3,
     borderColor: Colors.muteGray,
 
