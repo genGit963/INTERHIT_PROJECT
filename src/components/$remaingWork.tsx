@@ -42,8 +42,12 @@ const RemainingWork = () => {
         style={{textDecorationLine: 'underline', color: 'purple'}}>
         Remaining Work
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={doneRW()}>
         <TopPriority /> 1. Language Translation
+      </ThemedText>
+      <ThemedText>
+        If some translation found incomplete, we can add as we progress, won't
+        take any time.
       </ThemedText>
       <ThemedText>
         <TopPriority /> 2. ID Card and Contribtuion Certificate Svg Dynamic
@@ -72,7 +76,7 @@ const RemainingWork = () => {
       <ThemedText>
         <TopPriority /> 11. KulMandir API integration
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={doneRW()}>
         <TopPriority /> 12. Avoid whole Screen Loading rather use only in
         section
       </ThemedText>
@@ -128,6 +132,10 @@ const RemainingWork = () => {
       </ThemedText>
       <ThemedText>
         <TopPriority /> 28. TurnOff the Landscape mode for all screen
+      </ThemedText>
+      <ThemedText>Done for android, rebuild required.</ThemedText>
+      <ThemedText style={doneRW()}>
+        <MediumPriority /> 29. Confirmation while closing form
       </ThemedText>
     </View>
   );

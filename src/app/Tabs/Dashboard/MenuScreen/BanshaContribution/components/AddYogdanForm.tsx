@@ -85,6 +85,13 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
     submit: translateLanguage('Submit', 'बुझाउनुहोस्'),
     loading: translateLanguage('Loading...', 'पेस गर्दै...'),
     cancel: translateLanguage('Cancel', 'रद्द गर्नुहोस्'),
+    formName: translateLanguage('Bansha Yogdan Form', 'बंश योगदान फारम'),
+    cancelQuestion: translateLanguage(
+      'Are you sure want to cancel?',
+      'के तपाईँ निश्चित रूपमा रद्द गर्न चाहनुहुन्छ?',
+    ),
+    yes: translateLanguage('YES', 'हो'),
+    no: translateLanguage('NO', 'होइन'),
   };
 
   return (
@@ -93,7 +100,16 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
       transparent={true}
       visible={isVisible}
       onRequestClose={() => {
-        modalVisibile(false);
+        Alert.alert(addYogdanLabels.formName, addYogdanLabels.cancelQuestion, [
+          {
+            text: addYogdanLabels.yes,
+            onPress: () => modalVisibile(false),
+          },
+          {
+            text: addYogdanLabels.no,
+            onPress: () => {},
+          },
+        ]);
       }}>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>

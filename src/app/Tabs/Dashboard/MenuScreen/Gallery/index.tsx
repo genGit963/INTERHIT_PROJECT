@@ -52,10 +52,6 @@ const Gallery: React.FC<GalleryScreenProps> = ({navigation}) => {
     getAlbumData();
   }, []);
 
-  if (loading) {
-    return <Loader />;
-  }
-
   return (
     <View style={styles.Page}>
       <SafeAreaView>
@@ -66,24 +62,28 @@ const Gallery: React.FC<GalleryScreenProps> = ({navigation}) => {
         />
 
         {/* album Flatlist */}
-        <FlatList
-          initialNumToRender={8}
-          numColumns={2}
-          data={albumData}
-          style={styles.FlatListContainer}
-          contentContainerStyle={styles.FlatlistContentStyle}
-          showsVerticalScrollIndicator={false}
-          renderItem={(item) => (
-            <GallaryCard
-              gallary={item.item}
-              callbackHandlePress={handleGallaryModalView}
-            />
-          )}
-          ListEmptyComponent={<EmptyFlatList message="No Photos" />}
-          keyExtractor={(item) => item._id}
-          ListFooterComponent={<BottomSpace spaceHeight={100} />}
-          ListFooterComponentStyle={styles.FlatlistFooter}
-        />
+        {albumData.length > 0 ? (
+          <FlatList
+            initialNumToRender={8}
+            numColumns={2}
+            data={albumData}
+            style={styles.FlatListContainer}
+            contentContainerStyle={styles.FlatlistContentStyle}
+            showsVerticalScrollIndicator={false}
+            renderItem={(item) => (
+              <GallaryCard
+                gallary={item.item}
+                callbackHandlePress={handleGallaryModalView}
+              />
+            )}
+            ListEmptyComponent={<EmptyFlatList message="No Photos" />}
+            keyExtractor={(item) => item._id}
+            ListFooterComponent={<BottomSpace spaceHeight={100} />}
+            ListFooterComponentStyle={styles.FlatlistFooter}
+          />
+        ) : (
+          <Loader />
+        )}
 
         {/* Gallary Photos View Model */}
         {isGallaryModalVisible && (

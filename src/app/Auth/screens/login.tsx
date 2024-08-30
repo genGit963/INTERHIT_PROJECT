@@ -20,6 +20,7 @@ import FlexImgSvg from '../../../assets/svg/auth-rprst.svg';
 import {useLogin} from '../../../hooks/auth';
 import RNRestart from 'react-native-restart';
 import ApiError from '../../../components/api/ApiError';
+import useTranslate from '../../../hooks/language/translate';
 
 type LoginScreenProps = {} & AppScreenNavigationType;
 
@@ -40,18 +41,36 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
     });
   };
 
+  const {translateLanguage} = useTranslate();
+
+  const loginLabels = {
+    pageTitle: translateLanguage('Login', 'लगइन गर्नुहोस्'),
+    welcomeText: translateLanguage(
+      'Welcome to digital banshawali app',
+      'डिजिटल बंशावलीमा हजुरलाई स्वागत छ',
+    ),
+    phone: translateLanguage('Phone', 'फोन'),
+    password: translateLanguage('Password', 'पासवर्ड'),
+    forgotpw: translateLanguage('', 'पासवर्ड बिर्सनुभयो?'),
+    loading: translateLanguage('Loading...', 'पेस गर्दै...'),
+    login: translateLanguage('Login', 'लगइन गर्नुहोस्'),
+    hasAccQuestion: translateLanguage("Don't have an account?", 'खाता छैन?'),
+    signup: translateLanguage('Sign up', 'साइन अप गर्नुहोस्'),
+  };
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* title */}
-        <AuthScreenTop screenTitle={'Login'} />
+        <AuthScreenTop screenTitle={loginLabels.pageTitle} />
         <ScrollView
           style={styles.ScrollView}
           contentContainerStyle={styles.ScrollContent}
-          showsVerticalScrollIndicator={false}>
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled">
           {/* flex */}
           <ThemedText type="subtitle" style={styles.FlexText}>
-            डिजिटल बंशावलीमा हजुरलाई स्वागत छ
+            {loginLabels.welcomeText}
           </ThemedText>
           <FlexImgSvg height={250} width={'100%'} style={styles.FlexImg} />
 
@@ -60,14 +79,14 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
             name="phone"
             control={control}
             placeholder="Eg: 9867549091"
-            label="Phone"
+            label={loginLabels.phone}
             isRequired={true}
             error={errors.phone}
           />
           <CustomTextInput
             name="password"
             control={control}
-            label="Password"
+            label={loginLabels.password}
             secureTextEntry={false}
             isRequired={true}
             error={errors.password}
@@ -79,12 +98,14 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
               <ThemedText>Remember Password</ThemedText>
             </View>
             <TouchableOpacity>
-              <ThemedText style={styles.FPText}> Forgot Password?</ThemedText>
+              <ThemedText style={styles.FPText}>
+                {loginLabels.forgotpw}
+              </ThemedText>
             </TouchableOpacity>
           </View>
           <HeroButton
             disabled={loading}
-            btnText={loading ? 'Loading....' : 'Login'}
+            btnText={loading ? loginLabels.loading : loginLabels.login}
             onPress={handleSubmit(onSubmit)}
           />
           {/* errors */}
@@ -92,12 +113,12 @@ const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
 
           {/* registration */}
           <View style={styles.RegInfoView}>
-            <ThemedText>Don't have an Account ? </ThemedText>
+            <ThemedText>{loginLabels.hasAccQuestion} </ThemedText>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate(SCREEN_NAME.AUTH.SIGN_UP);
               }}>
-              <ThemedText type="link">Sign up</ThemedText>
+              <ThemedText type="link"> {loginLabels.signup}</ThemedText>
             </TouchableOpacity>
           </View>
         </ScrollView>

@@ -72,11 +72,6 @@ const BanshaContribution: React.FC<BanshaContributionProps> = ({
       item.description.toLowerCase().includes(searchText.toLowerCase()),
   );
 
-  // Loading
-  if (loading) {
-    return <Loader />;
-  }
-
   // error
   if (error) {
     return (
@@ -105,18 +100,22 @@ const BanshaContribution: React.FC<BanshaContributionProps> = ({
         <DropdownYogdan callBackSetDDSelected={setDDSelectedValue} />
 
         {/* Flatlist of yodan content */}
-        <FlatList
-          initialNumToRender={5}
-          data={searchText ? searchedData : filterData}
-          style={styles.FlatListContainer}
-          contentContainerStyle={styles.FlatlistContents}
-          showsVerticalScrollIndicator={false}
-          renderItem={(item) => <YogdanCard yogdan={item.item} />}
-          ListEmptyComponent={<EmptyFlatList message="No Yogdans" />}
-          keyExtractor={(item) => item._id}
-          ListFooterComponent={<BottomSpace spaceHeight={100} />}
-          ListFooterComponentStyle={styles.FlatlistFooter}
-        />
+        {yogdanData.length > 0 ? (
+          <FlatList
+            initialNumToRender={5}
+            data={searchText ? searchedData : filterData}
+            style={styles.FlatListContainer}
+            contentContainerStyle={styles.FlatlistContents}
+            showsVerticalScrollIndicator={false}
+            renderItem={(item) => <YogdanCard yogdan={item.item} />}
+            ListEmptyComponent={<EmptyFlatList message="No Yogdans" />}
+            keyExtractor={(item) => item._id}
+            ListFooterComponent={<BottomSpace spaceHeight={100} />}
+            ListFooterComponentStyle={styles.FlatlistFooter}
+          />
+        ) : (
+          <Loader />
+        )}
 
         <BottomSpace spaceHeight={'5%'} />
       </SafeAreaView>

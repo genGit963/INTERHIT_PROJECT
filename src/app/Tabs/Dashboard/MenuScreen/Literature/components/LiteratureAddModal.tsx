@@ -75,6 +75,13 @@ const LiteratureAddModal = ({
     submit: translateLanguage('Submit', 'बुझाउनुहोस्'),
     loading: translateLanguage('Loading...', 'पेस गर्दै...'),
     cancel: translateLanguage('Cancel', 'रद्द गर्नुहोस्'),
+    formName: translateLanguage('Literature Form', 'साहित्य फारम'),
+    cancelQuestion: translateLanguage(
+      'Are you sure want to cancel?',
+      'के तपाईँ निश्चित रूपमा रद्द गर्न चाहनुहुन्छ?',
+    ),
+    yes: translateLanguage('YES', 'हो'),
+    no: translateLanguage('NO', 'होइन'),
   };
 
   return (
@@ -83,7 +90,20 @@ const LiteratureAddModal = ({
       transparent={true}
       visible={isVisible}
       onRequestClose={() => {
-        modalVisibile(false);
+        Alert.alert(
+          addLiteratureLabels.formName,
+          addLiteratureLabels.cancelQuestion,
+          [
+            {
+              text: addLiteratureLabels.yes,
+              onPress: () => modalVisibile(false),
+            },
+            {
+              text: addLiteratureLabels.no,
+              onPress: () => {},
+            },
+          ],
+        );
       }}>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>

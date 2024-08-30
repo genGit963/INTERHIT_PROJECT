@@ -82,9 +82,9 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
       item.desc.toLowerCase().includes(searchText.toLowerCase()),
   );
 
-  if (loading) {
-    return <Loader />;
-  }
+  // if (loading) {
+  //   return <Loader />;
+  // }
 
   if (error) {
     return (
@@ -110,19 +110,23 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
         />
 
         {/* Alekh Card Contents */}
-        <FlatList
-          initialNumToRender={5}
-          data={searchText ? searchedData : data || []}
-          contentContainerStyle={styles.Flatlist}
-          showsVerticalScrollIndicator={false}
-          renderItem={({item}) => (
-            <AlekhCard callbackHandlePress={handleAlekhView} alekh={item} />
-          )}
-          ListEmptyComponent={<EmptyFlatList message="No Alekhs" />}
-          keyExtractor={(item) => item._id}
-          ListFooterComponent={<BottomSpace spaceHeight={100} />}
-          ListFooterComponentStyle={styles.FlatlistFooter}
-        />
+        {data?.length > 0 ? (
+          <FlatList
+            initialNumToRender={5}
+            data={searchText ? searchedData : data || []}
+            contentContainerStyle={styles.Flatlist}
+            showsVerticalScrollIndicator={false}
+            renderItem={({item}) => (
+              <AlekhCard callbackHandlePress={handleAlekhView} alekh={item} />
+            )}
+            ListEmptyComponent={<EmptyFlatList message="No Alekhs" />}
+            keyExtractor={(item) => item._id}
+            ListFooterComponent={<BottomSpace spaceHeight={100} />}
+            ListFooterComponentStyle={styles.FlatlistFooter}
+          />
+        ) : (
+          <Loader />
+        )}
 
         {/* Alekh Detail View Modal */}
         {isAlekhViewVisible && (
@@ -181,6 +185,11 @@ export const styles = StyleSheet.create({
       Opacity: 0.6,
       Elevation: 5,
     }),
+    position: 'absolute',
+    bottom: '4%',
+    right: '1.5%',
+    zIndex: 10,
+    backgroundColor: 'rgba(0,0,0)',
   },
   Overlay: {
     position: 'absolute',

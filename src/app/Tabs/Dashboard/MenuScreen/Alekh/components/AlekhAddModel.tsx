@@ -73,15 +73,22 @@ const AlekhAddModal = ({
   };
 
   const addAlekhLabels = {
-    modalTitle: translateLanguage('Add Alekh', 'आलेख थप्नुहोस्'),
+    modalTitle: translateLanguage('Add Aalekh', 'आलेख थप्नुहोस्'),
+    formName: translateLanguage('Aalekh Form', 'आलेख फारम'),
     image: translateLanguage('Upload Image', 'फोटो अपलोड गर्नुहोस्'),
-    title: translateLanguage('Alekh Title', 'आलेख शीर्षक'),
+    title: translateLanguage('Aalekh Title', 'आलेख शीर्षक'),
     details: translateLanguage('Details', 'विवरणहरू'),
     author: translateLanguage('Author Name', 'लेखकको नाम'),
-    write_alekh: translateLanguage('Write Alekh', 'आलेख लेख्नुहोस्'),
+    write_alekh: translateLanguage('Write Aalekh', 'आलेख लेख्नुहोस्'),
     submit: translateLanguage('Submit', 'बुझाउनुहोस्'),
     loading: translateLanguage('Loading...', 'पेस गर्दै...'),
     cancel: translateLanguage('Cancel', 'रद्द गर्नुहोस्'),
+    cancelQuestion: translateLanguage(
+      'Are you sure want to cancel?',
+      'के तपाईँ निश्चित रूपमा रद्द गर्न चाहनुहुन्छ?',
+    ),
+    yes: translateLanguage('YES', 'हो'),
+    no: translateLanguage('NO', 'होइन'),
   };
 
   return (
@@ -90,7 +97,16 @@ const AlekhAddModal = ({
       transparent={true}
       visible={isVisible}
       onRequestClose={() => {
-        modalVisibile(false);
+        Alert.alert(addAlekhLabels.formName, addAlekhLabels.cancelQuestion, [
+          {
+            text: addAlekhLabels.yes,
+            onPress: () => modalVisibile(false),
+          },
+          {
+            text: addAlekhLabels.no,
+            onPress: () => {},
+          },
+        ]);
       }}>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
