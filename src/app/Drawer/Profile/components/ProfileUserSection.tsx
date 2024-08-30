@@ -105,7 +105,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   QRButton: {
-    width: 150,
     alignItems: 'flex-start',
   },
 });

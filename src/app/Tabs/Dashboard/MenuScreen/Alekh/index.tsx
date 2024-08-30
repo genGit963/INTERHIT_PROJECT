@@ -114,7 +114,8 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
           <FlatList
             initialNumToRender={5}
             data={searchText ? searchedData : data || []}
-            contentContainerStyle={styles.Flatlist}
+            style={styles.FlatlistContainer}
+            contentContainerStyle={styles.FlatlistContents}
             showsVerticalScrollIndicator={false}
             renderItem={({item}) => (
               <AlekhCard callbackHandlePress={handleAlekhView} alekh={item} />
@@ -151,8 +152,6 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
             modalVisibile={setAlekhAddVisible}
           />
         )}
-
-        <BottomSpace spaceHeight={'5%'} />
       </SafeAreaView>
     </View>
   );
@@ -167,29 +166,28 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  Flatlist: {marginBottom: '8%'},
-  FlatlistFooter: {marginBottom: '6%'},
+  FlatlistContainer: {},
+  FlatlistContents: {gap: 12},
+  FlatlistFooter: {marginBottom: '15%'},
   AddAlekhButton: {
     position: 'absolute',
     bottom: '16%',
     right: '1.5%',
     zIndex: 10,
-    backgroundColor: 'rgba(0,0,0)',
   },
   AddAlekhIcon: {
     ...supplyShadowEffect({
       X_off: 0,
       Y_off: 0,
       Radius: 7,
-      Color: 'black',
+      Color: '#000',
       Opacity: 0.6,
-      Elevation: 5,
+      Elevation: 10,
     }),
     position: 'absolute',
     bottom: '4%',
     right: '1.5%',
     zIndex: 10,
-    backgroundColor: 'rgba(0,0,0)',
   },
   Overlay: {
     position: 'absolute',
@@ -197,7 +195,6 @@ export const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     zIndex: 5,
   },
 });

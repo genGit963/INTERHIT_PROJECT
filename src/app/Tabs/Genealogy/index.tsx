@@ -1,12 +1,9 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import { AppScreenNavigationType } from '../../../core/navigation-type';
-import ScreenTopTitle from '../../../components/ScreenTopTitle';
-import BottomSpace from '../../../components/BottomSpace';
-import { Colors } from '../../../constants/Color';
+import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {AppScreenNavigationType} from '../../../core/navigation-type';
+import {Colors} from '../../../constants/Color';
 import WebView from 'react-native-webview';
 import TabScreenTopTitle from '../../../components/TabScreenTopTitle';
-
 // types and interface
 type GenealogyTabScreenProps = {} & AppScreenNavigationType;
 
@@ -26,10 +23,8 @@ const GenealogyTabScreen: React.FC<GenealogyTabScreenProps> = ({
             uri: 'https://thadaraiadhikari.com/family',
             headers: {},
           }}
-          style={{ flex: 1, width: '100%', height: '100%' }}
+          style={{flex: 1, width: '100%', height: '100%'}}
         />
-
-        <BottomSpace spaceHeight={'5%'} />
       </SafeAreaView>
     </View>
   );
