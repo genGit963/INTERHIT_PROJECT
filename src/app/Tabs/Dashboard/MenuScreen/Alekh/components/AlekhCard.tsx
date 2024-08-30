@@ -34,9 +34,15 @@ const AlekhCard: React.FC<AlekhCardPropsTypes> = ({
           style={styles.AlekhImg}
         />
       </View>
-      <View style={styles.WriterDate}>
-        <ThemedText style={styles.WriterName}>{alekh.author}</ThemedText>
-        <ThemedText style={styles.CreatedBy}>{alekh.createdBy.name}</ThemedText>
+      <View style={styles.WriterCreator}>
+        <ThemedText style={styles.WriterName} type="mediumBold">
+          <ThemedText>Author: </ThemedText>
+          {alekh.author}
+        </ThemedText>
+        <ThemedText style={styles.CreatedBy} type="mediumBold">
+          <ThemedText>Creator: </ThemedText>
+          {alekh.createdBy.name}
+        </ThemedText>
       </View>
     </TouchableOpacity>
   );
@@ -45,7 +51,7 @@ const AlekhCard: React.FC<AlekhCardPropsTypes> = ({
 export const styles = StyleSheet.create({
   AlekhCard: {
     borderBottomWidth: 1,
-    borderBottomColor: Colors.muteGray,
+    borderBottomColor: Colors.darkGray,
     marginVertical: 16,
   },
   AlekhCardBody: {
@@ -71,22 +77,28 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
     // borderWidth: 1,
   },
-  WriterDate: {
+  WriterCreator: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     alignItems: 'center',
     gap: 16,
     marginTop: 4,
+    borderTopWidth: 0.5,
+    borderTopColor: Colors.muteGray,
+
     // borderWidth: 1,
   },
   WriterName: {
     // backgroundColor: 'red',
     textAlign: 'right',
+    fontSize: 16,
   },
   CreatedBy: {
     // backgroundColor: 'green',
     textAlign: 'right',
+    fontSize: 16,
+    color: Colors.darkGray,
   },
 });
 

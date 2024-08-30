@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -46,10 +46,11 @@ export interface AlekhInterface {
 // ----------------- Alekh Screen ---------------------
 const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
   // View Modal States
-  const [selectedAlekh, setSelectedAlekh] = useState<
+  const [selectedAlekh, setSelectedAlekh] = React.useState<
     AlekhInterface | undefined
   >(undefined);
-  const [isAlekhViewVisible, setAlekhViewVisible] = useState<boolean>(false);
+  const [isAlekhViewVisible, setAlekhViewVisible] =
+    React.useState<boolean>(false);
   const handleAlekhView = (alekh: AlekhInterface) => {
     setSelectedAlekh(alekh);
     setAlekhViewVisible(true);
@@ -61,10 +62,12 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
   };
 
   // Add Modal States
-  const [isAlekhAddVisible, setAlekhAddVisible] = useState<boolean>(false);
+  const [isAlekhAddVisible, setAlekhAddVisible] =
+    React.useState<boolean>(false);
 
   // Search text
-  const [searchText, setSearchText] = useState<SearchType['searchText']>('');
+  const [searchText, setSearchText] =
+    React.useState<SearchType['searchText']>('');
 
   const {translateLanguage} = useTranslate();
 
@@ -75,11 +78,18 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
   });
 
   // Filtered data based on search text
-  const searchedData: AlekhInterface[] = data?.filter(
-    (item: AlekhInterface) =>
-      item.body.toLowerCase().includes(searchText.toLowerCase()) ||
-      item.title.toLowerCase().includes(searchText.toLowerCase()) ||
-      item.desc.toLowerCase().includes(searchText.toLowerCase()),
+  const searchedData: AlekhInterface[] = React.useMemo(
+    () =>
+      data?.filter(
+        (item: AlekhInterface) =>
+          item.title.toLowerCase().includes(searchText.toLowerCase()) ||
+          item.author.toLowerCase().includes(searchText.toLowerCase()) ||
+          item.createdBy.name
+            .toLowerCase()
+            .includes(searchText.toLowerCase()) ||
+          item.desc.toLowerCase().includes(searchText.toLowerCase()),
+      ),
+    [searchText],
   );
 
   // if (loading) {

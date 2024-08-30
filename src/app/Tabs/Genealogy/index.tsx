@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import {AppScreenNavigationType} from '../../../core/navigation-type';
 import {Colors} from '../../../constants/Color';
@@ -15,7 +15,7 @@ const GenealogyTabScreen: React.FC<GenealogyTabScreenProps> = ({
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
-        <TabScreenTopTitle screenTitle={'Genealogy'} />
+        {/* <TabScreenTopTitle screenTitle={'Genealogy'} /> */}
 
         {/*  Screen Body */}
         <WebView

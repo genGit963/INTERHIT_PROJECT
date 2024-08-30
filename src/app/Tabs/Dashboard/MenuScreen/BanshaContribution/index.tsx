@@ -31,7 +31,7 @@ const BanshaContribution: React.FC<BanshaContributionProps> = ({
 }) => {
   // search Text
   const [searchText, setSearchText] = useState<SearchType['searchText']>('');
-  console.log('searchText bansha yogdan: ', searchText);
+  // console.log('searchText bansha yogdan: ', searchText);
 
   //yogdan data
   const [yogdanData, setYogdanData] = useState<BanshaYogdanInterface[]>([]);
