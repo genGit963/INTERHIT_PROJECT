@@ -1,4 +1,5 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
+
 import languageReducer from './features/language/languageSlice';
 import {
   FLUSH,
@@ -9,6 +10,7 @@ import {
   REGISTER,
   REHYDRATE,
 } from 'redux-persist';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const persistConfig = {
