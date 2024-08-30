@@ -63,30 +63,39 @@ const BarChartDistricts: React.FC = () => {
         <BarChart
           data={districtPopulation}
           showScrollIndicator={false}
-          scrollAnimation={false}
           horizontal={true}
-          barWidth={40} // Increase or adjust bar width as needed
+          barWidth={36} // Increase or adjust bar width as needed
+          isAnimated
+          // x-axis
           xAxisLabelTextStyle={{
-            color: 'green',
+            color: 'black',
             fontSize: 16,
-            // backgroundColor: 'red',
             width: 130,
             height: 30,
             fontWeight: 700,
             textAlign: 'right',
           }}
-          yAxisLabelContainerStyle={{backgroundColor: 'red'}}
+          // y-axis
+          // yAxisAtTop={true}
+          // yAxisLabelContainerStyle={{display: 'none'}}
+          // yAxisColor={'green'}
+          // rotateYAxisTexts={100}
+          // yAxisTextStyle={{fontSize: 18}}
+          showYAxisIndices={false}
+          // colors
+          showGradient
+          frontColor={Colors.primaryLight} // Customize bar color
+          gradientColor={Colors.primary}
           // hideRules={true}
           // showXAxisIndices={true}
-          // shiftX={-2}
+          shiftX={-45}
           // noOfSections={100} // Adjust to make the chart more granular
-          stepValue={10} // Decrease this to handle smaller values better
+          stepValue={100} // Decrease this to handle smaller values better
           width={DIMENSION.SCREEN.width - 120}
           height={DIMENSION.SCREEN.height - 200}
-          showValuesAsTopLabel={true} // Show values on top of bars
-          // initialSpacing={20} // Add initial spacing from the Y-axis
+          // showValuesAsTopLabel={true} // Show values on top of bars
+          // initialSpacing={0} // Add initial spacing from the Y-axis
           spacing={1} // Adjust spacing between bars
-          frontColor={Colors.primary} // Customize bar color
           maxValue={districtPopulation ? maxValue(districtPopulation) : 800}
         />
       )}
@@ -100,7 +109,7 @@ const styles = StyleSheet.create({
   ChartContainer: {
     backgroundColor: Colors.screenBackground,
     // flex: 1,
-    borderWidth: 1,
+    // borderWidth: 1,
     width: DIMENSION.SCREEN.width - 80,
     height: DIMENSION.SCREEN.height - 80,
     // marginBottom: 250,
