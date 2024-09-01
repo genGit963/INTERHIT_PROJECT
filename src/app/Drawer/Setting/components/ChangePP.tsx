@@ -14,9 +14,12 @@ import {
   launchImageLibrary,
   Asset,
 } from 'react-native-image-picker';
-import {checkPermission, requestPermission} from '../utils/permissions';
-import {Colors} from '../constants/Color';
-import {ThemedText} from './ThemedText';
+import {
+  checkPermission,
+  requestPermission,
+} from '../../../../utils/permissions';
+import {Colors} from '../../../../constants/Color';
+import HeroButton from '../../../../components/HeroButton';
 
 interface ImagePickerComponentProps {
   control: Control<any>;
@@ -26,7 +29,7 @@ interface ImagePickerComponentProps {
   isRequired: boolean;
 }
 
-const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
+const ChangeProfileImage: React.FC<ImagePickerComponentProps> = ({
   control,
   errors,
   label,
@@ -35,7 +38,7 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
 }) => {
   const [filename, setFilename] = useState<string | undefined>('');
   const [imageUri, setImageUri] = useState<string | undefined>('');
-  const [, setImageAsset] = useState<Asset | undefined>();
+  const [_, setImageAsset] = useState<Asset | undefined>();
 
   const handleImageUpload = async (
     onChange: (value: Asset | undefined) => void,
@@ -77,28 +80,17 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
 
   return (
     <View style={styles.imagePickerContainer}>
-      <View style={styles.labelContainer}>
-        <ThemedText style={styles.label}>
-          {label}
-          {isRequired && <Text style={styles.requiredSymbol}>*</Text>}
-        </ThemedText>
-      </View>
-      {imageUri && (
-        <Image source={{uri: imageUri}} style={styles.selectedImage} />
-      )}
       <Controller
         control={control}
         name={controllerName}
         render={({field: {onChange}}) => (
           <View style={styles.imagePickerBox}>
-            <ThemedText style={styles.filename}>
-              {filename ? filename : 'eg: filename.jpg'}
-            </ThemedText>
-            <TouchableOpacity onPress={() => handleImageUpload(onChange)}>
-              <ThemedText type="link">
-                {imageUri ? 'Change Image' : 'Upload Image'}
-              </ThemedText>
-            </TouchableOpacity>
+            <HeroButton
+              btnText={'Change Profile'}
+              varient="link"
+              style={styles.ChangePPBtn}
+              onPress={() => handleImageUpload(onChange)}
+            />
           </View>
         )}
       />
@@ -111,49 +103,24 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
   );
 };
 
-export default CustomImagePickerComponent;
+export default ChangeProfileImage;
 
 const styles = StyleSheet.create({
   imagePickerContainer: {
     marginVertical: 8,
   },
-  labelContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 4,
-    color: '#000',
-  },
-  requiredSymbol: {
-    color: Colors.redMain,
-    fontSize: 18,
-    marginBottom: 5,
-  },
   imagePickerBox: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 0.5,
-    borderColor: Colors.muteGray,
-    height: 50,
-    borderRadius: 10,
-    padding: 10,
+    // backgroundColor: 'red',
   },
-  filename: {
-    fontSize: 15,
-    color: Colors.muteGray,
+  ChangePPBtn: {
+    // borderWidth: 1,
+    alignItems: 'center',
   },
   error: {
     color: Colors.redMain,
     marginTop: 4,
-  },
-  selectedImage: {
-    width: '100%',
-    height: 200,
-    resizeMode: 'cover',
-    borderRadius: 10,
-    marginVertical: 8,
   },
 });

@@ -9,7 +9,14 @@ import {ThemedText} from './ThemedText';
 
 interface HeroButtonProps extends TouchableOpacityProps {
   btnText: string;
-  varient?: 'outlined' | 'solid' | 'ghost' | 'cancel' | 'done' | 'warning';
+  varient?:
+    | 'outlined'
+    | 'solid'
+    | 'ghost'
+    | 'cancel'
+    | 'done'
+    | 'warning'
+    | 'link';
 }
 
 const HeroButton: React.FC<HeroButtonProps> = ({
@@ -27,6 +34,7 @@ const HeroButton: React.FC<HeroButtonProps> = ({
         varient === 'warning' ? styles.WarningButtonView : undefined,
         varient === 'cancel' ? styles.CancelButtonView : undefined,
         varient === 'done' ? styles.DoneButtonView : undefined,
+        varient === 'link' ? styles.LinkButtonView : undefined,
         style,
       ]}
       {...rest}>
@@ -39,6 +47,7 @@ const HeroButton: React.FC<HeroButtonProps> = ({
           varient === 'warning' ? styles.WarningButtonText : undefined,
           varient === 'cancel' ? styles.CancelButtonText : undefined,
           varient === 'done' ? styles.DoneButtonText : undefined,
+          varient === 'link' ? styles.LinkButtonText : undefined,
         ]}>
         {btnText}
       </ThemedText>
@@ -130,6 +139,22 @@ const styles = StyleSheet.create({
     paddingRight: 4,
     color: Colors.primary,
     textAlign: 'center',
+  },
+  LinkButtonView: {
+    // backgroundColor: Colors.primary,
+    height: 40,
+    borderRadius: 10,
+    paddingRight: 4,
+    justifyContent: 'center',
+    width: '100%',
+    alignItems: 'center',
+  },
+  LinkButtonText: {
+    fontSize: 18,
+    paddingRight: 4,
+    color: Colors.primary,
+    textAlign: 'center',
+    textDecorationLine: 'underline',
   },
 });
 
