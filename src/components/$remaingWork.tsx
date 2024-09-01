@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleProp, StyleSheet, TextStyle, View } from 'react-native';
-import { ThemedText } from './ThemedText';
+import {StyleProp, StyleSheet, TextStyle, View} from 'react-native';
+import {ThemedText} from './ThemedText';
 
 const TopPriority = () => {
   return (
-    <ThemedText type="mediumBold" style={{ fontSize: 16, color: 'red' }}>
+    <ThemedText type="mediumBold" style={{fontSize: 16, color: 'red'}}>
       Top
     </ThemedText>
   );
@@ -12,7 +12,7 @@ const TopPriority = () => {
 
 const MediumPriority = () => {
   return (
-    <ThemedText type="mediumBold" style={{ fontSize: 16, color: 'blue' }}>
+    <ThemedText type="mediumBold" style={{fontSize: 16, color: 'blue'}}>
       Mid
     </ThemedText>
   );
@@ -20,7 +20,7 @@ const MediumPriority = () => {
 
 const LowPriority = () => {
   return (
-    <ThemedText type="mediumBold" style={{ fontSize: 16, color: 'orange' }}>
+    <ThemedText type="mediumBold" style={{fontSize: 16, color: 'orange'}}>
       Low
     </ThemedText>
   );
@@ -29,8 +29,16 @@ const LowPriority = () => {
 function doneRW(): StyleProp<TextStyle> {
   return {
     color: 'green',
-    fontSize: 16,
+    fontSize: 12,
     textDecorationLine: 'line-through',
+  };
+}
+
+function pendIT(): StyleProp<TextStyle> {
+  return {
+    color: 'purple',
+    fontSize: 14,
+    textDecorationLine: 'underline',
   };
 }
 
@@ -39,20 +47,20 @@ const RemainingWork = () => {
     <View style={styles.Container}>
       <ThemedText
         type="subtitle"
-        style={{ textDecorationLine: 'underline', color: 'purple' }}>
+        style={{textDecorationLine: 'underline', color: 'purple'}}>
         Remaining Work
       </ThemedText>
       <ThemedText style={doneRW()}>
         <TopPriority /> 1. Language Translation: If some translation found
         incomplete, we can add as we progress, won't take any time.
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={pendIT()}>
         <TopPriority /> 2. ID Card and Contribtuion Certificate Svg Dynamic
       </ThemedText>
-      <ThemedText>
-        <MediumPriority /> 3. What to do in Notice Tab
+      <ThemedText style={pendIT()}>
+        <MediumPriority /> 3. DISCUSSION: What to do in Notice Tab
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={pendIT()}>
         <TopPriority /> 4. Geneology Work
       </ThemedText>
       <ThemedText style={doneRW()}>
@@ -64,13 +72,13 @@ const RemainingWork = () => {
       <ThemedText style={doneRW()}>
         <TopPriority /> 7. Loding Lotte
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={pendIT()}>
         <MediumPriority /> 8. Profile/Other Menu
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={pendIT()}>
         <MediumPriority /> 10. What to do with Merge Card lists
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={pendIT()}>
         <TopPriority /> 11. KulMandir API integration
       </ThemedText>
       <ThemedText style={doneRW()}>
@@ -89,7 +97,7 @@ const RemainingWork = () => {
       <ThemedText style={doneRW()}>
         <TopPriority /> 16. Modal Border for Visibility
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={pendIT()}>
         <LowPriority /> 17. Sadhsaya member which members to fetch
       </ThemedText>
       <ThemedText style={doneRW()}>
@@ -98,26 +106,27 @@ const RemainingWork = () => {
       <ThemedText style={doneRW()}>
         <MediumPriority /> TESTIN: 19. All Committee Screen API lookup Test
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={doneRW()}>
         <LowPriority /> 20. About Org Data: Update in Core/Society_Data
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={doneRW()}>
         <LowPriority /> 21. Well Wishes: Update in Core/Society_Data
       </ThemedText>
-      <ThemedText>
-        <MediumPriority /> 22. Setting/Update Profile must alike Edit Form //API not available
+      <ThemedText style={pendIT()}>
+        <MediumPriority /> 22. Setting/Update Profile must alike Edit Form //API
+        not available
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={pendIT()}>
         <MediumPriority /> 23. Setting/Manage Pswd //API not available
       </ThemedText>
       <ThemedText>
         <MediumPriority /> 24. App update, Feedback, PP, Help, T&C Where to
         redirect in app or website
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={pendIT()}>
         <LowPriority /> 25. Checkout the logout properly
       </ThemedText>
-      <ThemedText>
+      <ThemedText style={pendIT()}>
         <LowPriority /> 26. Attach Fb, insta and website link of banshawali,
         NOTE: keep data in Core/society_data
       </ThemedText>

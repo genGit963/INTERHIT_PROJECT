@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   Page: {
     backgroundColor: Platform.OS === 'ios' ? '#fff' : '#fff',
     flex: 1,
-    width: DIMENSION.SCREEN.width,
+    // width: DIMENSION.SCREEN.width,
     paddingHorizontal: 24,
   },
   ImageBackground: {
