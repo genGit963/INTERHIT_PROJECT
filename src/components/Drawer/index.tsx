@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Modal,
   View,
@@ -7,12 +7,12 @@ import {
   SafeAreaView,
 } from 'react-native';
 import BottomSpace from '../BottomSpace';
-import {ThemedText} from '../ThemedText';
-import {AppScreenNavigationType} from '../../core/navigation-type';
-import {SCREEN_NAME} from '../../core/AppScreen';
+import { ThemedText } from '../ThemedText';
+import { AppScreenNavigationType } from '../../core/navigation-type';
+import { SCREEN_NAME } from '../../core/AppScreen';
 import DrawerBarBtn from './DrawerBarButton';
-import {stylesDC} from './Drawer.stylesheet';
-import {aboutUsOptionsData, committeeOptionsData} from './drawer-data';
+import { stylesDC } from './Drawer.stylesheet';
+import { aboutUsOptionsData, committeeOptionsData } from './drawer-data';
 import RNRestart from 'react-native-restart';
 
 // svg
@@ -31,8 +31,9 @@ import PrivacypolicySvg from '../../assets/svg/shield.svg';
 import HelpFAQsSvg from '../../assets/svg/help-circle.svg';
 import TermsConditionsSvg from '../../assets/svg/file-text.svg';
 import UserDrawerView from './UserDrawerView';
-import {asyncRemoveData} from '../../core/AsyncStorage';
+import { asyncRemoveData } from '../../core/AsyncStorage';
 import useTranslate from '../../hooks/language/translate';
+import MiscellaneousMenu from './MiscellaneousMenuButton';
 
 // type
 type DrawerModalProps = {
@@ -59,7 +60,7 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
     await asyncRemoveData('USER').then(() => RNRestart.restart());
   };
 
-  const {translateLanguage} = useTranslate();
+  const { translateLanguage } = useTranslate();
 
   const drawerOptionsTitle = {
     profile: translateLanguage('Profile', 'प्रोफाइल'),
@@ -191,48 +192,43 @@ const DrawerModal: React.FC<DrawerModalProps> = ({
           {/* ---------------------- App Miscellneous ---------------------- */}
           <View style={stylesDC.AppMiscllView}>
             {/* ---------------------- "App update" --------------------*/}
-            <DrawerBarBtn
+            <MiscellaneousMenu
               Icon={AppUpdateSvg}
               Title={drawerOptionsTitle.update}
-              route={SCREEN_NAME.DRAWER.PROFILE.MAIN}
-              navigation={navigation}
               callbackModalVisible={modalVisibile}
+              endPoint='#get_the_app'
             />
 
             {/* ---------------------- "Feedback" --------------------*/}
-            <DrawerBarBtn
+            <MiscellaneousMenu
               Icon={FeedbackSvg}
               Title={drawerOptionsTitle.feedback}
-              route={SCREEN_NAME.DRAWER.PROFILE.MAIN}
-              navigation={navigation}
               callbackModalVisible={modalVisibile}
+              endPoint=''
             />
 
             {/* ---------------------- "Privacy policy" --------------------*/}
-            <DrawerBarBtn
+            <MiscellaneousMenu
               Icon={PrivacypolicySvg}
               Title={drawerOptionsTitle.privacy}
-              route={SCREEN_NAME.DRAWER.PROFILE.MAIN}
-              navigation={navigation}
               callbackModalVisible={modalVisibile}
+              endPoint=''
             />
 
             {/* ---------------------- "Help & FAQs" --------------------*/}
-            <DrawerBarBtn
+            <MiscellaneousMenu
               Icon={HelpFAQsSvg}
               Title={drawerOptionsTitle.faq}
-              route={SCREEN_NAME.DRAWER.PROFILE.MAIN}
-              navigation={navigation}
               callbackModalVisible={modalVisibile}
+              endPoint=''
             />
 
             {/* ---------------------- "Terms & Conditions" --------------------*/}
-            <DrawerBarBtn
+            <MiscellaneousMenu
               Icon={TermsConditionsSvg}
               Title={drawerOptionsTitle.terms}
-              route={SCREEN_NAME.DRAWER.PROFILE.MAIN}
-              navigation={navigation}
               callbackModalVisible={modalVisibile}
+              endPoint=''
             />
           </View>
           <View style={stylesDC.LogoutAndSocialView}>
