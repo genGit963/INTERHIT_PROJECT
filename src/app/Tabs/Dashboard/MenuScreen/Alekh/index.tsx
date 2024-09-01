@@ -82,12 +82,12 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({ navigation }) => {
     () =>
       data?.filter(
         (item: AlekhInterface) =>
-          item.title.toLowerCase().includes(searchText.toLowerCase()) ||
-          item.author.toLowerCase().includes(searchText.toLowerCase()) ||
-          item.createdBy.name
+          item?.title.toLowerCase().includes(searchText.toLowerCase()) ||
+          item?.author.toLowerCase().includes(searchText.toLowerCase()) ||
+          item?.createdBy.name
             .toLowerCase()
             .includes(searchText.toLowerCase()) ||
-          item.desc.toLowerCase().includes(searchText.toLowerCase()),
+          item?.desc.toLowerCase().includes(searchText.toLowerCase()),
       ),
     [searchText],
   );

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -9,7 +9,10 @@ import {
 import {AppScreenNavigationType} from '../../../core/navigation-type';
 import ScreenTopTitle from '../../../components/ScreenTopTitle';
 import BottomSpace from '../../../components/BottomSpace';
-import {SocietyContributionRespInterface} from '../../../schema/tabs/contribution/contributions.schema';
+import {
+  SoceityContributionInterface,
+  SocietyContributionRespInterface,
+} from '../../../schema/tabs/contribution/contributions.schema';
 import EmptyFlatList from '../../../components/EmptyFlatList';
 import ContributionCard from './components/SContributionCard';
 import {Colors} from '../../../constants/Color';
@@ -30,41 +33,47 @@ const ContributionTabScreen: React.FC<ContributionTabScreenProps> = ({
 }) => {
   // search
   const [searchText, setSearchText] = useState<SearchType['searchText']>('');
-  // console.log('searchText contribution: ', searchText);
 
   //contributionEventData
   const [societyContributionData, setSocietyContributionData] = useState<
     SocietyContributionRespInterface[]
   >([]);
 
-  //modalVisible
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
-
   //selected contribution_event for detail data
   const [selectedContributionEvent, setSelectedContributionEvent] =
     useState<SocietyContributionRespInterface>();
-
-  // contribution QR modal
-  const [isContributionAddQRVisible, setContributionAddQRVisible] =
-    useState<boolean>(false);
 
   const {loading, error, handleGetContributionEvents} =
     useGetAllContributionEvents();
 
   //get all event data
-  const getContributionEventData = async () => {
-    const getContributionEventResp = await handleGetContributionEvents();
-    if (getContributionEventResp) {
-      // console.log("Contribution events: ", getContributionEventResp)
-      setSocietyContributionData(getContributionEventResp);
-    }
-  };
-
-  const {translateLanguage} = useTranslate();
-
   useEffect(() => {
+    const getContributionEventData = async () => {
+      const getContributionEventResp = await handleGetContributionEvents();
+      if (getContributionEventResp) {
+        // console.log("Contribution events: ", getContributionEventResp)
+        setSocietyContributionData(getContributionEventResp);
+      }
+    };
     getContributionEventData();
   }, []);
+
+  const searchData: SocietyContributionRespInterface[] = useMemo(
+    () =>
+      societyContributionData.filter((item: SocietyContributionRespInterface) =>
+        item?.title.toLowerCase().includes(searchText.toLowerCase()),
+      ),
+    [searchText],
+  );
+
+  //modalVisible
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  // contribution QR modal
+  const [isContributionAddQRVisible, setContributionAddQRVisible] =
+    useState<boolean>(false);
+
+  const {translateLanguage} = useTranslate();
 
   const handleContributionEventView = (
     contributionEvent: SocietyContributionRespInterface,
@@ -96,7 +105,7 @@ const ContributionTabScreen: React.FC<ContributionTabScreenProps> = ({
         {/*  Contribution Contents */}
         <FlatList
           initialNumToRender={5}
-          data={societyContributionData}
+          data={searchText ? searchData : societyContributionData}
           style={styles.FlatListContainer}
           contentContainerStyle={styles.FlatlistContents}
           showsVerticalScrollIndicator={false}

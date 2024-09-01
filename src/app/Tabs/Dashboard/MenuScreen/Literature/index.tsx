@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -64,11 +65,15 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({ navigation }) => {
     });
   };
 
-  const searchedLiterature: LiteratureResInterface[] = literatureData.filter((item) =>
-    item.title.toLowerCase().includes(searchText.toLowerCase()) ||
-    item.content.toLowerCase().includes(searchText.toLowerCase()) ||
-    item.author.toLowerCase().includes(searchText.toLowerCase())
-  ) || []
+  const searchedLiterature: LiteratureResInterface[] = useMemo(
+    () =>
+      literatureData.filter(
+        (item) =>
+          item?.title.toLowerCase().includes(searchText.toLowerCase()) ||
+          item?.author.toLowerCase().includes(searchText.toLowerCase()),
+      ) || [],
+    [searchText],
+  );
 
   useEffect(() => {
     getLiteratureData();

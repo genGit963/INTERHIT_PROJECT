@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import {Colors} from '../../../../../constants/Color';
 import ScreenTopTitle from '../../../../../components/ScreenTopTitle';
@@ -12,6 +12,7 @@ import {TopContributionInterface} from '../../../../../schema/tabs/dashboard/top
 import Loader from '../../../../../components/Loader';
 import EmptyResponse from '../../../../../components/EmptyResponse';
 import useTranslate from '../../../../../hooks/language/translate';
+import ApiError from '../../../../../components/api/ApiError';
 
 // types
 type TopContributionProps = {} & AppScreenNavigationType;
@@ -26,34 +27,39 @@ const TopContribution: React.FC<TopContributionProps> = ({navigation}) => {
 
   const {loading, error, handleGetTopContribution} = useGetTopContributions();
 
-  const getTopContributions = async () => {
-    await handleGetTopContribution().then((Resp) => {
-      setTopContributionData(Resp);
-    });
-  };
-
-  const searchedTopContributors: TopContributionInterface[] =
-    topContributionData.filter((contribution) =>
-      contribution.full_name.toLowerCase().includes(searchText.toLowerCase()),
-    );
-
-  const {translateLanguage} = useTranslate();
-
   useEffect(() => {
+    const getTopContributions = async () => {
+      await handleGetTopContribution().then((Resp) => {
+        setTopContributionData(Resp);
+      });
+    };
     getTopContributions();
   }, []);
 
+  const searchedTopContributors: TopContributionInterface[] = useMemo(
+    () =>
+      topContributionData.filter((contribution) =>
+        contribution.full_name.toLowerCase().includes(searchText.toLowerCase()),
+      ),
+    [searchText],
+  );
+
+  const {translateLanguage} = useTranslate();
   return (
     <View style={styles.Page}>
       <SafeAreaView>
         {/* Screen Title */}
-        <ScreenTopTitle
-          navigation={navigation}
-          screenTitle={translateLanguage(
-            'Top Contributors',
-            'शीर्ष योगदानकर्ता',
-          )}
-        />
+        {error ? (
+          <ApiError message={'Fetch Failed !!'} />
+        ) : (
+          <ScreenTopTitle
+            navigation={navigation}
+            screenTitle={translateLanguage(
+              'Top Contributors',
+              'शीर्ष योगदानकर्ता',
+            )}
+          />
+        )}
 
         {/* Search Bar */}
         <SearchInput
