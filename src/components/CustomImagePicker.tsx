@@ -91,9 +91,9 @@ const CustomImagePickerComponent: React.FC<ImagePickerComponentProps> = ({
         name={controllerName}
         render={({ field: { onChange } }) => (
           <View style={styles.imagePickerBox}>
-            <Text style={styles.filename}>
+            <ThemedText style={styles.filename}>
               {filename ? filename : 'eg: filename.jpg'}
-            </Text>
+            </ThemedText>
             <TouchableOpacity onPress={() => handleImageUpload(onChange)}>
               <ThemedText type="link">
                 {imageUri ? 'Change Image' : 'Upload Image'}

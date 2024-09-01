@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -6,11 +6,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {AppScreenNavigationType} from '../../../core/navigation-type';
+import { AppScreenNavigationType } from '../../../core/navigation-type';
 import ScreenTopTitle from '../../../components/ScreenTopTitle';
 import BottomSpace from '../../../components/BottomSpace';
-import {Colors} from '../../../constants/Color';
-import {ThemedText} from '../../../components/ThemedText';
+import { Colors } from '../../../constants/Color';
+import { ThemedText } from '../../../components/ThemedText';
 import EditProfileModal from './components/EditProfileModal';
 import ChangePasswordModal from './components/ChangePasswordModal';
 
@@ -18,12 +18,13 @@ import ChangePasswordModal from './components/ChangePasswordModal';
 import EditProfileSvg from '../../../assets/svg/iconamoon_profile-light.svg';
 import ChangePswdSvg from '../../../assets/svg/mdi_password-outline.svg';
 import supplyShadowEffect from '../../../utils/Shadow';
+import useTranslate from '../../../hooks/language/translate';
 
 // types and interface
 type SettingsScreenProps = {} & AppScreenNavigationType;
 
 // ----------------- Settings screen ---------------------
-const SettingsScreen: React.FC<SettingsScreenProps> = ({navigation}) => {
+const SettingsScreen: React.FC<SettingsScreenProps> = ({ navigation }) => {
   // change pswd modal state
   const [isChangePswdModalVisible, setChangePswdModalVisible] =
     useState<boolean>(false);
@@ -32,11 +33,13 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({navigation}) => {
   const [isEditProfileModalVisible, setEditProfileModalVisible] =
     useState<boolean>(false);
 
+  const { translateLanguage } = useTranslate()
+
   return (
     <View style={styles.Page}>
       <SafeAreaView style={styles.Screen}>
         {/* Title */}
-        <ScreenTopTitle navigation={navigation} screenTitle="Settings" />
+        <ScreenTopTitle navigation={navigation} screenTitle={translateLanguage("Settings", "सेटिङहरू")} />
 
         {/* Body */}
         <ScrollView
@@ -49,8 +52,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({navigation}) => {
             onPress={() => setEditProfileModalVisible(true)}>
             <EditProfileSvg height={34} width={34} />
             <View style={styles.MenuDetail}>
-              <ThemedText type="semiBold">Edit Profile</ThemedText>
-              <ThemedText type="muted">Change your Personal Details</ThemedText>
+              <ThemedText type="semiBold">{translateLanguage("Edit Profile", "प्रोफाइल सम्पादन गर्नुहोस्")}</ThemedText>
+              <ThemedText type="muted">{translateLanguage("Change your Personal Details", "आफ्नो व्यक्तिगत विवरणहरू परिवर्तन गर्नुहोस्")}</ThemedText>
             </View>
           </TouchableOpacity>
 
@@ -60,8 +63,8 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({navigation}) => {
             onPress={() => setChangePswdModalVisible(true)}>
             <ChangePswdSvg height={34} width={34} />
             <View style={styles.MenuDetail}>
-              <ThemedText type="semiBold">Manage Password</ThemedText>
-              <ThemedText type="muted">Change your current password</ThemedText>
+              <ThemedText type="semiBold">{translateLanguage("Manage Password", "पासवर्ड प्रबन्ध गर्नुहोस्")}</ThemedText>
+              <ThemedText type="muted">{translateLanguage("Change your current password", "हालको पासवर्ड परिवर्तन गर्नुहोस्")}</ThemedText>
             </View>
           </TouchableOpacity>
         </ScrollView>
@@ -96,8 +99,8 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  ScrollView: {marginBottom: 10, paddingBottom: 30},
-  ScrollContent: {paddingBottom: 100, gap: 10},
+  ScrollView: { marginBottom: 10, paddingBottom: 30 },
+  ScrollContent: { paddingBottom: 100, gap: 10 },
 
   MenuCard: {
     display: 'flex',

@@ -1,21 +1,24 @@
 // EditProfileModal.tsx
 import React from 'react';
-import {zodResolver} from '@hookform/resolvers/zod';
-import {Modal, ScrollView, StyleSheet, View, Alert, Image} from 'react-native';
-import {useForm} from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Modal, ScrollView, StyleSheet, View, Alert, Image } from 'react-native';
+import { useForm } from 'react-hook-form';
 import {
   EditProfileZSchema,
   EditProfileZType,
 } from '../../../../schema/drawer/settings';
 import HeroButton from '../../../../components/HeroButton';
-import {ThemedText} from '../../../../components/ThemedText';
+import { ThemedText } from '../../../../components/ThemedText';
 import CustomTextInput from '../../../../components/CustomInput';
 import BottomSpace from '../../../../components/BottomSpace';
-import {Colors} from '../../../../constants/Color';
+import { Colors } from '../../../../constants/Color';
 import supplyShadowEffect from '../../../../utils/Shadow';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../../../redux/store';
-import {stat} from '@dr.pogodin/react-native-fs';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../redux/store';
+import { stat } from '@dr.pogodin/react-native-fs';
+import useTranslate from '../../../../hooks/language/translate';
+import { confirmFormClose } from '../../../../utils/closeModalConfirmation';
+import CustomImagePickerComponent from '../../../../components/CustomImagePicker';
 
 type EditProfileModalProps = {
   isVisible: boolean;
@@ -27,12 +30,12 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   modalVisibile,
 }) => {
   // app user redux
-  const {appUser} = useSelector((state: RootState) => state.appUser);
+  const { appUser } = useSelector((state: RootState) => state.appUser);
 
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm<EditProfileZType>({
     resolver: zodResolver(EditProfileZSchema),
     defaultValues: {
@@ -42,38 +45,49 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   });
 
   const onSubmit = (data: EditProfileZType) => {
-    console.log('edit profile data: ', {...data, profilePhoto: 'photo.jpg'});
+    console.log('edit profile data: ', { ...data, profilePhoto: 'photo.jpg' });
     modalVisibile(false);
   };
+
+  const { translateLanguage } = useTranslate()
 
   return (
     <Modal
       animationType="slide"
       transparent={true}
       visible={isVisible}
-      onRequestClose={() => {
-        Alert.alert('Edit Profile', 'Are you sure want to cancel?', [
-          {
-            text: 'Yes',
-            onPress: () => modalVisibile(false),
-          },
-          {
-            text: 'No',
-            onPress: () => {},
-          },
-        ]);
-      }}>
+      onRequestClose={() => confirmFormClose({
+        formName: translateLanguage("Edit Profile Form", "प्रोफाइल सम्पादन फारम"),
+        cancelQuestion: translateLanguage(
+          'Are you sure want to cancel?',
+          'के तपाईँ निश्चित रूपमा रद्द गर्न चाहनुहुन्छ?',
+        ),
+        yes: translateLanguage('YES', 'हो'),
+        no: translateLanguage('NO', 'होइन'),
+        callbackModalVisible: modalVisibile
+      })
+
+      }>
       <View style={styles.ModelContainer}>
         <View style={styles.modalView}>
           {/* Cancel btn */}
           <HeroButton
-            btnText="Cancel"
+            btnText={translateLanguage('Cancel', 'रद्द गर्नुहोस्')}
             varient="cancel"
-            onPress={() => modalVisibile(false)}
+            onPress={() => confirmFormClose({
+              formName: translateLanguage("Edit Profile", "प्रोफाइल सम्पादन फारम"),
+              cancelQuestion: translateLanguage(
+                'Are you sure want to cancel?',
+                'के तपाईँ निश्चित रूपमा रद्द गर्न चाहनुहुन्छ?',
+              ),
+              yes: translateLanguage('YES', 'हो'),
+              no: translateLanguage('NO', 'होइन'),
+              callbackModalVisible: modalVisibile
+            })}
           />
           {/* form title */}
           <ThemedText type="subtitle" style={styles.FormTitle}>
-            Edit Profile
+            {translateLanguage("Edit Profile", "प्रोफाइल सम्पादन गर्नुहोस्")}
           </ThemedText>
           <ScrollView
             style={styles.ScrollContainer}
@@ -86,12 +100,14 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
               style={styles.PPImage}
             />
 
+            <CustomImagePickerComponent control={control} errors={errors} label='Change Image' controllerName='image' isRequired />
+
             {/* inputs */}
             <CustomTextInput
               name="fullName"
               placeholder="Eg: Ram Bahadur Bogati"
               control={control}
-              label="Full Name"
+              label={translateLanguage('Full Name', 'पुरा नाम')}
               isRequired
               error={errors.fullName}
             />
@@ -101,7 +117,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
               placeholder="Eg: barhau@gmail.com"
               control={control}
               defaultValue={control._defaultValues.fullName}
-              label="Email"
+              label={translateLanguage('Email', 'इमेल ठेगाना')}
               isRequired
               error={errors.email}
             />
@@ -116,7 +132,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
             /> */}
 
             {/* Submit Button */}
-            <HeroButton btnText="Submit" onPress={handleSubmit(onSubmit)} />
+            <HeroButton btnText={translateLanguage("Submit", "बुझाउनुहोस्")} onPress={handleSubmit(onSubmit)} />
             <BottomSpace spaceHeight={'10%'} />
           </ScrollView>
         </View>
@@ -139,17 +155,20 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.screenBackground,
     alignItems: 'center',
     paddingVertical: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     height: '100%',
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
+    borderWidth: 3,
+    borderColor: Colors.muteGray,
+
     ...supplyShadowEffect({
       X_off: 0,
-      Y_off: 0,
-      Radius: 10,
+      Y_off: -4,
+      Radius: 15,
       Color: '#000',
-      Opacity: 0.5,
-      Elevation: 10,
+      Opacity: 0.4,
+      Elevation: 8,
     }),
   },
   PPImage: {
@@ -160,7 +179,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 'auto',
     marginVertical: 40,
   },
-  FormTitle: {textAlign: 'left', width: '100%', fontSize: 18, marginBottom: 12},
+  FormTitle: { textAlign: 'left', width: '100%', fontSize: 18, marginBottom: 12 },
   ScrollContainer: {
     width: '100%',
     marginBottom: 50,
