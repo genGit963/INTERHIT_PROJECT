@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -7,29 +7,29 @@ import {
   View,
 } from 'react-native';
 
-import { ThemedText } from '../../../../../components/ThemedText';
+import {ThemedText} from '../../../../../components/ThemedText';
 import ScreenTopTitle from '../../../../../components/ScreenTopTitle';
 import SearchSvg from '../../../../../assets/svg/search.svg';
 import BottomSpace from '../../../../../components/BottomSpace';
 import EmptyFlatList from '../../../../../components/EmptyFlatList';
-import { Colors } from '../../../../../constants/Color';
+import {Colors} from '../../../../../constants/Color';
 import supplyShadowEffect from '../../../../../utils/Shadow';
 import LiteratureViewModal from './components/LiteratureViewModal';
 import LiteratureCard from './components/LiteratureCard';
 import AddLiteratureSvg from '../../../../../assets/svg/solid-plus-circle.svg';
 import LiteratureAddModal from './components/LiteratureAddModal';
-import { AppScreenNavigationType } from '../../../../../core/navigation-type';
-import { useGetLiterature } from '../../../../../hooks/tabs/dashboard/literature';
-import { LiteratureResInterface } from '../../../../../schema/tabs/dashboard/literature.schema';
+import {AppScreenNavigationType} from '../../../../../core/navigation-type';
+import {useGetLiterature} from '../../../../../hooks/tabs/dashboard/literature';
+import {LiteratureResInterface} from '../../../../../schema/tabs/dashboard/literature.schema';
 import ApiError from '../../../../../components/api/ApiError';
 import Loader from '../../../../../components/Loader';
-import SearchInput, { SearchType } from '../../../../../components/SearchInput';
+import SearchInput, {SearchType} from '../../../../../components/SearchInput';
 
 // types and interface
 type LiteratureScreenProps = {} & AppScreenNavigationType;
 
 // ----------------- Literature Screen ---------------------
-const LiteratureScreen: React.FC<LiteratureScreenProps> = ({ navigation }) => {
+const LiteratureScreen: React.FC<LiteratureScreenProps> = ({navigation}) => {
   // View Modal States
   const [selectedLiterature, setSelectedLiterature] = useState<
     LiteratureResInterface | undefined
@@ -57,7 +57,7 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({ navigation }) => {
   const [isLiteratureAddVisible, setLiteratureAddVisible] =
     useState<boolean>(false);
 
-  const { loading, error, handleGetLiterature } = useGetLiterature();
+  const {loading, error, handleGetLiterature} = useGetLiterature();
   const getLiteratureData = async () => {
     await handleGetLiterature().then((Response) => {
       setLiteratureData(Response);
@@ -107,7 +107,13 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({ navigation }) => {
 
         <FlatList
           initialNumToRender={5}
-          data={searchText ? searchedLiterature : literatureData ? literatureData : []}
+          data={
+            searchText
+              ? searchedLiterature
+              : literatureData
+              ? literatureData
+              : []
+          }
           contentContainerStyle={styles.Flatlist}
           showsVerticalScrollIndicator={false}
           renderItem={(item) => (
@@ -162,10 +168,10 @@ export const styles = StyleSheet.create({
   Page: {
     backgroundColor: Colors.screenBackground,
     flex: 1,
+    paddingHorizontal: 24,
   },
   Screen: {
     backgroundColor: Colors.screenBackground,
-    paddingHorizontal: 24,
   },
   SearchConatiner: {
     display: 'flex',
@@ -182,8 +188,8 @@ export const styles = StyleSheet.create({
     color: Colors.muteText,
     fontSize: 18,
   },
-  Flatlist: { marginBottom: '8%' },
-  FlatlistFooter: { marginBottom: '6%' },
+  Flatlist: {marginBottom: '8%'},
+  FlatlistFooter: {marginBottom: '6%'},
   AddLiteratureButton: {
     position: 'absolute',
     bottom: '20%',
