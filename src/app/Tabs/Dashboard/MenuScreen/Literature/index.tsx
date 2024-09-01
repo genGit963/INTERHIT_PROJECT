@@ -9,7 +9,6 @@ import {
 
 import {ThemedText} from '../../../../../components/ThemedText';
 import ScreenTopTitle from '../../../../../components/ScreenTopTitle';
-import SearchSvg from '../../../../../assets/svg/search.svg';
 import BottomSpace from '../../../../../components/BottomSpace';
 import EmptyFlatList from '../../../../../components/EmptyFlatList';
 import {Colors} from '../../../../../constants/Color';
