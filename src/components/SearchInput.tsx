@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   Platform,
   StyleSheet,
@@ -35,6 +35,7 @@ const SearchInput: React.FC<SearchProps> = ({
 }) => {
   const {
     control,
+    watch,
     handleSubmit,
     formState: {errors},
   } = useForm<SearchType>({
@@ -47,6 +48,11 @@ const SearchInput: React.FC<SearchProps> = ({
     // console.log('search text: ', data);
     callBackSetSearchValue(data.searchText);
   };
+
+  const searchTextWatch = watch('searchText');
+  useEffect(() => {
+    callBackSetSearchValue(searchTextWatch);
+  }, [searchTextWatch]);
 
   return (
     <View style={styles.SearchContainer}>

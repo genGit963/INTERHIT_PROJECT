@@ -71,9 +71,9 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({navigation}) => {
   const searchedLiterature: LiteratureResInterface[] =
     literatureData.filter(
       (item) =>
-        item.title.toLowerCase().includes(searchText.toLowerCase()) ||
-        item.content.toLowerCase().includes(searchText.toLowerCase()) ||
-        item.author.toLowerCase().includes(searchText.toLowerCase()),
+        item?.title.toLowerCase().includes(searchText.toLowerCase()) ||
+        item?.content.toLowerCase().includes(searchText.toLowerCase()) ||
+        item?.author.toLowerCase().includes(searchText.toLowerCase()),
     ) || [];
 
   useEffect(() => {
@@ -112,13 +112,7 @@ const LiteratureScreen: React.FC<LiteratureScreenProps> = ({navigation}) => {
         {!loading ? (
           <FlatList
             initialNumToRender={5}
-            data={
-              searchText
-                ? searchedLiterature
-                : literatureData
-                ? literatureData
-                : []
-            }
+            data={searchText ? searchedLiterature : literatureData}
             contentContainerStyle={styles.Flatlist}
             showsVerticalScrollIndicator={false}
             renderItem={(item) => (

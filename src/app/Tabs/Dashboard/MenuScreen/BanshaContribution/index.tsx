@@ -64,12 +64,13 @@ const BanshaContribution: React.FC<BanshaContributionProps> = ({
       ? yogdanData
       : yogdanData.filter(
           (item, _) =>
-            item.type.toLowerCase() === DDSelectedValue.toLowerCase(),
+            item?.type.toLowerCase() === DDSelectedValue.toLowerCase(),
         );
+
   const searchedData: BanshaYogdanInterface[] = yogdanData.filter(
     (item) =>
-      item.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchText.toLowerCase()),
+      item?.name.toLowerCase().includes(searchText.toLowerCase()) ||
+      item?.description.toLowerCase().includes(searchText.toLowerCase()),
   );
 
   // error
@@ -103,7 +104,9 @@ const BanshaContribution: React.FC<BanshaContributionProps> = ({
         {yogdanData.length > 0 ? (
           <FlatList
             initialNumToRender={5}
-            data={searchText ? searchedData : filterData}
+            data={
+              searchText ? searchedData : filterData ? filterData : yogdanData
+            }
             style={styles.FlatListContainer}
             contentContainerStyle={styles.FlatlistContents}
             showsVerticalScrollIndicator={false}
