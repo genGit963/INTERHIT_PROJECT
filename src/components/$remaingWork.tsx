@@ -1,10 +1,10 @@
 import React from 'react';
-import {StyleProp, StyleSheet, TextStyle, View} from 'react-native';
-import {ThemedText} from './ThemedText';
+import { StyleProp, StyleSheet, TextStyle, View } from 'react-native';
+import { ThemedText } from './ThemedText';
 
 const TopPriority = () => {
   return (
-    <ThemedText type="mediumBold" style={{fontSize: 16, color: 'red'}}>
+    <ThemedText type="mediumBold" style={{ fontSize: 16, color: 'red' }}>
       Top
     </ThemedText>
   );
@@ -12,7 +12,7 @@ const TopPriority = () => {
 
 const MediumPriority = () => {
   return (
-    <ThemedText type="mediumBold" style={{fontSize: 16, color: 'blue'}}>
+    <ThemedText type="mediumBold" style={{ fontSize: 16, color: 'blue' }}>
       Mid
     </ThemedText>
   );
@@ -20,7 +20,7 @@ const MediumPriority = () => {
 
 const LowPriority = () => {
   return (
-    <ThemedText type="mediumBold" style={{fontSize: 16, color: 'orange'}}>
+    <ThemedText type="mediumBold" style={{ fontSize: 16, color: 'orange' }}>
       Low
     </ThemedText>
   );
@@ -39,7 +39,7 @@ const RemainingWork = () => {
     <View style={styles.Container}>
       <ThemedText
         type="subtitle"
-        style={{textDecorationLine: 'underline', color: 'purple'}}>
+        style={{ textDecorationLine: 'underline', color: 'purple' }}>
         Remaining Work
       </ThemedText>
       <ThemedText style={doneRW()}>
@@ -106,10 +106,10 @@ const RemainingWork = () => {
         <LowPriority /> 21. Well Wishes: Update in Core/Society_Data
       </ThemedText>
       <ThemedText>
-        <MediumPriority /> 22. Setting/Update Profile must alike Edit Form
+        <MediumPriority /> 22. Setting/Update Profile must alike Edit Form //API not available
       </ThemedText>
       <ThemedText>
-        <MediumPriority /> 23. Setting/Manage Pswd
+        <MediumPriority /> 23. Setting/Manage Pswd //API not available
       </ThemedText>
       <ThemedText>
         <MediumPriority /> 24. App update, Feedback, PP, Help, T&C Where to
