@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -59,18 +59,24 @@ const BanshaContribution: React.FC<BanshaContributionProps> = ({
   }, [handleGetYogdan]);
 
   // filteration by DD selected value
-  const filterData: BanshaYogdanInterface[] =
-    DDSelectedValue === 'All'
+  const filterData: BanshaYogdanInterface[] = useMemo(() => {
+    return DDSelectedValue === 'All'
       ? yogdanData
       : yogdanData.filter(
           (item, _) =>
             item?.type.toLowerCase() === DDSelectedValue.toLowerCase(),
         );
+  }, [DDSelectedValue, yogdanData]);
 
-  const searchedData: BanshaYogdanInterface[] = yogdanData.filter(
-    (item) =>
-      item?.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      item?.description.toLowerCase().includes(searchText.toLowerCase()),
+  const searchedData: BanshaYogdanInterface[] = useMemo(
+    () =>
+      yogdanData.filter(
+        (item) =>
+          item?.name.toLowerCase().includes(searchText.toLowerCase()) ||
+          item?.type.toLowerCase().includes(searchText.toLowerCase()) ||
+          item?.description.toLowerCase().includes(searchText.toLowerCase()),
+      ),
+    [searchText],
   );
 
   // error
@@ -104,9 +110,7 @@ const BanshaContribution: React.FC<BanshaContributionProps> = ({
         {yogdanData.length > 0 ? (
           <FlatList
             initialNumToRender={5}
-            data={
-              searchText ? searchedData : filterData ? filterData : yogdanData
-            }
+            data={searchText ? searchedData : filterData}
             style={styles.FlatListContainer}
             contentContainerStyle={styles.FlatlistContents}
             showsVerticalScrollIndicator={false}
@@ -148,8 +152,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
   },
   FlatListContainer: {marginVertical: 10},
-  FlatlistContents: {marginBottom: '8%'},
-  FlatlistFooter: {marginBottom: '6%'},
+  FlatlistContents: {marginBottom: '20%'},
+  FlatlistFooter: {marginBottom: '20%'},
   AddYoganBtn: {
     position: 'absolute',
     bottom: '4%',
