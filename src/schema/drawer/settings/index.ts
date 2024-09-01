@@ -3,7 +3,6 @@ import {z} from 'zod';
 export const EditProfileZSchema = z.object({
   fullName: z.string().min(1, {message: 'Full Name are required'}),
   email: z.string().min(1, {message: 'Email is required'}),
-  phone: z.string().min(1, {message: 'Phone is required'}),
 });
 
 export type EditProfileZType = z.infer<typeof EditProfileZSchema>;

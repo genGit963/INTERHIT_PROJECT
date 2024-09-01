@@ -60,8 +60,10 @@ const ContributionTabScreen: React.FC<ContributionTabScreenProps> = ({
 
   const searchData: SocietyContributionRespInterface[] = useMemo(
     () =>
-      societyContributionData.filter((item: SocietyContributionRespInterface) =>
-        item?.title.toLowerCase().includes(searchText.toLowerCase()),
+      societyContributionData.filter(
+        (item: SocietyContributionRespInterface) =>
+          item?.title.toLowerCase().includes(searchText.toLowerCase()) ||
+          item?.organizer.toLowerCase().includes(searchText.toLowerCase()),
       ),
     [searchText],
   );

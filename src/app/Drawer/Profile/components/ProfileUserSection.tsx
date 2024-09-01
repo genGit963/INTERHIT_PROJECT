@@ -20,8 +20,6 @@ const ProfileUserSection: React.FC<ProfileUserSectionProps> = ({
   const {handleUserDataProvider} = useUserDataProvider();
   const [APPUSER, setAPPUSER] = useState<StoredUserType | null | undefined>();
 
-  const {translateLanguage} = useTranslate();
-
   useEffect(() => {
     const handleFetchUser = async () => {
       const appUser = await handleUserDataProvider();
@@ -32,6 +30,8 @@ const ProfileUserSection: React.FC<ProfileUserSectionProps> = ({
     };
     handleFetchUser();
   }, []);
+
+  const {translateLanguage} = useTranslate();
 
   return (
     <View style={styles.UserView}>

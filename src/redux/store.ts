@@ -1,6 +1,7 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
-
 import languageReducer from './features/language/languageSlice';
+import userReducer from './features/user/userSlice';
+
 import {
   FLUSH,
   PAUSE,
@@ -20,6 +21,7 @@ const persistConfig = {
 
 const appPersistReducers = combineReducers({
   language: languageReducer,
+  appUser: userReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, appPersistReducers);

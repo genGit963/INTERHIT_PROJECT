@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Alert,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -37,7 +38,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
 
   const onSubmit = async (data: LoginZType) => {
     await handleLogin(data).then(() => {
-      RNRestart.restart();
+      Alert.alert('Log In', 'Login Successfull !', [
+        {
+          text: 'OK',
+          onPress: () => RNRestart.restart(),
+          style: 'default',
+        },
+      ]);
     });
   };
 

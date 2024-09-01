@@ -1,11 +1,25 @@
 import {useCallback, useState} from 'react';
-import {LoginZType, SignupZType, VerifyOTPZType} from '../../schema/auth';
+import {
+  LoginZType,
+  SignupZType,
+  StoredUserType,
+  VerifyOTPZType,
+} from '../../schema/auth';
 import AUTH_SERVICE from '../../services/auth';
 import {asyncStoreData} from '../../core/AsyncStorage';
+import {AppDispatch} from '../../redux/store';
+import {useDispatch} from 'react-redux';
+import {setAppUser} from '../../redux/features/user/userSlice';
 
 export const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();
+
+  // handle language changes
+  const dispatch: AppDispatch = useDispatch();
+  const handleReduxAppUser = (user: StoredUserType) => {
+    dispatch(setAppUser(user));
+  };
 
   const handleLogin = useCallback(async (loginData: LoginZType) => {
     setLoading(true);
@@ -13,6 +27,7 @@ export const useLogin = () => {
     try {
       await AUTH_SERVICE.login(loginData).then(async (Response) => {
         // storing to AsyncStorage
+        handleReduxAppUser(Response.data);
         await asyncStoreData('USER', JSON.stringify(Response.data));
         await asyncStoreData('TOKEN', Response.data.accessToken);
       });

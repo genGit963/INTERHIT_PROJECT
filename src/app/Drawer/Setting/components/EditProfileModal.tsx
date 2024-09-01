@@ -13,6 +13,9 @@ import CustomTextInput from '../../../../components/CustomInput';
 import BottomSpace from '../../../../components/BottomSpace';
 import {Colors} from '../../../../constants/Color';
 import supplyShadowEffect from '../../../../utils/Shadow';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../../../redux/store';
+import {stat} from '@dr.pogodin/react-native-fs';
 
 type EditProfileModalProps = {
   isVisible: boolean;
@@ -23,12 +26,19 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
   isVisible,
   modalVisibile,
 }) => {
+  // app user redux
+  const {appUser} = useSelector((state: RootState) => state.appUser);
+
   const {
     control,
     handleSubmit,
     formState: {errors},
   } = useForm<EditProfileZType>({
     resolver: zodResolver(EditProfileZSchema),
+    defaultValues: {
+      fullName: appUser?.user.name,
+      email: appUser?.user.email,
+    },
   });
 
   const onSubmit = (data: EditProfileZType) => {
@@ -90,19 +100,20 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
               name="email"
               placeholder="Eg: barhau@gmail.com"
               control={control}
+              defaultValue={control._defaultValues.fullName}
               label="Email"
               isRequired
               error={errors.email}
             />
 
-            <CustomTextInput
+            {/* <CustomTextInput
               name="phone"
               placeholder="Eg: 9876548910"
               control={control}
               label="Phone"
               isRequired
               error={errors.phone}
-            />
+            /> */}
 
             {/* Submit Button */}
             <HeroButton btnText="Submit" onPress={handleSubmit(onSubmit)} />

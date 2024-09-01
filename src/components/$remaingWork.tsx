@@ -59,8 +59,7 @@ const RemainingWork = () => {
         <TopPriority /> 5. OverView Finishing
       </ThemedText>
       <ThemedText style={doneRW()}>
-        <TopPriority /> 6. Search Implementation on All: implement GOVINDA as I
-        did in alekh search to all other
+        <TopPriority /> 6. Search Implementation on All
       </ThemedText>
       <ThemedText style={doneRW()}>
         <TopPriority /> 7. Loding Lotte
@@ -93,11 +92,11 @@ const RemainingWork = () => {
       <ThemedText>
         <LowPriority /> 17. Sadhsaya member which members to fetch
       </ThemedText>
-      <ThemedText>
-        <MediumPriority /> 18. Committee History
+      <ThemedText style={doneRW()}>
+        <MediumPriority /> REMOVED: 18. Committee History
       </ThemedText>
-      <ThemedText>
-        <MediumPriority /> 19. All Committee Screen API lookup Test
+      <ThemedText style={doneRW()}>
+        <MediumPriority /> TESTIN: 19. All Committee Screen API lookup Test
       </ThemedText>
       <ThemedText>
         <LowPriority /> 20. About Org Data: Update in Core/Society_Data
