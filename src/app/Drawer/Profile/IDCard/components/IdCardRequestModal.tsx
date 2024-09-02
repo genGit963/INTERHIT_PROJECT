@@ -1,23 +1,30 @@
 // IDCardRequestModal.tsx
 import React from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Alert, Modal, ScrollView, StyleSheet, View } from 'react-native';
-import { useForm } from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {
+  Alert,
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
+import {useForm} from 'react-hook-form';
 import CustomTextInput from '../../../../../components/CustomInput';
 import HeroButton from '../../../../../components/HeroButton';
 import supplyShadowEffect from '../../../../../utils/Shadow';
-import { Colors } from '../../../../../constants/Color';
+import {Colors} from '../../../../../constants/Color';
 import CustomDropdownSelector from '../../../../../components/CustomDropdownSelector';
 import CustomRadioSelector from '../../../../../components/CustomRadioSelector';
 import BottomSpace from '../../../../../components/BottomSpace';
-import { ThemedText } from '../../../../../components/ThemedText';
+import {ThemedText} from '../../../../../components/ThemedText';
 import {
   IdCardZSchema,
   IdCardZType,
 } from '../../../../../schema/drawer/profile/id-card.schema';
 import CustomImagePickerComponent from '../../../../../components/CustomImagePicker';
-import { useRequestIdCard } from '../../../../../hooks/drawer/profile/idCard';
-import { Asset } from 'react-native-image-picker';
+import {useRequestIdCard} from '../../../../../hooks/drawer/profile/idCard';
+import {Asset} from 'react-native-image-picker';
 
 type IDCardRequestModalProps = {
   isVisible: boolean;
@@ -31,12 +38,12 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm<IdCardZType>({
     resolver: zodResolver(IdCardZSchema),
   });
 
-  const { loading, error, handleRequestIdCard } = useRequestIdCard();
+  const {loading, error, handleRequestIdCard} = useRequestIdCard();
   const onSubmit = async (data: IdCardZType) => {
     const formData = new FormData();
 
@@ -136,9 +143,9 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
               control={control}
               label="Gender"
               options={[
-                { label: 'Male', value: 'Male' },
-                { label: 'Female', value: 'Female' },
-                { label: 'Others', value: 'Others' },
+                {label: 'Male', value: 'Male'},
+                {label: 'Female', value: 'Female'},
+                {label: 'Others', value: 'Others'},
               ]}
               isRequired
             />
@@ -148,14 +155,14 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
               control={control}
               label="Blood Group"
               options={[
-                { label: 'A+', value: 'A+' },
-                { label: 'A-', value: 'A-' },
-                { label: 'B+', value: 'B+' },
-                { label: 'B-', value: 'B-' },
-                { label: 'O+', value: 'O+' },
-                { label: 'O-', value: 'O-' },
-                { label: 'AB+', value: 'AB+' },
-                { label: 'AB-', value: 'AB-' },
+                {label: 'A+', value: 'A+'},
+                {label: 'A-', value: 'A-'},
+                {label: 'B+', value: 'B+'},
+                {label: 'B-', value: 'B-'},
+                {label: 'O+', value: 'O+'},
+                {label: 'O-', value: 'O-'},
+                {label: 'AB+', value: 'AB+'},
+                {label: 'AB-', value: 'AB-'},
               ]}
               isRequired
             />
@@ -165,12 +172,12 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
               control={control}
               label="Province"
               options={[
-                { label: 'कोशी प्रदेश', value: 'कोशी प्रदेश' },
-                { label: 'मधेश प्रदेश', value: 'मधेश प्रदेश' },
-                { label: 'बागमती प्रदेश', value: 'बागमती प्रदेश' },
-                { label: 'गण्डकी प्रदेश', value: 'गण्डकी प्रदेश' },
-                { label: 'लुम्बिनी प्रदेश', value: 'लुम्बिनी प्रदेश' },
-                { label: 'कर्णाली प्रदेश', value: 'कर्णाली प्रदेश' },
+                {label: 'कोशी प्रदेश', value: 'कोशी प्रदेश'},
+                {label: 'मधेश प्रदेश', value: 'मधेश प्रदेश'},
+                {label: 'बागमती प्रदेश', value: 'बागमती प्रदेश'},
+                {label: 'गण्डकी प्रदेश', value: 'गण्डकी प्रदेश'},
+                {label: 'लुम्बिनी प्रदेश', value: 'लुम्बिनी प्रदेश'},
+                {label: 'कर्णाली प्रदेश', value: 'कर्णाली प्रदेश'},
                 {
                   label: 'सुदूर पश्चिमाञ्च प्रदेश',
                   value: 'सुदूर पश्चिमाञ्च प्रदेश',
@@ -184,8 +191,8 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
               control={control}
               label="District"
               options={[
-                { label: 'District 1', value: 'District 1' },
-                { label: 'District 2', value: 'District 2' },
+                {label: 'District 1', value: 'District 1'},
+                {label: 'District 2', value: 'District 2'},
                 // Add other districts as needed
               ]}
               isRequired
@@ -196,8 +203,8 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
               control={control}
               label="Local Level"
               options={[
-                { label: 'Local Level 1', value: 'Local Level 1' },
-                { label: 'Local Level 2', value: 'Local Level 2' },
+                {label: 'Local Level 1', value: 'Local Level 1'},
+                {label: 'Local Level 2', value: 'Local Level 2'},
                 // Add other local levels as needed
               ]}
               isRequired
@@ -253,7 +260,7 @@ const IDCardRequestModal: React.FC<IDCardRequestModalProps> = ({
 
 const styles = StyleSheet.create({
   ModelContainer: {
-    height: '90%',
+    height: Platform.OS === 'ios' ? '94%' : '99%',
     width: '100%',
     margin: 'auto',
     position: 'absolute',
@@ -278,7 +285,7 @@ const styles = StyleSheet.create({
       Elevation: 10,
     }),
   },
-  FormTitle: { textAlign: 'left', width: '100%', fontSize: 18, marginBottom: 12 },
+  FormTitle: {textAlign: 'left', width: '100%', fontSize: 18, marginBottom: 12},
   ScrollContainer: {
     width: '100%',
     marginBottom: 50,

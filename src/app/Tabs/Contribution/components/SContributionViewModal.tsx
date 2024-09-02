@@ -1,4 +1,12 @@
-import {Image, Modal, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {Colors} from '../../../../constants/Color';
 import supplyShadowEffect from '../../../../utils/Shadow';
@@ -106,7 +114,7 @@ export default SContributionViewModal;
 
 const styles = StyleSheet.create({
   ModelContainer: {
-    height: '90%',
+    height: Platform.OS === 'ios' ? '94%' : '99%',
     width: '100%',
     position: 'absolute',
     bottom: 0,

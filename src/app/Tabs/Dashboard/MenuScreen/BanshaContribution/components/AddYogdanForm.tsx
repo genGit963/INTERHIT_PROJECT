@@ -205,7 +205,7 @@ const AddYogdanModal: React.FC<AddYogdanModalProps> = ({
 
 const styles = StyleSheet.create({
   ModelContainer: {
-    height: '85%',
+    height: Platform.OS === 'ios' ? '94%' : '99%',
     width: '100%',
     margin: 'auto',
     position: 'absolute',

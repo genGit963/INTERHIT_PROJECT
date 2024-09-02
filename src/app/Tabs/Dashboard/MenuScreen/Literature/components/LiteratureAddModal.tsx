@@ -1,6 +1,13 @@
 // LiteratureAddModal.tsx
 import React from 'react';
-import {Modal, StyleSheet, View, ScrollView, Alert} from 'react-native';
+import {
+  Modal,
+  StyleSheet,
+  View,
+  ScrollView,
+  Alert,
+  Platform,
+} from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
 import {ThemedText} from '../../../../../../components/ThemedText';
 import {Colors} from '../../../../../../constants/Color';
@@ -195,7 +202,7 @@ const LiteratureAddModal = ({
 
 const styles = StyleSheet.create({
   ModelContainer: {
-    height: '85%',
+    height: Platform.OS === 'ios' ? '94%' : '99%',
     width: '100%',
     margin: 'auto',
     position: 'absolute',

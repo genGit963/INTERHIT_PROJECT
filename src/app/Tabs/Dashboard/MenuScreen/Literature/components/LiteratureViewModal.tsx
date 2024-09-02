@@ -1,11 +1,18 @@
 import React from 'react';
-import { Modal, StyleSheet, View, ScrollView, Image } from 'react-native';
+import {
+  Modal,
+  StyleSheet,
+  View,
+  ScrollView,
+  Image,
+  Platform,
+} from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
-import { ThemedText } from '../../../../../../components/ThemedText';
-import { Colors } from '../../../../../../constants/Color';
+import {ThemedText} from '../../../../../../components/ThemedText';
+import {Colors} from '../../../../../../constants/Color';
 import BottomSpace from '../../../../../../components/BottomSpace';
 import HeroButton from '../../../../../../components/HeroButton';
-import { LiteratureResInterface } from '../../../../../../schema/tabs/dashboard/literature.schema';
+import {LiteratureResInterface} from '../../../../../../schema/tabs/dashboard/literature.schema';
 
 const LiteratureViewModal = ({
   isVisible,
@@ -34,16 +41,18 @@ const LiteratureViewModal = ({
             style={styles.ScorllContainer}>
             {/* Images Carousel */}
             <Image
-              source={{ uri: data?.author_image.secure_url }}
+              source={{uri: data?.author_image.secure_url}}
               alt={data?.author}
               style={styles.WriteImg}
               resizeMode="cover"
             />
             {/* Writer */}
-            <ThemedText type='semiBold' style={styles.Writer}>
+            <ThemedText type="semiBold" style={styles.Writer}>
               {data?.author}
             </ThemedText>
-            <ThemedText type='mediumBold' style={styles.Date}>{String(new Date(data?.createdAt as string).toDateString())}</ThemedText>
+            <ThemedText type="mediumBold" style={styles.Date}>
+              {String(new Date(data?.createdAt as string).toDateString())}
+            </ThemedText>
 
             {/* Detail */}
             <ThemedText style={styles.Detail}>{data?.content}</ThemedText>
@@ -57,7 +66,7 @@ const LiteratureViewModal = ({
 
 const styles = StyleSheet.create({
   ModelContainer: {
-    height: '85%',
+    height: Platform.OS === 'ios' ? '94%' : '99%',
     width: '100%',
     margin: 'auto',
     position: 'absolute',
@@ -85,7 +94,7 @@ const styles = StyleSheet.create({
       Elevation: 8,
     }),
   },
-  ScorllContainer: { width: '100%', paddingHorizontal: 10 },
+  ScorllContainer: {width: '100%', paddingHorizontal: 10},
   DoneButton: {
     width: '100%',
     paddingHorizontal: 4,

@@ -192,7 +192,7 @@ const AlekhAddModal = ({
 
 const styles = StyleSheet.create({
   ModelContainer: {
-    height: '85%',
+    height: Platform.OS === 'ios' ? '94%' : '99%',
     width: '100%',
     position: 'absolute',
     bottom: -5,

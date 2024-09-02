@@ -1,5 +1,12 @@
 import React from 'react';
-import {Modal, StyleSheet, View, ScrollView, Image} from 'react-native';
+import {
+  Modal,
+  StyleSheet,
+  View,
+  ScrollView,
+  Image,
+  Platform,
+} from 'react-native';
 import supplyShadowEffect from '../../../../../../utils/Shadow';
 
 import {AlekhInterface} from '..';
@@ -64,7 +71,7 @@ const AlekhViewModal = ({
 
 const styles = StyleSheet.create({
   ModelContainer: {
-    height: '85%',
+    height: Platform.OS === 'ios' ? '94%' : '99%',
     width: '100%',
     margin: 'auto',
     position: 'absolute',

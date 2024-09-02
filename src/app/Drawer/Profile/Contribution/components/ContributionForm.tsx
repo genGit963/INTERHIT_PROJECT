@@ -246,7 +246,7 @@ const ContributionFormModal: React.FC<ContributionFormModalProps> = ({
 
 const styles = StyleSheet.create({
   ModelContainer: {
-    height: '90%',
+    height: Platform.OS === 'ios' ? '94%' : '99%',
     width: '100%',
     margin: 'auto',
     position: 'absolute',

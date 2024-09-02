@@ -1,11 +1,11 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {Colors} from '../../constants/Color';
 
 // stylesDC : StyleSheet for Drawer Component
 
 export const stylesDC = StyleSheet.create({
   ModelContainer: {
-    height: '100%',
+    height: Platform.OS === 'ios' ? '94%' : '99%',
     width: '68%',
     position: 'absolute',
     // backgroundColor: 'red',

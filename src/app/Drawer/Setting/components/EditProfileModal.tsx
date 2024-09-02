@@ -1,7 +1,14 @@
 // EditProfileModal.tsx
 import React from 'react';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {Image, Modal, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {useForm} from 'react-hook-form';
 import {
   EditProfileZSchema,
@@ -196,7 +203,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
 const styles = StyleSheet.create({
   ModelContainer: {
-    height: '90%',
+    height: Platform.OS === 'ios' ? '94%' : '99%',
     width: '100%',
     margin: 'auto',
     position: 'absolute',
