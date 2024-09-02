@@ -7,34 +7,37 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { AppScreenNavigationType } from '../../../core/navigation-type';
-import { ThemedText } from '../../../components/ThemedText';
+import {AppScreenNavigationType} from '../../../core/navigation-type';
+import {ThemedText} from '../../../components/ThemedText';
 import AuthScreenTop from '../components/AuthScreenTop';
-import { Colors } from '../../../constants/Color';
+import {Colors} from '../../../constants/Color';
 import HeroButton from '../../../components/HeroButton';
-import { SCREEN_NAME } from '../../../core/AppScreen';
-import { useForm } from 'react-hook-form';
-import { LoginZSchema, LoginZType } from '../../../schema/auth';
+import {SCREEN_NAME} from '../../../core/AppScreen';
+import {useForm} from 'react-hook-form';
+import {LoginZSchema, LoginZType} from '../../../schema/auth';
 import CustomTextInput from '../../../components/CustomInput';
-import { zodResolver } from '@hookform/resolvers/zod';
+import {zodResolver} from '@hookform/resolvers/zod';
 import FlexImgSvg from '../../../assets/svg/auth-rprst.svg';
-import { useLogin } from '../../../hooks/auth';
+import {useLogin} from '../../../hooks/auth';
 import RNRestart from 'react-native-restart';
 import ApiError from '../../../components/api/ApiError';
 import useTranslate from '../../../hooks/language/translate';
+import {AppDispatch, RootState} from '../../../redux/store';
+import {useDispatch, useSelector} from 'react-redux';
+import {setLanguage} from '../../../redux/features/language/languageSlice';
 
 type LoginScreenProps = {} & AppScreenNavigationType;
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({navigation}) => {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm<LoginZType>({
     resolver: zodResolver(LoginZSchema),
   });
 
-  const { loading, error, handleLogin } = useLogin();
+  const {loading, error, handleLogin} = useLogin();
 
   const onSubmit = async (data: LoginZType) => {
     await handleLogin(data).then(() => {
@@ -48,7 +51,17 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     });
   };
 
-  const { translateLanguage } = useTranslate();
+  // handle language changes
+
+  // use toggled language
+  const {language} = useSelector((state: RootState) => state.language);
+
+  const dispatch: AppDispatch = useDispatch();
+  const toogleLanguage = () => {
+    dispatch(setLanguage(language === 'english' ? 'nepali' : 'english'));
+  };
+
+  const {translateLanguage} = useTranslate();
 
   const loginLabels = {
     pageTitle: translateLanguage('Login', 'लगइन गर्नुहोस्'),
@@ -128,6 +141,21 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
               <ThemedText type="link"> {loginLabels.signup}</ThemedText>
             </TouchableOpacity>
           </View>
+
+          {/* change language */}
+          <View style={styles.LangtoggleBtn}>
+            <ThemedText style={styles.CLText}>
+              {translateLanguage(
+                'Change Language To: ',
+                'भाषा परिवर्तन गर्नुहोस्: ',
+              )}{' '}
+            </ThemedText>
+            <TouchableOpacity onPress={toogleLanguage}>
+              <ThemedText type="mediumBold" style={styles.LangType}>
+                {language === 'nepali' ? 'English' : ' नेपाली'}
+              </ThemedText>
+            </TouchableOpacity>
+          </View>
         </ScrollView>
       </SafeAreaView>
     </View>
@@ -143,8 +171,8 @@ export const styles = StyleSheet.create({
   Screen: {
     backgroundColor: Colors.screenBackground,
   },
-  ScrollView: { marginBottom: 10, paddingBottom: 40 },
-  ScrollContent: { paddingBottom: 140 },
+  ScrollView: {marginBottom: 10, paddingBottom: 40},
+  ScrollContent: {paddingBottom: 140},
   FlexText: {
     textAlign: 'center',
   },
@@ -167,6 +195,19 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  LangtoggleBtn: {
+    // borderWidth: 1,
+    alignItems: 'center',
+    marginTop: 20,
+    marginHorizontal: 'auto',
+    flexDirection: 'row',
+  },
+  CLText: {
+    color: Colors.darkGray,
+  },
+  LangType: {
+    color: Colors.primary,
   },
 });
 

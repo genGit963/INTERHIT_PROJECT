@@ -20,31 +20,25 @@ export const useGenQuery = ({
   const [data, setData] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();
+  console.log('lkjugujhokpon......');
+  const cacheKey = queryFn.toString();
 
   const fetchData = useCallback(async () => {
     setLoading(true);
     setError(undefined);
-
-    // Caching the fetched data:
-    const cacheKey = queryFn.toString(); // Unique key based on function string
-    if (cache[cacheKey] && cache[cacheKey].expiry > Date.now()) {
-      setData(cache[cacheKey].data);
-      setLoading(false);
-      return;
-    }
 
     try {
       const response = await queryFn();
       // console.log('useGenQuery queryFn Res: ', response.data);
       if (response) {
         setData(response.data);
+        cache[cacheKey] = {
+          data: response.data,
+          expiry: Date.now() + cacheTime * 60 * 1000,
+        };
+        console.log('chave data: ', cache);
       }
-
       // Cache the data
-      cache[cacheKey] = {
-        data: response.data,
-        expiry: Date.now() + cacheTime * 60 * 1000,
-      };
     } catch (err) {
       setError('Query Failed!');
       console.log('useGenQuery Failed error: ', err);
@@ -53,9 +47,19 @@ export const useGenQuery = ({
     }
   }, [queryFn, cacheTime]);
 
+  const checkCache = useCallback(() => {
+    if (cache[cacheKey] && cache[cacheKey].expiry > Date.now()) {
+      setData(cache[cacheKey].data);
+      setLoading(false);
+      console.log('chave data if: ', cache);
+      return;
+    }
+  }, []);
+
   useEffect(() => {
+    checkCache();
     fetchData();
-  }, [fetchData]);
+  }, [fetchData, checkCache]);
 
   return {loading, error, data};
 };

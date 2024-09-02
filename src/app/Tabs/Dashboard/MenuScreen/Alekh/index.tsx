@@ -12,13 +12,13 @@ import AlekhViewModal from './components/AlekhViewModal';
 import AlekhCard from './components/AlekhCard';
 import BottomSpace from '../../../../../components/BottomSpace';
 import EmptyFlatList from '../../../../../components/EmptyFlatList';
-import { Colors } from '../../../../../constants/Color';
+import {Colors} from '../../../../../constants/Color';
 import supplyShadowEffect from '../../../../../utils/Shadow';
 import AlekhAddModal from './components/AlekhAddModel';
-import { AppScreenNavigationType } from '../../../../../core/navigation-type';
+import {AppScreenNavigationType} from '../../../../../core/navigation-type';
 import AddAlekhSvg from '../../../../../assets/svg/solid-plus-circle.svg';
-import SearchInput, { SearchType } from '../../../../../components/SearchInput';
-import { useGenQuery } from '../../../../../hooks/gen-hooks/gen-query';
+import SearchInput, {SearchType} from '../../../../../components/SearchInput';
+import {useGenQuery} from '../../../../../hooks/gen-hooks/gen-query';
 import DASHBOARD_SERVICES from '../../../../../services/tabs/dashboard';
 import ApiError from '../../../../../components/api/ApiError';
 import Loader from '../../../../../components/Loader';
@@ -44,7 +44,7 @@ export interface AlekhInterface {
 }
 
 // ----------------- Alekh Screen ---------------------
-const AlekhScreen: React.FC<AlekhScreenProps> = ({ navigation }) => {
+const AlekhScreen: React.FC<AlekhScreenProps> = ({navigation}) => {
   // View Modal States
   const [selectedAlekh, setSelectedAlekh] = React.useState<
     AlekhInterface | undefined
@@ -69,12 +69,12 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({ navigation }) => {
   const [searchText, setSearchText] =
     React.useState<SearchType['searchText']>('');
 
-  const { translateLanguage } = useTranslate();
+  const {translateLanguage} = useTranslate();
 
   // Get Alekhs hook
-  const { data, loading, error } = useGenQuery({
+  const {loading, error, data} = useGenQuery({
     queryFn: async () => await DASHBOARD_SERVICES.getAlekhs(),
-    cacheTime: 6, // 6 minute cache
+    cacheTime: 12, // 6 minute cache
   });
 
   // Filtered data based on search text
@@ -127,7 +127,7 @@ const AlekhScreen: React.FC<AlekhScreenProps> = ({ navigation }) => {
             style={styles.FlatlistContainer}
             contentContainerStyle={styles.FlatlistContents}
             showsVerticalScrollIndicator={false}
-            renderItem={({ item }) => (
+            renderItem={({item}) => (
               <AlekhCard callbackHandlePress={handleAlekhView} alekh={item} />
             )}
             ListEmptyComponent={<EmptyFlatList message="No Alekhs" />}
@@ -177,8 +177,8 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.screenBackground,
   },
   FlatlistContainer: {},
-  FlatlistContents: { gap: 12 },
-  FlatlistFooter: { marginBottom: '15%' },
+  FlatlistContents: {gap: 12},
+  FlatlistFooter: {marginBottom: '15%'},
   AddAlekhButton: {
     position: 'absolute',
     bottom: '16%',
